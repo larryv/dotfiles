@@ -1,0 +1,14 @@
+[alias]
+    diffc = diff --cached
+[color]
+    branch = auto
+    diff = auto
+[core]
+    autocrlf = input
+    excludesfile = .gitexclude
+[user]
+    name = Lawrence Velázquez
+    email = larryv@alum.mit.edu
+
+[include]
+    path = .gitconfig.local
