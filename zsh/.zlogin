@@ -17,9 +17,12 @@ if [[ "${OSTYPE}" =~ '^darwin' ]]; then
         export LESSEDIT='/usr/bin/env mate --line %lm %f'
     fi
 
-    if [[ -x /usr/libexec/java_home ]]; then
-        export JAVA_HOME=$(/usr/libexec/java_home)
-    fi
+    function {
+        local JH=/usr/libexec/java_home
+        if [[ -x ${JH} ]] && JAVA_HOME=$(${JH} -F 2> /dev/null); then
+            export JAVA_HOME
+        fi
+    }
 fi
 
 # Gnuplot
