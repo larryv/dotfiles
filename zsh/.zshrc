@@ -61,9 +61,10 @@ function {
     esac
 
     # Left-hand prompt
+    local hostname='[%m]'
     local hist_number='%B%h%b'
     local privileges='%B%(?,%F{green},%F{red})%#%f%b'
-    export PS1="${hist_number} ${privileges} "
+    export PS1="${hostname} ${hist_number} ${privileges} "
 
     # Right-hand prompt
     local pwd='%B%1~%b'
