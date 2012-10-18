@@ -70,9 +70,9 @@ function {
     export PS1="${hostname} %B${hist_number} ${privileges}%b "
 
     # Right-hand prompt
-    local pwd='%1~'
+    local pwd='%~'
     local vcs='${vcs_info_msg_0_}'
-    export RPS1="%B${pwd}%b${vcs}"
+    export RPS1='%$((${COLUMNS} / 2))<..<%B'${pwd}'%b'${vcs}
 }
 
 # zsh env and parameters
