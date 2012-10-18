@@ -17,7 +17,7 @@ zstyle :compinstall filename "${ZDOTDIR}/.zshrc"
 
 # Enable tab completion and dress it up a bit
 autoload -Uz compinit && function {
-    compinit -C
+    compinit
     zstyle ':completion:*:descriptions' format '%B%d%b'
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
 }
