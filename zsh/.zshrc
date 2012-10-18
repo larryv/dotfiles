@@ -24,13 +24,16 @@ autoload -Uz compinit && function {
 
 # Set prompt; use anonymous function to manage scope.
 function {
-    # (Taken from OS X /etc/bashrc.) Tell terminal about working dir.
-    # Identify the directory using a "file:" scheme URL, including the host
-    # name to disambiguate local vs. remote connections. Percent-escape
-    # spaces.
+    # Working directory code and comments are adapted from
+    # OS X's /etc/bashrc.
+    #
+    # Tell the terminal about the working directory at each prompt.
     if [[ "${TERM_PROGRAM}" == "Apple_Terminal" && -z "${INSIDE_EMACS}" ]];
     then
         update_terminal_cwd () {
+            # Identify the directory using a "file:" scheme URL,
+            # including the host name to disambiguate local vs.
+            # remote connections. Percent-escape spaces.
             printf '\e]7;%s\a' "file://${HOSTNAME}${PWD// /%20}"
         }
         local PC="A"
