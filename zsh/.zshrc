@@ -65,14 +65,14 @@ function {
 
     # Left-hand prompt
     local hostname='[%m]'
-    local hist_number='%B%h%b'
-    local privileges='%B%(?,%F{green},%F{red})%#%f%b'
-    export PS1="${hostname} ${hist_number} ${privileges} "
+    local hist_number='%h'
+    local privileges='%(?.%F{green}.%F{red})%#%f'
+    export PS1="${hostname} %B${hist_number} ${privileges}%b "
 
     # Right-hand prompt
-    local pwd='%B%1~%b'
+    local pwd='%1~'
     local vcs='${vcs_info_msg_0_}'
-    export RPS1="${pwd}${vcs}"
+    export RPS1="%B${pwd}%b${vcs}"
 }
 
 # zsh env and parameters
