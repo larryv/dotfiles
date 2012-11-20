@@ -75,12 +75,13 @@ function {
     export RPS1='%$((${COLUMNS} / 2))<..<%B'${pwd}'%b'${vcs}
 }
 
-# zsh env and parameters
-export REPORTTIME=10        # Print timing stats if commands take too long
-
 # Aliases
 alias hf='open -a "Hex Fiend"'
 alias ls='ls -AFh'
+
+# Misc
+export REPORTTIME=10    # Print timing stats
+stty -ixon              # Disable software flow control for terminal
 
 ##### OS-specific settings #####
 
