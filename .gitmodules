@@ -1,0 +1,3 @@
+[submodule "Colemak.vim"]
+	path = vim/plugin/Colemak.vim
+	url = git://github.com/larryv/Colemak.vim.git
