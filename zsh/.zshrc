@@ -77,7 +77,10 @@ function {
 }
 
 # Aliases
-alias hf='open -a "Hex Fiend"'
+if [[ -d "/Applications/Hex Fiend.app" ||
+      -d "/Applications/MacPorts/Hex Fiend.app" ]]; then
+    alias hf='open -a "Hex Fiend"'
+fi
 alias ls='ls -AFh'
 
 # Misc
