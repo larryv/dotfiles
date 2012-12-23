@@ -29,8 +29,3 @@ fi
 export GDFONTPATH=${HOME}/Library/Fonts:/Library/Fonts:/System/Library/Fonts
 export GNUPLOT_DEFAULT_GDFONT=helvetica
 export GNUTERM=x11      # AquaTerm is stupid and cuts shit off
-
-# AWS CLI Tools
-export AWS_CREDENTIAL_FILE=${HOME}/.allsortz/aws_key
-export AWS_IAM_HOME=${HOME}/bin/aws/IAMCli
-export EC2_HOME=${HOME}/bin/aws/ec2-api-tools

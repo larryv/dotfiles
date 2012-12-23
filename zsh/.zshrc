@@ -86,12 +86,3 @@ alias ls='ls -AFh'
 # Misc
 export REPORTTIME=10    # Print timing stats
 stty -ixon              # Disable software flow control for terminal
-
-##### OS-specific settings #####
-
-# if [[ "${OSTYPE}" =~ '^freebsd' ]]; then
-#     # On FreeBSD, start ssh-agent
-#     if ! (ssh-add -l &> /dev/null); then
-#         eval $(ssh-agent -s)
-#     fi
-# fi
