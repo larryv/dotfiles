@@ -9,8 +9,9 @@ export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=1000000     # History kept in shell
 export SAVEHIST=1000000     # Lines to save to history file
 
-# emacs keybindings
+# zshzle
 bindkey -e
+export WORDCHARS="${WORDCHARS/\//}"
 
 # Define file that compinstall should change
 zstyle :compinstall filename "${ZDOTDIR}/.zshrc"
