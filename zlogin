@@ -29,3 +29,6 @@ fi
 export GDFONTPATH=${HOME}/Library/Fonts:/Library/Fonts:/System/Library/Fonts
 export GNUPLOT_DEFAULT_GDFONT=helvetica
 export GNUTERM=x11      # AquaTerm is stupid and cuts shit off
+
+# Disable term output flow control
+stty -ixon

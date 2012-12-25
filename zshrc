@@ -85,4 +85,3 @@ alias ls='ls -AFh'
 
 # Misc
 export REPORTTIME=10    # Print timing stats
-stty -ixon              # Disable software flow control for terminal
