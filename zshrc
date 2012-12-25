@@ -14,7 +14,7 @@ bindkey -e
 export WORDCHARS="${WORDCHARS/\//}"
 
 # Define file that compinstall should change
-zstyle :compinstall filename "${ZDOTDIR}/.zshrc"
+zstyle :compinstall filename "${HOME}/.zshrc"
 
 # Enable tab completion and dress it up a bit
 autoload -Uz compinit && function {

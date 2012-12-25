@@ -1,8 +1,3 @@
-##### THIS FILE SHOULD BE SYMLINKED TO ~/.zshenv #####
-
-# Tell zsh where other startup files are
-export ZDOTDIR="${HOME}/.dotfiles/zsh"
-
 # This doesn't quite work in other startup files. Invoking zsh
 # from inside another shell results in the MacPorts directories
 # being at the END of PATH, rather than at the beginning. Not
