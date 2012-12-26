@@ -31,11 +31,21 @@ function {
     # Identify the working directory to the terminal using a "file:"
     # scheme URL, including the host name to disambiguate local vs.
     # remote connections. Percent-escape spaces.
-    if [[ "${TERM_PROGRAM}" == "Apple_Terminal" && -z "${INSIDE_EMACS}" ]];
-    then
-        function update_terminal_cwd {
-            printf '\e]7;%s\a' "file://${HOSTNAME}${PWD// /%20}"
-        }
+    if [[ "${TERM_PROGRAM}" == "Apple_Terminal" ]]; then
+        if [[ -n "${TMUX}" ]]; then
+            # Must explicitly tell tmux to pass the escape sequence
+            # through to Terminal.app. See
+            # http://sourceforge.net/mailarchive/message.php?msg_id=27190530.
+            function update_terminal_cwd {
+                local CWD_ESC_SEQ='\ePtmux;\e\e]7;%s\a\e\'
+                printf "${CWD_ESC_SEQ}" "file://${HOSTNAME}${PWD// /%20}"
+            }
+        else
+            function update_terminal_cwd {
+                local CWD_ESC_SEQ='\e]7;%s\a'
+                printf "${CWD_ESC_SEQ}" "file://${HOSTNAME}${PWD// /%20}"
+            }
+        fi
         local PC="A"
     fi
 
