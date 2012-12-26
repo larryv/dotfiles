@@ -23,24 +23,23 @@ autoload -Uz compinit && function {
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
 }
 
-# Set prompt; use anonymous function to manage scope.
+# Set prompt; use anonymous function to manage scope
 function {
     # Working directory code and comments are adapted from
     # OS X's /etc/bashrc.
     #
-    # Tell the terminal about the working directory at each prompt.
+    # Identify the working directory to the terminal using a "file:"
+    # scheme URL, including the host name to disambiguate local vs.
+    # remote connections. Percent-escape spaces.
     if [[ "${TERM_PROGRAM}" == "Apple_Terminal" && -z "${INSIDE_EMACS}" ]];
     then
-        update_terminal_cwd () {
-            # Identify the directory using a "file:" scheme URL,
-            # including the host name to disambiguate local vs.
-            # remote connections. Percent-escape spaces.
+        function update_terminal_cwd {
             printf '\e]7;%s\a' "file://${HOSTNAME}${PWD// /%20}"
         }
         local PC="A"
     fi
 
-    # Version control info; see zshcontrib man page.
+    # Version control info; see zshcontrib(1) man page
     if autoload -Uz vcs_info; then
         zstyle ':vcs_info:*' enable git hg svn
         zstyle ':vcs_info:*' formats ' (%s:%b)'
@@ -59,9 +58,9 @@ function {
 
     # Must define precmd all in one go
     case "${PC}" in
-        A ) precmd () { update_terminal_cwd };;
-        B ) precmd () { vcs_info };;
-        AB ) precmd () { update_terminal_cwd; vcs_info };;
+        A ) function precmd { update_terminal_cwd } ;;
+        B ) function precmd { vcs_info } ;;
+        AB ) function precmd { update_terminal_cwd; vcs_info } ;;
     esac
 
     # Left-hand prompt
