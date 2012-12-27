@@ -5,9 +5,9 @@ setopt inc_append_history   # Continually append to hist file
 setopt prompt_subst         # Allow expn and command subst in prompts
 
 # History
+export HISTSIZE=1000
+export SAVEHIST=1000000
 export HISTFILE="${HOME}/.zsh_history"
-export HISTSIZE=1000000     # History kept in shell
-export SAVEHIST=1000000     # Lines to save to history file
 
 # zshzle
 bindkey -e
