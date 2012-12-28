@@ -2,14 +2,14 @@
 #              colored based on last exit status
 # Right prompt: Current working dir, truncated to half screen width
 setopt PROMPT_SUBST
-export PS1='[%m] %B%h %(?.%F{green}.%F{red})%#%f%b '
-export RPS1='%$((${COLUMNS} / 2))<..<%B%~%b'
+PS1='[%m] %B%h %(?.%F{green}.%F{red})%#%f%b '
+RPS1='%$((${COLUMNS} / 2))<..<%B%~%b'
 
 # History
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY
-export HISTSIZE=1000
-export SAVEHIST=1000000
-export HISTFILE=${HOME}/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000000
+HISTFILE=${HOME}/.zsh_history
 
 # Aliases
 alias ls='ls -AFh'
@@ -20,7 +20,7 @@ fi
 
 # emacs keybindings, and treat slashes as word separators
 bindkey -e
-export WORDCHARS=${WORDCHARS/\//}
+WORDCHARS=${WORDCHARS/\//}
 
 # Dress up tab completion
 autoload -Uz compinit && function {
@@ -30,7 +30,7 @@ autoload -Uz compinit && function {
 }
 
 # Print timing stats for commands that run over 10 sec
-export REPORTTIME=10
+REPORTTIME=10
 
 # Use the chpwd hook to identify the working dir to Terminal.app. If
 # inside tmux, must use a "wrapper" sequence to pass the original escape
