@@ -6,7 +6,7 @@ export EDITOR='/usr/bin/env vim'
 export GREP_OPTIONS='--color=auto'
 export PAGER='/usr/bin/env less'
 
-if [[ "${OSTYPE}" =~ '^darwin' ]]; then
+if [[ ${OSTYPE} == darwin* ]]; then
     if [[ -x /opt/local/bin/mvim ]]; then
         # MacVim
         export VISUAL='/usr/bin/env mvim --nofork'

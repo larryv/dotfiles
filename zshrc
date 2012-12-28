@@ -1,27 +1,29 @@
-# zsh options
-setopt extended_history     # Save timestamps to hist file
-#setopt hist_ignore_dups     # Ignore consecutive duplicate events
-setopt inc_append_history   # Continually append to hist file
-setopt prompt_subst         # Allow expn and command subst in prompts
-
 # History
+setopt EXTENDED_HISTORY INC_APPEND_HISTORY
 export HISTSIZE=1000
 export SAVEHIST=1000000
-export HISTFILE="${HOME}/.zsh_history"
+export HISTFILE=${HOME}/.zsh_history
 
-# zshzle
+# Aliases
+alias ls='ls -AFh'
+if [[ -d "/Applications/Hex Fiend.app" ||
+      -d "/Applications/MacPorts/Hex Fiend.app" ]]; then
+    alias hf='open -a "Hex Fiend"'
+fi
+
+# emacs keybindings, and treat slashes as word separators
 bindkey -e
-export WORDCHARS="${WORDCHARS/\//}"
+export WORDCHARS=${WORDCHARS/\//}
 
-# Define file that compinstall should change
-zstyle :compinstall filename "${HOME}/.zshrc"
-
-# Enable tab completion and dress it up a bit
+# Dress up tab completion
 autoload -Uz compinit && function {
     compinit
     zstyle ':completion:*:descriptions' format '%B%d%b'
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
 }
+
+# Print timing stats for commands that run over 10 sec
+export REPORTTIME=10
 
 # Set prompt; use anonymous function to manage scope
 function {
@@ -31,22 +33,22 @@ function {
     # Identify the working directory to the terminal using a "file:"
     # scheme URL, including the host name to disambiguate local vs.
     # remote connections. Percent-escape spaces.
-    if [[ "${TERM_PROGRAM}" == "Apple_Terminal" ]]; then
-        if [[ -n "${TMUX}" ]]; then
+    if [[ ${TERM_PROGRAM} == Apple_Terminal ]]; then
+        if [[ -n ${TMUX} ]]; then
             # Must explicitly tell tmux to pass the escape sequence
             # through to Terminal.app. See
             # http://sourceforge.net/mailarchive/message.php?msg_id=27190530.
             function update_terminal_cwd {
                 local CWD_ESC_SEQ='\ePtmux;\e\e]7;%s\a\e\'
-                printf "${CWD_ESC_SEQ}" "file://${HOSTNAME}${PWD// /%20}"
+                printf ${CWD_ESC_SEQ} "file://${HOSTNAME}${PWD// /%20}"
             }
         else
             function update_terminal_cwd {
                 local CWD_ESC_SEQ='\e]7;%s\a'
-                printf "${CWD_ESC_SEQ}" "file://${HOSTNAME}${PWD// /%20}"
+                printf ${CWD_ESC_SEQ} "file://${HOSTNAME}${PWD// /%20}"
             }
         fi
-        local PC="A"
+        local PC=A
     fi
 
     # Version control info; see zshcontrib(1) man page
@@ -56,18 +58,18 @@ function {
         zstyle ':vcs_info:*' actionformats ' (%s:%b|%a)'
         zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
-        # Change prompt colors in modified git repos
+        # Color-code git info based on repo status
         zstyle ':vcs_info:git:*' check-for-changes true
         zstyle ':vcs_info:git:*' unstagedstr '%F{red}'
         zstyle ':vcs_info:git:*' stagedstr '%F{yellow}'
         zstyle ':vcs_info:git:*' formats ' %F{green}%u%c(%s:%b)%f'
         zstyle ':vcs_info:git:*' actionformats ' %F{green}%u%c(%s:%b|%a)%f'
 
-        local PC="${PC}B"
+        local PC=${PC}B
     fi
 
     # Must define precmd all in one go
-    case "${PC}" in
+    case ${PC} in
         A ) function precmd { update_terminal_cwd } ;;
         B ) function precmd { vcs_info } ;;
         AB ) function precmd { update_terminal_cwd; vcs_info } ;;
@@ -80,17 +82,11 @@ function {
     export PS1="${hostname} %B${hist_number} ${privileges}%b "
 
     # Right-hand prompt
+    setopt PROMPT_SUBST
     local pwd='%~'
     local vcs='${vcs_info_msg_0_}'
     export RPS1='%$((${COLUMNS} / 2))<..<%B'${pwd}'%b'${vcs}
 }
 
-# Aliases
-if [[ -d "/Applications/Hex Fiend.app" ||
-      -d "/Applications/MacPorts/Hex Fiend.app" ]]; then
-    alias hf='open -a "Hex Fiend"'
-fi
-alias ls='ls -AFh'
-
-# Misc
-export REPORTTIME=10    # Print timing stats
+# wtf is compinstall
+zstyle :compinstall filename ${HOME}/.zshrc
