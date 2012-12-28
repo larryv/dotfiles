@@ -7,12 +7,8 @@ export GREP_OPTIONS='--color=auto'
 export PAGER='/usr/bin/env less'
 
 if [[ ${OSTYPE} == darwin* ]]; then
-    function {
-        local JH=/usr/libexec/java_home
-        if [[ -x ${JH} ]] && JAVA_HOME=$(${JH} -F 2> /dev/null); then
-            export JAVA_HOME
-        fi
-    }
+    export JAVA_HOME="$(/usr/libexec/java_home -F 2> /dev/null)"
+    if [[ -z ${JAVA_HOME} ]]; then unset JAVA_HOME; fi
 fi
 
 # Gnuplot
