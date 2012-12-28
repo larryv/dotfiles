@@ -1,3 +1,10 @@
+# Left prompt: Hostname, history number, and privileges indicator,
+#              colored based on last exit status
+# Right prompt: Current working dir, truncated to half screen width
+setopt PROMPT_SUBST
+export PS1='[%m] %B%h %(?.%F{green}.%F{red})%#%f%b '
+export RPS1='%$((${COLUMNS} / 2))<..<%B%~%b'
+
 # History
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY
 export HISTSIZE=1000
@@ -65,6 +72,7 @@ function {
         zstyle ':vcs_info:git:*' formats ' %F{green}%u%c(%s:%b)%f'
         zstyle ':vcs_info:git:*' actionformats ' %F{green}%u%c(%s:%b|%a)%f'
 
+        RPS1+='${vcs_info_msg_0_}'
         local PC=${PC}B
     fi
 
@@ -75,17 +83,6 @@ function {
         AB ) function precmd { update_terminal_cwd; vcs_info } ;;
     esac
 
-    # Left-hand prompt
-    local hostname='[%m]'
-    local hist_number='%h'
-    local privileges='%(?.%F{green}.%F{red})%#%f'
-    export PS1="${hostname} %B${hist_number} ${privileges}%b "
-
-    # Right-hand prompt
-    setopt PROMPT_SUBST
-    local pwd='%~'
-    local vcs='${vcs_info_msg_0_}'
-    export RPS1='%$((${COLUMNS} / 2))<..<%B'${pwd}'%b'${vcs}
 }
 
 # wtf is compinstall
