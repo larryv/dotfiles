@@ -32,57 +32,37 @@ autoload -Uz compinit && function {
 # Print timing stats for commands that run over 10 sec
 export REPORTTIME=10
 
-# Set prompt; use anonymous function to manage scope
-function {
-    # Working directory code and comments are adapted from
-    # OS X's /etc/bashrc.
-    #
-    # Identify the working directory to the terminal using a "file:"
-    # scheme URL, including the host name to disambiguate local vs.
-    # remote connections. Percent-escape spaces.
-    if [[ ${TERM_PROGRAM} == Apple_Terminal ]]; then
-        if [[ -n ${TMUX} ]]; then
-            # Must explicitly tell tmux to pass the escape sequence
-            # through to Terminal.app. See
-            # http://sourceforge.net/mailarchive/message.php?msg_id=27190530.
-            function update_terminal_cwd {
-                local CWD_ESC_SEQ='\ePtmux;\e\e]7;%s\a\e\'
-                printf ${CWD_ESC_SEQ} "file://${HOSTNAME}${PWD// /%20}"
-            }
-        else
-            function update_terminal_cwd {
-                local CWD_ESC_SEQ='\e]7;%s\a'
-                printf ${CWD_ESC_SEQ} "file://${HOSTNAME}${PWD// /%20}"
-            }
-        fi
-        local PC=A
-    fi
+# Use the chpwd hook to identify the working dir to Terminal.app. If
+# inside tmux, must use a "wrapper" sequence to pass the original escape
+# sequence through.  (See
+# http://sourceforge.net/mailarchive/message.php?msg_id=27190530.)
+#
+# Adapted from OS X's /etc/bashrc.
+if [[ ${TERM_PROGRAM} == Apple_Terminal ]]; then
+    function chpwd {
+        local CWD_ESC_SEQ='\e]7;%s\a'
+        if [[ -n ${TMUX} ]]; then CWD_ESC_SEQ='\ePtmux;\e\e]7;%s\a\e\'; fi
+        printf ${CWD_ESC_SEQ} "file://${HOSTNAME}${PWD// /%20}"
+    }
+    chpwd       # Otherwise new terminals won't have the pwd
+fi
 
-    # Version control info; see zshcontrib(1) man page
-    if autoload -Uz vcs_info; then
-        zstyle ':vcs_info:*' enable git hg svn
-        zstyle ':vcs_info:*' formats ' (%s:%b)'
-        zstyle ':vcs_info:*' actionformats ' (%s:%b|%a)'
-        zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
+# Use the precmd hook to get VCS info for the prompt; see zshcontrib(1)
+autoload -Uz vcs_info && function {
+    zstyle ':vcs_info:*' enable git hg svn
+    zstyle ':vcs_info:*' formats ' (%s:%b)'
+    zstyle ':vcs_info:*' actionformats ' (%s:%b|%a)'
+    zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
-        # Color-code git info based on repo status
-        zstyle ':vcs_info:git:*' check-for-changes true
-        zstyle ':vcs_info:git:*' unstagedstr '%F{red}'
-        zstyle ':vcs_info:git:*' stagedstr '%F{yellow}'
-        zstyle ':vcs_info:git:*' formats ' %F{green}%u%c(%s:%b)%f'
-        zstyle ':vcs_info:git:*' actionformats ' %F{green}%u%c(%s:%b|%a)%f'
+    # Color-code git info based on repo status
+    zstyle ':vcs_info:git:*' check-for-changes true
+    zstyle ':vcs_info:git:*' unstagedstr '%F{red}'
+    zstyle ':vcs_info:git:*' stagedstr '%F{yellow}'
+    zstyle ':vcs_info:git:*' formats ' %F{green}%u%c(%s:%b)%f'
+    zstyle ':vcs_info:git:*' actionformats ' %F{green}%u%c(%s:%b|%a)%f'
 
-        RPS1+='${vcs_info_msg_0_}'
-        local PC=${PC}B
-    fi
-
-    # Must define precmd all in one go
-    case ${PC} in
-        A ) function precmd { update_terminal_cwd } ;;
-        B ) function precmd { vcs_info } ;;
-        AB ) function precmd { update_terminal_cwd; vcs_info } ;;
-    esac
-
+    function precmd { vcs_info }
+    RPS1+='${vcs_info_msg_0_}'
 }
 
 # wtf is compinstall
