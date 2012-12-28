@@ -7,16 +7,6 @@ export GREP_OPTIONS='--color=auto'
 export PAGER='/usr/bin/env less'
 
 if [[ ${OSTYPE} == darwin* ]]; then
-    if [[ -x /opt/local/bin/mvim ]]; then
-        # MacVim
-        export VISUAL='/usr/bin/env mvim --nofork'
-        export LESSEDIT='/usr/bin/env mvim +%lm -- %f'
-    elif [[ -x /usr/local/bin/mate ]]; then
-        # TextMate
-        export VISUAL='/usr/bin/env mate --wait'
-        export LESSEDIT='/usr/bin/env mate --line %lm %f'
-    fi
-
     function {
         local JH=/usr/libexec/java_home
         if [[ -x ${JH} ]] && JAVA_HOME=$(${JH} -F 2> /dev/null); then
