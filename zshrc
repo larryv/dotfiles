@@ -32,22 +32,23 @@ autoload -Uz compinit && function {
 # Print timing stats for commands that run over 10 sec
 REPORTTIME=10
 
-# Use the chpwd hook to identify the working dir to Terminal.app. If
+# Add a precmd hook to identify the working dir to Terminal.app.  If
 # inside tmux, must use a "wrapper" sequence to pass the original escape
 # sequence through.  (See
 # http://sourceforge.net/mailarchive/message.php?msg_id=27190530.)
 #
 # Adapted from OS X's /etc/bashrc.
+typeset -a precmd_functions
 if [[ ${TERM_PROGRAM} == Apple_Terminal ]]; then
-    function chpwd {
+    function update_terminal_cwd {
         local CWD_ESC_SEQ='\e]7;%s\a'
         if [[ -n ${TMUX} ]]; then CWD_ESC_SEQ='\ePtmux;\e\e]7;%s\a\e\'; fi
         printf ${CWD_ESC_SEQ} "file://${HOSTNAME}${PWD// /%20}"
     }
-    chpwd       # Otherwise new terminals won't have the pwd
+    precmd_functions+=update_terminal_cwd
 fi
 
-# Use the precmd hook to get VCS info for the prompt; see zshcontrib(1)
+# Add a precmd hook to get VCS info for the prompt; see zshcontrib(1)
 autoload -Uz vcs_info && function {
     zstyle ':vcs_info:*' enable git hg svn
     zstyle ':vcs_info:*' formats ' (%s:%b)'
@@ -61,7 +62,7 @@ autoload -Uz vcs_info && function {
     zstyle ':vcs_info:git:*' formats ' %F{green}%u%c(%s:%b)%f'
     zstyle ':vcs_info:git:*' actionformats ' %F{green}%u%c(%s:%b|%a)%f'
 
-    function precmd { vcs_info }
+    precmd_functions+=vcs_info
     RPS1+='${vcs_info_msg_0_}'
 }
 
