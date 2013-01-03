@@ -32,6 +32,11 @@ autoload -Uz compinit && function {
 # Print timing stats for commands that run over 10 sec
 REPORTTIME=10
 
+# Disable terminal output flow control
+if [[ -o LOGIN ]]; then
+    stty -ixon
+fi
+
 # Add a precmd hook to identify the working dir to Terminal.app.  If
 # inside tmux, must use a "wrapper" sequence to pass the original escape
 # sequence through.  (See
