@@ -37,18 +37,30 @@ if [[ -o LOGIN ]]; then
     stty -ixon
 fi
 
-# Add a precmd hook to identify the working dir to Terminal.app.  If
-# inside tmux, must use a "wrapper" sequence to pass the original escape
-# sequence through.  (See
-# http://sourceforge.net/mailarchive/message.php?msg_id=27190530.)
-#
-# Adapted from OS X's /etc/bashrc.
+# Add a precmd hook to identify the working dir to Terminal.app.
+# Adapted from OS X's /etc/bashrc and the slightly-incorrect answer at
+# http://stackoverflow.com/a/187853/50102.
 typeset -a precmd_functions
 if [[ ${TERM_PROGRAM} == Apple_Terminal ]]; then
     function update_terminal_cwd {
-        local CWD_ESC_SEQ='\e]7;%s\a'
-        if [[ -n ${TMUX} ]]; then CWD_ESC_SEQ='\ePtmux;\e\e]7;%s\a\e\'; fi
-        printf ${CWD_ESC_SEQ} "file://${HOSTNAME}${PWD// /%20}"
+        emulate -L zsh
+
+        # Percent-escape entire path.  Non-intuitively, must *disable*
+        # MULTIBYTE to correctly encode multibyte Unicode characters.
+        setopt EXTENDED_GLOB NO_MULTIBYTE
+        local nonslash='(#m)[^/]'
+        local host=${HOSTNAME//${~nonslash}/%$(( [##16] ##${MATCH} ))}
+        local cwd=${PWD//${~nonslash}/%$(( [##16] ##${MATCH} ))}
+
+        # Send custom escape sequence to Terminal.app.  If zsh is
+        # running inside tmux, use a "wrapper" sequence to pass the
+        # original sequence through.  See
+        # http://sourceforge.net/mailarchive/message.php?msg_id=27190530.
+        if [[ -n ${TMUX} ]]; then
+            printf '\ePtmux;\e\e]7;%s\a\e\' "file://${host}${cwd}"
+        else
+            printf '\e]7;%s\a' "file://${host}${cwd}"
+        fi
     }
     precmd_functions+=update_terminal_cwd
 fi
