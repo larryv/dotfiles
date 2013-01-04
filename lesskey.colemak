@@ -10,6 +10,8 @@ E   back-line-force
 s   forw-scroll
 l   back-scroll
 
+\el undo-hilite
+
 d   goto-line
 D   goto-end
 
