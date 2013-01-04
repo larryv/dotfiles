@@ -82,6 +82,3 @@ autoload -Uz vcs_info && function {
     precmd_functions+=vcs_info
     RPS1+='${vcs_info_msg_0_}'
 }
-
-# wtf is compinstall
-zstyle :compinstall filename ${HOME}/.zshrc
