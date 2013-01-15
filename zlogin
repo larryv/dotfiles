@@ -6,9 +6,10 @@ export EDITOR='/usr/bin/env vim'
 export GREP_OPTIONS='--color=auto'
 export PAGER='/usr/bin/env less'
 
+# Set JAVA_HOME dynamically, if a JVM is installed
 if [[ ${OSTYPE} == darwin* ]]; then
     export JAVA_HOME="$(/usr/libexec/java_home -F 2> /dev/null)"
-    if [[ -z ${JAVA_HOME} ]]; then unset JAVA_HOME; fi
+    [[ -z ${JAVA_HOME} ]] && unset JAVA_HOME
 fi
 
 # Gnuplot

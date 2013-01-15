@@ -32,9 +32,7 @@ autoload -Uz compinit && function {
 REPORTTIME=10
 
 # Disable terminal output flow control
-if [[ -o LOGIN ]]; then
-    stty -ixon
-fi
+[[ -o LOGIN ]] && stty -ixon
 
 # Add a precmd hook to identify the working dir to Terminal.app.
 # Adapted from OS X's /etc/bashrc and the slightly-incorrect answer at
