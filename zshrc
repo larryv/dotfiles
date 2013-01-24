@@ -28,6 +28,10 @@ autoload -Uz compinit && function {
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
 }
 
+# Enable fancy-pants on-line help
+unalias run-help
+autoload -Uz run-help
+
 # Print timing stats for commands that run over 10 sec
 REPORTTIME=10
 
