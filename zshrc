@@ -1,8 +1,8 @@
-# Left prompt: Hostname, history number, and privileges indicator,
-#              colored based on last exit status
+# Left prompt: Hostname, history number, and privileges/shell-nesting
+#   indicator, colored based on last exit status
 # Right prompt: Current working dir, truncated to half screen width
 setopt PROMPT_SUBST
-PS1='[%m] %B%h %(?.%F{green}.%F{red})%#%f%b '
+PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((${SHLVL} * 2))::%#:)}%f%b '
 RPS1='%$((${COLUMNS} / 2))<..<%B%~%b'
 
 # History
