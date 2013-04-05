@@ -2,7 +2,8 @@
 #   indicator, colored based on last exit status
 # Right prompt: Current working dir, truncated to half screen width
 setopt PROMPT_SUBST
-PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((${SHLVL} * 2))::%#:)}%f%b '
+#PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((${SHLVL} * 2))::%#:)}%f%b '
+PS1='%B%h %(?.%F{green}.%F{red})${(r:$((${SHLVL} * 2))::%#:)}%f%b '
 RPS1='%$((${COLUMNS} / 2))<..<%B%~%b'
 
 # History
