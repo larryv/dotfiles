@@ -23,7 +23,7 @@ fi
 WORDCHARS=${WORDCHARS/\//}
 
 # Dress up tab completion
-autoload -Uz compinit && function {
+autoload -Uz compinit && {
     compinit
     zstyle ':completion:*:descriptions' format '%B%d%b'
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
@@ -68,7 +68,7 @@ if [[ ${TERM_PROGRAM} == Apple_Terminal ]]; then
 fi
 
 # Add a precmd hook to get VCS info for the prompt; see zshcontrib(1)
-autoload -Uz vcs_info && function {
+autoload -Uz vcs_info && {
     zstyle ':vcs_info:*' enable git hg svn
     zstyle ':vcs_info:*' formats ' (%s:%b)'
     zstyle ':vcs_info:*' actionformats ' (%s:%b|%a)'
