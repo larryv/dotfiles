@@ -7,7 +7,7 @@
     autocrlf = input
     excludesfile = ~/.gitexclude
 [user]
-    name = Lawrence Velázquez
+    name = Lawrence Velázquez
     email = larryv@alum.mit.edu
 
 [include]
