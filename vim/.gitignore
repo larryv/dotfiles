@@ -1,5 +1,0 @@
-# Vim netrw junk
-.netrw*
-
-# pathogen.vim bundles
-bundle/
