@@ -11,12 +11,11 @@ HISTSIZE=1000
 SAVEHIST=1000000
 HISTFILE=${HOME}/.zsh_history
 
-# Aliases
-alias ls='ls -AFh'
-if [[ -d "/Applications/Hex Fiend.app" ||
-      -d "/Applications/MacPorts/Hex Fiend.app" ]]; then
-    alias hf='open -a "Hex Fiend"'
+# Custom commands
+if [[ ${OSTYPE} == darwin* ]]; then
+    hf (); emulate zsh -c "open -a 'Hex Fiend' $*"
 fi
+ls (); emulate zsh -c "command ls -AFh $*"
 
 # Treat slashes as word separators
 WORDCHARS=${WORDCHARS/\//}
