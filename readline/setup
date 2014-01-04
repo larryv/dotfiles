@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# -----
+# Install script for readline setup.
+#
+# Usage: sh setup [-f] [TARGET_DIRECTORY]
+# -----
+
+# Source shared functions, etc.
+. ../common.sh || exit 2
+
+# TODO: Try to factor out common script-level options.
+readline_FORCE=
+while getopts f opt; do
+    case $opt in
+        f) readline_FORCE=-f ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+readline_SOURCES=inputrc
+readline_TARGET_DIR=${1:-$HOME}
+
+CreateAbsoluteSymlinks -d $readline_FORCE $readline_SOURCES "$readline_TARGET_DIR"
