@@ -1,4 +1,6 @@
-########## COLEMAK NONSENSE ##########
+# -----
+# Colemak keybindings for readline
+# -----
 
 $if mode=emacs
 
