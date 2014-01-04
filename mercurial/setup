@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# -----
+# Install script for Mercurial setup.
+#
+# Usage: sh setup [-f] [TARGET_DIRECTORY]
+# -----
+
+# Source shared functions, etc.
+. ../common.sh || exit 2
+
+# TODO: Try to factor out common script-level options.
+hg_FORCE=
+while getopts f opt; do
+    case $opt in
+        f) hg_FORCE=-f ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+hg_TARGET_DIR=${1:-$HOME}
+
+CreateAbsoluteSymlinks -d $hg_FORCE hgrc "$hg_TARGET_DIR"
