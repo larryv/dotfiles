@@ -18,8 +18,14 @@ while getopts f opt; do
 done
 shift $(($OPTIND - 1))
 
-zsh_SOURCES=z*
+# Link .zshenv, which will point zsh to an alternative ZDOTDIR.
+zsh_SOURCES=zshenv
 # TODO: Support customized target directory.
 zsh_TARGET_DIR=$HOME
+CreateAbsoluteSymlinks -d $zsh_FORCE $zsh_SOURCES "$zsh_TARGET_DIR"
 
+# Link the other dotfiles into the alternative ZDOTDIR.
+zsh_SOURCES='zlogin zshrc'
+zsh_TARGET_DIR=$zsh_TARGET_DIR/.zsh
+mkdir "$zsh_TARGET_DIR"
 CreateAbsoluteSymlinks -d $zsh_FORCE $zsh_SOURCES "$zsh_TARGET_DIR"
