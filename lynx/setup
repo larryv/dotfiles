@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# -----
+# Install script for Lynx setup.
+#
+# Usage: sh setup [-f]
+# -----
+
+# Source shared functions, etc.
+. ../common.sh || exit 2
+
+# TODO: Try to factor out common script-level options.
+lynx_FORCE=
+while getopts f opt; do
+    case $opt in
+        f) lynx_FORCE=-f ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+lynx_SOURCES=lynx.cfg
+# TODO: Support customized target directory.
+lynx_TARGET_DIR=$HOME/.lynx
+mkdir $lynx_TARGET_DIR
+CreateAbsoluteSymlinks $lynx_FORCE $lynx_SOURCES "$lynx_TARGET_DIR"
