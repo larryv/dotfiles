@@ -34,9 +34,6 @@ autoload -Uz run-help
 # Print timing stats for commands that run over 10 sec
 REPORTTIME=10
 
-# Disable terminal output flow control
-[[ -o LOGIN ]] && stty -ixon
-
 # Add a precmd hook to identify the working dir to Terminal.app.
 # Adapted from OS X's /etc/bashrc and the slightly-incorrect answer at
 # http://stackoverflow.com/a/187853/50102.
