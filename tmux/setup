@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# -----
+# Install script for tmux setup.
+#
+# Usage: sh setup [-f]
+# -----
+
+# Source shared functions, etc.
+. ../common.sh || exit 2
+
+# TODO: Try to factor out common script-level options.
+tmux_FORCE=
+while getopts f opt; do
+    case $opt in
+        f) tmux_FORCE=-f ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+tmux_SOURCES=tmux.conf
+# TODO: Support customized target directory.
+tmux_TARGET_DIR=$HOME
+
+CreateAbsoluteSymlinks -d $tmux_FORCE $tmux_SOURCES "$tmux_TARGET_DIR"
