@@ -55,7 +55,7 @@ CreateAbsoluteSymlinks() {
 
         cas_RESULT='Failed to symlink'
         if [ -n "$cas_SOURCE" ] && [ -n "$cas_TARGET" ]; then
-            ln -s $cas_FORCE "$cas_SOURCE" "$cas_TARGET" && cas_RESULTS=Symlinked
+            ln -s $cas_FORCE "$cas_SOURCE" "$cas_TARGET" && cas_RESULT=Symlinked
         fi
         printf '%s %s as %s\n' "$cas_RESULT" "$cas_SOURCE" "$cas_TARGET"
 
