@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# -----
+# Install script for zsh setup.
+#
+# Usage: sh setup [-f] [TARGET_DIRECTORY]
+# -----
+
+# Source shared functions, etc.
+. ../common.sh || exit 2
+
+# TODO: Try to factor out common script-level options.
+zsh_FORCE=
+while getopts f opt; do
+    case $opt in
+        f) zsh_FORCE=-f ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+zsh_TARGET_DIR=${1:-$HOME}
+
+CreateAbsoluteSymlinks -d $zsh_FORCE z* "$zsh_TARGET_DIR"
