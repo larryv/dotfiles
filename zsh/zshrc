@@ -9,7 +9,7 @@ RPS1='%$((${COLUMNS} / 2))<..<%~'
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY
 HISTSIZE=1000
 SAVEHIST=1000000
-HISTFILE=${ZDOTDIR}/.zsh_history
+HISTFILE=${ZDOTDIR}/zsh_history
 
 # Custom commands
 if [[ ${OSTYPE} == darwin* ]]; then
