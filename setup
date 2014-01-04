@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# -----
+# Master install script for system configuration.
+#
+# Usage: sh setup [-f] [TARGET_DIRECTORY]
+# -----
+
+# Check for options.
+FORCE=
+while getopts f opt; do
+    case $opt in
+        f) FORCE=-f ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+TARGET_DIR=${1:-$HOME}
+
+# Source all "setup" files in directory tree.
+for SETUP in $(find . -name setup -type f); do
+    DIR=$(dirname "$SETUP")
+    SCRIPT=$(basename "$SETUP")
+    [ "x$DIR" = "x." ] || [ -z "$DIR" ] || [ -z "$SCRIPT" ] && continue
+
+    (cd "$DIR" && . "./$SCRIPT" $FORCE "$TARGET_DIR")
+done
