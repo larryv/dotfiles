@@ -3,7 +3,7 @@
 # -----
 # Master install script for system configuration.
 #
-# Usage: sh setup [-f] [TARGET_DIRECTORY]
+# Usage: sh setup [-f]
 # -----
 
 # Check for options.
@@ -15,7 +15,8 @@ while getopts f opt; do
 done
 shift $(($OPTIND - 1))
 
-TARGET_DIR=${1:-$HOME}
+# TODO: Support customized target directory.
+TARGET_DIR=$HOME
 
 # Source all "setup" files in directory tree.
 for SETUP in $(find . -name setup -type f); do

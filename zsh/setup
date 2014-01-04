@@ -3,7 +3,7 @@
 # -----
 # Install script for zsh setup.
 #
-# Usage: sh setup [-f] [TARGET_DIRECTORY]
+# Usage: sh setup [-f]
 # -----
 
 # Source shared functions, etc.
@@ -19,6 +19,7 @@ done
 shift $(($OPTIND - 1))
 
 zsh_SOURCES=z*
-zsh_TARGET_DIR=${1:-$HOME}
+# TODO: Support customized target directory.
+zsh_TARGET_DIR=$HOME
 
 CreateAbsoluteSymlinks -d $zsh_FORCE $zsh_SOURCES "$zsh_TARGET_DIR"
