@@ -15,7 +15,7 @@ while getopts f opt; do
 done
 shift $(($OPTIND - 1))
 
-# TODO: Support customized target directory.
+# TODO: Support custom install location.
 #TARGET=$HOME
 
 # Pass options to sub-scripts through environment because POSIX:2004
