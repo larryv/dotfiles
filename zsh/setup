@@ -3,7 +3,7 @@
 # -----
 # Install script for zsh setup.
 #
-# Usage: sh setup [-f]
+# Usage: sh setup [-f] [TARGET]
 # -----
 
 # Source shared functions, etc.
@@ -20,12 +20,11 @@ shift $(($OPTIND - 1))
 
 # Link .zshenv, which will point zsh to an alternative ZDOTDIR.
 zsh_SOURCES=zshenv
-# TODO: Support customized target directory.
-zsh_TARGET_DIR=$HOME
-CreateAbsoluteSymlinks -d $zsh_FORCE $zsh_SOURCES "$zsh_TARGET_DIR"
+zsh_TARGET=${1:-${TARGET:-$HOME}}
+mkdir -p "$zsh_TARGET"
+CreateAbsoluteSymlinks -d $zsh_FORCE $zsh_SOURCES "$zsh_TARGET"
 
 # Link the other dotfiles into the alternative ZDOTDIR.
 zsh_SOURCES='zlogin zshrc'
-zsh_TARGET_DIR=$zsh_TARGET_DIR/.zsh
-mkdir "$zsh_TARGET_DIR"
-CreateAbsoluteSymlinks -d $zsh_FORCE $zsh_SOURCES "$zsh_TARGET_DIR"
+mkdir "$HOME/.zsh"
+CreateAbsoluteSymlinks -d $zsh_FORCE $zsh_SOURCES "$HOME/.zsh"

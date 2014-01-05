@@ -3,7 +3,7 @@
 # -----
 # Install script for Git setup.
 #
-# Usage: sh setup [-f]
+# Usage: sh setup [-f] [TARGET]
 # -----
 
 # Source shared functions, etc.
@@ -19,7 +19,6 @@ done
 shift $(($OPTIND - 1))
 
 git_SOURCES=git*
-# TODO: Support customized target directory.
-git_TARGET_DIR=$HOME
+git_TARGET=${1:-${TARGET:-$HOME}}
 
-CreateAbsoluteSymlinks -d $git_FORCE $git_SOURCES "$git_TARGET_DIR"
+CreateAbsoluteSymlinks -d $git_FORCE $git_SOURCES "$git_TARGET"

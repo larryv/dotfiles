@@ -3,7 +3,7 @@
 # -----
 # Install script for Mercurial setup.
 #
-# Usage: sh setup [-f]
+# Usage: sh setup [-f] [TARGET]
 # -----
 
 # Source shared functions, etc.
@@ -19,7 +19,6 @@ done
 shift $(($OPTIND - 1))
 
 hg_SOURCES=hgrc
-# TODO: Support customized target directory.
-hg_TARGET_DIR=$HOME
+hg_TARGET=${1:-${TARGET:-$HOME}}
 
-CreateAbsoluteSymlinks -d $hg_FORCE $hg_SOURCES "$hg_TARGET_DIR"
+CreateAbsoluteSymlinks -d $hg_FORCE $hg_SOURCES "$hg_TARGET"

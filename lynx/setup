@@ -3,7 +3,7 @@
 # -----
 # Install script for Lynx setup.
 #
-# Usage: sh setup [-f]
+# Usage: sh setup [-f] [TARGET]
 # -----
 
 # Source shared functions, etc.
@@ -19,7 +19,6 @@ done
 shift $(($OPTIND - 1))
 
 lynx_SOURCES=lynx.cfg
-# TODO: Support customized target directory.
-lynx_TARGET_DIR=$HOME/.lynx
-mkdir $lynx_TARGET_DIR
-CreateAbsoluteSymlinks $lynx_FORCE $lynx_SOURCES "$lynx_TARGET_DIR"
+lynx_TARGET=${1:-${TARGET:-$HOME/.lynx}}
+mkdir -p "$lynx_TARGET"
+CreateAbsoluteSymlinks $lynx_FORCE $lynx_SOURCES "$lynx_TARGET"

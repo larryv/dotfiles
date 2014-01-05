@@ -3,7 +3,7 @@
 # -----
 # Install script for tmux setup.
 #
-# Usage: sh setup [-f]
+# Usage: sh setup [-f] [TARGET]
 # -----
 
 # Source shared functions, etc.
@@ -20,12 +20,11 @@ shift $(($OPTIND - 1))
 
 # Install tmux configuration.
 tmux_SOURCES=tmux.conf
-# TODO: Support customized target directory.
-tmux_TARGET_DIR=$HOME
-CreateAbsoluteSymlinks -d $tmux_FORCE $tmux_SOURCES "$tmux_TARGET_DIR"
+tmux_TARGET=${1:-${TARGET:-$HOME}}
+CreateAbsoluteSymlinks -d $tmux_FORCE $tmux_SOURCES "$tmux_TARGET"
 
 # Install zsh customizations.
 tmux_SOURCES=tmux.zsh
-tmux_TARGET_DIR=$tmux_TARGET_DIR/.zsh/interactive
-mkdir -p $tmux_TARGET_DIR
-CreateAbsoluteSymlinks -d $tmux_FORCE $tmux_SOURCES "$tmux_TARGET_DIR"
+# TODO: Support custom zsh configuration location.
+mkdir -p "$HOME/.zsh/interactive"
+CreateAbsoluteSymlinks $tmux_FORCE $tmux_SOURCES "$HOME/.zsh/interactive"
