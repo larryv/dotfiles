@@ -19,3 +19,10 @@ export GNUTERM=x11      # AquaTerm is stupid and cuts shit off
 
 # Custom lynx configuration
 export LYNX_CFG=${HOME}/.lynx/lynx.cfg
+
+# Source any "topic" scripts. Customizations to enhance the
+# functionality of external programs should be placed in
+# $ZDOTDIR/login
+for script in ${ZDOTDIR}/login/*(N); do
+    . ${script}
+done
