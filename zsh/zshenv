@@ -18,3 +18,10 @@ if [[ ${OSTYPE} == darwin* ]]; then
 fi
 
 ZDOTDIR=${HOME}/.zsh
+
+# Source any "topic" scripts. Customizations to enhance the
+# functionality of external programs should be placed in
+# $ZDOTDIR/startup.
+for script in ${ZDOTDIR}/startup/*.zshenv(N); do
+    . ${script}
+done
