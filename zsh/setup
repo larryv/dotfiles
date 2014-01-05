@@ -19,12 +19,10 @@ done
 shift $(($OPTIND - 1))
 
 # Link .zshenv, which will point zsh to an alternative ZDOTDIR.
-zsh_SOURCES=zshenv
 zsh_TARGET=${1:-${TARGET:-$HOME}}
 mkdir -p "$zsh_TARGET"
-CreateAbsoluteSymlinks -d $zsh_FORCE $zsh_SOURCES "$zsh_TARGET"
+CreateAbsoluteSymlinks -d $zsh_FORCE zshenv "$zsh_TARGET"
 
 # Link the other dotfiles into the alternative ZDOTDIR.
-zsh_SOURCES='zlogin zshrc'
 mkdir "$HOME/.zsh"
-CreateAbsoluteSymlinks -d $zsh_FORCE $zsh_SOURCES "$HOME/.zsh"
+CreateAbsoluteSymlinks -d $zsh_FORCE zlogin zshrc "$HOME/.zsh"

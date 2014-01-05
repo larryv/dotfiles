@@ -18,7 +18,6 @@ while getopts f opt; do
 done
 shift $(($OPTIND - 1))
 
-lynx_SOURCES=lynx.cfg
 lynx_TARGET=${1:-${TARGET:-$HOME/.lynx}}
 mkdir -p "$lynx_TARGET"
-CreateAbsoluteSymlinks $lynx_FORCE $lynx_SOURCES "$lynx_TARGET"
+CreateAbsoluteSymlinks $lynx_FORCE lynx.cfg "$lynx_TARGET"

@@ -18,7 +18,6 @@ while getopts f opt; do
 done
 shift $(($OPTIND - 1))
 
-hg_SOURCES=hgrc
 hg_TARGET=${1:-${TARGET:-$HOME}}
 
-CreateAbsoluteSymlinks -d $hg_FORCE $hg_SOURCES "$hg_TARGET"
+CreateAbsoluteSymlinks -d $hg_FORCE hgrc "$hg_TARGET"

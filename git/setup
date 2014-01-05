@@ -18,7 +18,6 @@ while getopts f opt; do
 done
 shift $(($OPTIND - 1))
 
-git_SOURCES=git*
 git_TARGET=${1:-${TARGET:-$HOME}}
 
-CreateAbsoluteSymlinks -d $git_FORCE $git_SOURCES "$git_TARGET"
+CreateAbsoluteSymlinks -d $git_FORCE git* "$git_TARGET"
