@@ -18,11 +18,13 @@ shift $(($OPTIND - 1))
 # TODO: Support customized target directory.
 #TARGET=$HOME
 
-# Source all "setup" files in directory tree.
+# Pass options to sub-scripts through environment because POSIX:2004
+# doesn't require shells to pass arguments to sourced scripts.
+export FORCE TARGET
 for SETUP in $(find . -name setup -type f); do
     DIR=$(dirname "$SETUP")
     SCRIPT=$(basename "$SETUP")
     [ "x$DIR" = "x." ] || [ -z "$DIR" ] || [ -z "$SCRIPT" ] && continue
 
-    (cd "$DIR" && . "./$SCRIPT" $FORCE)
+    (cd "$DIR" && . "./$SCRIPT")
 done

@@ -10,7 +10,7 @@
 . ../common.sh || exit 2
 
 # TODO: Try to factor out common script-level options.
-hg_FORCE=
+hg_FORCE=$FORCE
 while getopts f opt; do
     case $opt in
         f) hg_FORCE=-f ;;

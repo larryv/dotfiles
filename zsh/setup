@@ -10,7 +10,7 @@
 . ../common.sh || exit 2
 
 # TODO: Try to factor out common script-level options.
-zsh_FORCE=
+zsh_FORCE=$FORCE
 while getopts f opt; do
     case $opt in
         f) zsh_FORCE=-f ;;
