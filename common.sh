@@ -4,6 +4,11 @@
 
 # Usage: ResolveCanonicalPath PATH
 ResolveCanonicalPath() {
+    # Make sure our getopts doesn't pick up where another getopts left off.
+    OPTIND=1
+    while getopts '' opt; do :; done
+    shift $(($OPTIND - 1))
+
     # Too many arguments.
     if [ $# -gt 1 ]; then
         # TODO: Print informative error.
