@@ -20,9 +20,9 @@ shift $(($OPTIND - 1))
 
 # Install tmux configuration.
 tmux_TARGET=${1:-${TARGET:-$HOME}}
-CreateAbsoluteSymlinks -d $tmux_FORCE tmux.conf "$tmux_TARGET"
+ln_abs -s $tmux_FORCE tmux.conf "$tmux_TARGET/.tmux.conf"
 
 # Install zsh customizations.
 # TODO: Support custom zsh configuration location.
 mkdir -p "$HOME/.zsh/interactive"
-CreateAbsoluteSymlinks $tmux_FORCE tmux.zsh "$HOME/.zsh/interactive"
+ln_abs -s $tmux_FORCE tmux.zsh "$HOME/.zsh/interactive/tmux"

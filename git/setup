@@ -19,5 +19,6 @@ done
 shift $(($OPTIND - 1))
 
 git_TARGET=${1:-${TARGET:-$HOME}}
-
-CreateAbsoluteSymlinks -d $git_FORCE git* "$git_TARGET"
+for src in git*; do
+    ln_abs -s $git_FORCE "$src" "$git_TARGET/.$src"
+done

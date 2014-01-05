@@ -12,8 +12,7 @@ ResolveCanonicalPath() {
 
     # TODO: Handle symlinks.
     if [ -d "$1" ]; then
-        # The root directory is intentionally represented by the null string.
-        (cd -P "$1" && printf '%s' "${PWD%/}")
+        (cd -P "$1" && printf '%s' "$PWD")
     elif [ -f "$1" ]; then
         rcp_DIR=$(ResolveCanonicalPath $(dirname "$1"))
         rcp_FILE=$(basename "$1")
@@ -23,42 +22,34 @@ ResolveCanonicalPath() {
     fi
 }
 
-# Usage: CreateAbsoluteSymlinks [-df] src [src2 ...] TARGET_DIR
-CreateAbsoluteSymlinks() {
-    # We currently ignore invalid options.
-    cas_DOTTED=
-    cas_FORCE=
-    while getopts df opt; do
+# Usage: ln_abs [-fs] source_file target_file
+ln_abs() {
+    # Ignore invalid options.
+    ln_FORCE=
+    ln_SYMLINK=
+    while getopts fs opt; do
         case $opt in
-            d) cas_DOTTED=. ;;
-            f) cas_FORCE=-f ;;
+            f) ln_FORCE=-f ;;
+            s) ln_SYMLINK=-s ;;
         esac
     done
     shift $(($OPTIND - 1))
 
-    # Too few non-option arguments.
-    if [ $# -lt 2 ]; then
+    # Wrong number of non-option arguments.
+    if [ $# -ne 2 ]; then
         # TODO: Print informative error.
         return 1
     fi
 
-    # TODO: Allow final argument to be a non-directory, mirroring ln(s).
+    ln_SOURCE=$(ResolveCanonicalPath "$1")
+    ln_TARGET=$2
 
-    # Extract final argument sans trailing slashes. The root directory
-    # is intentionally represented by the null string.
-    eval cas_TARGET_DIR='${'$#'%/}'
-
-    # Create the symlinks using absolute source paths.
-    until [ $# -eq 1 ]; do
-        cas_SOURCE=$(ResolveCanonicalPath "$1")
-        cas_TARGET=$cas_TARGET_DIR/${cas_DOTTED}$(basename "$1")
-
-        cas_RESULT='Failed to symlink'
-        if [ -n "$cas_SOURCE" ] && [ -n "$cas_TARGET" ]; then
-            ln -s $cas_FORCE "$cas_SOURCE" "$cas_TARGET" && cas_RESULT=Symlinked
-        fi
-        printf '%s %s as %s\n' "$cas_RESULT" "$cas_SOURCE" "$cas_TARGET"
-
-        shift
-    done
+    if [ -n "$ln_SOURCE" ] &&
+        ln $ln_FORCE $ln_SYMLINK "$ln_SOURCE" "$ln_TARGET"
+    then
+        printf 'OK: ' >&2
+    else
+        printf 'FAILED: ' >&2
+    fi
+    printf '%s -> %s\n' "$ln_TARGET" "$ln_SOURCE" >&2
 }
