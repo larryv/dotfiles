@@ -12,11 +12,6 @@ if [[ ${OSTYPE} == darwin* ]]; then
     [[ -z ${JAVA_HOME} ]] && unset JAVA_HOME
 fi
 
-# Gnuplot
-export GDFONTPATH=${HOME}/Library/Fonts:/Library/Fonts:/System/Library/Fonts
-export GNUPLOT_DEFAULT_GDFONT=helvetica
-export GNUTERM=x11      # AquaTerm is stupid and cuts shit off
-
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
 # $ZDOTDIR/login
