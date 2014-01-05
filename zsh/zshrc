@@ -82,7 +82,7 @@ autoload -Uz vcs_info && {
 
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
-# $ZDOTDIR/interactive.
-for script in ${ZDOTDIR}/interactive/*(N); do
+# $ZDOTDIR/startup
+for script in ${ZDOTDIR}/startup/*.zshrc(N); do
     . ${script}
 done

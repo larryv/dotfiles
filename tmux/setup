@@ -24,5 +24,5 @@ ln_abs -s $tmux_FORCE tmux.conf "$tmux_TARGET/.tmux.conf"
 
 # Install zsh customizations.
 # TODO: Support custom zsh configuration location.
-mkdir -p "$HOME/.zsh/interactive"
-ln_abs -s $tmux_FORCE tmux.zsh "$HOME/.zsh/interactive/tmux"
+mkdir -p "$HOME/.zsh/startup"
+ln_abs -s $tmux_FORCE tmux.zsh "$HOME/.zsh/startup/tmux.zshrc"

@@ -25,5 +25,5 @@ ln_abs -s $lynx_FORCE lynx.cfg "$lynx_TARGET"
 
 # Install zsh customizations.
 # TODO: Support custom zsh configuration location.
-mkdir -p "$HOME/.zsh/login"
-ln_abs -s $lynx_FORCE lynx.zsh "$HOME/.zsh/login/lynx"
+mkdir -p "$HOME/.zsh/startup"
+ln_abs -s $lynx_FORCE lynx.zsh "$HOME/.zsh/startup/lynx.zlogin"

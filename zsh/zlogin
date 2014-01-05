@@ -14,7 +14,7 @@ fi
 
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
-# $ZDOTDIR/login
-for script in ${ZDOTDIR}/login/*(N); do
+# $ZDOTDIR/startup.
+for script in ${ZDOTDIR}/startup/*.zlogin(N); do
     . ${script}
 done
