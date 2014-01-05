@@ -20,5 +20,5 @@ shift $(($OPTIND - 1))
 
 # Install zsh customizations.
 # TODO: Support custom zsh configuration location.
-mkdir -p "$HOME/.zsh/startup"
+mkdir -p -- "$HOME/.zsh/startup"
 ln_abs -s $mp_FORCE macports.zsh "$HOME/.zsh/startup/macports.zshenv"

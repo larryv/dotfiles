@@ -20,5 +20,5 @@ shift $(($OPTIND - 1))
 
 git_TARGET=${1:-${TARGET:-$HOME}}
 for src in git*; do
-    ln_abs -s $git_FORCE "$src" "$git_TARGET/.$src"
+    ln_abs -s $git_FORCE -- "$src" "$git_TARGET/.$src"
 done

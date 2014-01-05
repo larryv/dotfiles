@@ -20,10 +20,10 @@ shift $(($OPTIND - 1))
 
 # Install Lynx configuration.
 lynx_TARGET=${1:-${TARGET:-$HOME/.lynx}}
-mkdir -p "$lynx_TARGET"
+mkdir -p -- "$lynx_TARGET"
 ln_abs -s $lynx_FORCE lynx.cfg "$lynx_TARGET"
 
 # Install zsh customizations.
 # TODO: Support custom zsh configuration location.
-mkdir -p "$HOME/.zsh/startup"
+mkdir -p -- "$HOME/.zsh/startup"
 ln_abs -s $lynx_FORCE lynx.zsh "$HOME/.zsh/startup/lynx.zlogin"

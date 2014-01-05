@@ -14,8 +14,8 @@ ResolveCanonicalPath() {
     if [ -d "$1" ]; then
         (cd -P "$1" && printf '%s' "$PWD")
     elif [ -f "$1" ]; then
-        rcp_DIR=$(ResolveCanonicalPath $(dirname "$1"))
-        rcp_FILE=$(basename "$1")
+        rcp_DIR=$(ResolveCanonicalPath $(dirname -- "$1"))
+        rcp_FILE=$(basename -- "$1")
         [ -z "$rcp_DIR" ] || [ -z "$rcp_FILE" ] && return 1;
 
         printf '%s/%s' "$rcp_DIR" "$rcp_FILE"
@@ -43,11 +43,11 @@ ln_abs() {
         return 1
     fi
 
-    ln_SOURCE=$(ResolveCanonicalPath "$1")
+    ln_SOURCE=$(ResolveCanonicalPath -- "$1")
     ln_TARGET=$2
 
     if [ -n "$ln_SOURCE" ] &&
-        ln $ln_FORCE $ln_SYMLINK "$ln_SOURCE" "$ln_TARGET"
+        ln $ln_FORCE $ln_SYMLINK -- "$ln_SOURCE" "$ln_TARGET"
     then
         printf 'OK: ' >&2
     else

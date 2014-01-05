@@ -22,9 +22,9 @@ shift $(($OPTIND - 1))
 # doesn't require shells to pass arguments to sourced scripts.
 export FORCE TARGET
 for SETUP in $(find . -name setup -type f); do
-    DIR=$(dirname "$SETUP")
-    SCRIPT=$(basename "$SETUP")
+    DIR=$(dirname -- "$SETUP")
+    SCRIPT=$(basename -- "$SETUP")
     [ "x$DIR" = "x." ] || [ -z "$DIR" ] || [ -z "$SCRIPT" ] && continue
 
-    (cd "$DIR" && . "./$SCRIPT")
+    (cd -- "$DIR" && . "./$SCRIPT")
 done
