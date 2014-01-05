@@ -16,7 +16,7 @@ done
 shift $(($OPTIND - 1))
 
 # TODO: Support customized target directory.
-TARGET_DIR=$HOME
+#TARGET=$HOME
 
 # Source all "setup" files in directory tree.
 for SETUP in $(find . -name setup -type f); do
@@ -24,5 +24,5 @@ for SETUP in $(find . -name setup -type f); do
     SCRIPT=$(basename "$SETUP")
     [ "x$DIR" = "x." ] || [ -z "$DIR" ] || [ -z "$SCRIPT" ] && continue
 
-    (cd "$DIR" && . "./$SCRIPT" $FORCE "$TARGET_DIR")
+    (cd "$DIR" && . "./$SCRIPT" $FORCE)
 done
