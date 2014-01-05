@@ -24,7 +24,9 @@ ResolveCanonicalPath() {
 
 # Usage: ln_abs [-fs] source_file target_file
 ln_abs() {
-    # Ignore invalid options.
+    # Make sure our getopts doesn't pick up where another getopts left off.
+    OPTIND=1
+
     ln_FORCE=
     ln_SYMLINK=
     while getopts fs opt; do
@@ -53,3 +55,6 @@ ln_abs() {
     fi
     printf '%s -> %s\n' "$ln_TARGET" "$ln_SOURCE" >&2
 }
+
+# Make sure our getopts doesn't pick up where other getopts left off.
+OPTIND=1
