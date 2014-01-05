@@ -24,6 +24,6 @@ mkdir -p -- "$zsh_TARGET"
 ln_abs -s $zsh_FORCE zshenv "$zsh_TARGET/.zshenv"
 
 # Link the other dotfiles into the alternative ZDOTDIR.
-mkdir -- "$HOME/.zsh"
+mkdir -p -- "$HOME/.zsh"
 ln_abs -s $zsh_FORCE zlogin "$HOME/.zsh/.zlogin"
 ln_abs -s $zsh_FORCE zshrc "$HOME/.zsh/.zshrc"
