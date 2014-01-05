@@ -7,14 +7,15 @@
 # shells, prepend all entries and remove duplicates.
 
 if [[ ${OSTYPE} == darwin* ]]; then
-    macports_bin=( /opt/local/bin /opt/local/sbin )
+    mp_prefix=/opt/local
+    mp_bin=( ${mp_prefix}/bin ${mp_prefix}/sbin )
     if [[ ! -o LOGIN ]]; then
-        # zsh 5.0.0: path=(${macports_bin:*path} ${path:|macports_bin})
-        macports_bin=( ${(M)macports_bin:#${(~j:|:)path}} )
-        path=( ${macports_bin} ${path} ) && path=( ${(u)path} )
-    elif [[ -d /opt/local ]]; then
-        # zsh 5.0.0: path=(${macports_bin} ${path:|macports_bin})
-        path=( ${macports_bin} ${path} ) && path=( ${(u)path} )
+        # zsh 5.0.0: path=(${mp_bin:*path} ${path:|mp_bin})
+        mp_bin=( ${(M)mp_bin:#${(~j:|:)path}} )
+        path=( ${mp_bin} ${path} ) && path=( ${(u)path} )
+    elif [[ -d ${mp_prefix} ]]; then
+        # zsh 5.0.0: path=(${mp_bin} ${path:|mp_bin})
+        path=( ${mp_bin} ${path} ) && path=( ${(u)path} )
     fi
-    unset macports_bin
+    unset mp_prefix mp_bin
 fi
