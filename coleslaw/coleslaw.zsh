@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 #
 # ZLE pokery-diggery for the Colemak keyboard layout.
 #
@@ -63,3 +61,5 @@ bindkey '\eR' spell-word                    # ESC-S
 bindkey '\er' spell-word                    # ESC-s
 bindkey '^Xl' undo                          # ^Xu
 bindkey '^X^L' undo                         # ^X^U
+
+# vi: set filetype=zsh:
