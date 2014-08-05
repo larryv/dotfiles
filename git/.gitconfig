@@ -1,0 +1,14 @@
+[alias]
+	diffc = diff --cached
+[color]
+	branch = auto
+	diff = auto
+[core]
+	autocrlf = input
+	excludesfile = __PREFIX__/.gitexclude
+[user]
+	name = __NAME__
+	email = __EMAIL__
+
+[include]
+	path = .gitconfig.local

@@ -2,9 +2,9 @@
 # override preexisting environment variables from a calling shell.
 # They are desirable for a login shell though.
 
-export EDITOR='/usr/bin/env vim'
+export EDITOR=vim
 export GREP_OPTIONS='--color=auto'
-export PAGER='/usr/bin/env less'
+export PAGER=less
 
 # Set JAVA_HOME dynamically, if a JVM is installed
 if [[ ${OSTYPE} == darwin* ]]; then
@@ -14,7 +14,7 @@ fi
 
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
-# $ZDOTDIR/startup.
-for script in ${ZDOTDIR}/startup/*.zlogin(N); do
-    . ${script}
+# __PREFIX__/.zsh/startup.
+for script in __PREFIX__/.zsh/startup/*.zlogin(N); do
+    . $script
 done
