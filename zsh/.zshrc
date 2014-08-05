@@ -9,13 +9,18 @@ RPS1='%$((${COLUMNS} / 2))<..<%~'
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY
 HISTSIZE=1000
 SAVEHIST=1000000
-HISTFILE=${ZDOTDIR}/zsh_history
+HISTFILE=$HOME/.zsh_history
 
 # Custom commands
+# TODO: Make the function versions handle argument quoting properly.
+# This currently fails pretty badly. Just try running "ls" on
+# a directory with a quoted space in its name.
 if [[ ${OSTYPE} == darwin* ]]; then
-    hf (); emulate zsh -c "open -a 'Hex Fiend' $*"
+    #hf (); emulate zsh -c "open -a 'Hex Fiend' $*"
+    alias hf=open -a 'Hex Fiend'
 fi
-ls (); emulate zsh -c "command ls -AFh $*"
+#ls (); emulate zsh -c 'command ls -AFh '"$argv[*]"
+alias ls='ls -AFh'
 
 # Treat slashes as word separators
 WORDCHARS=${WORDCHARS/\//}
@@ -28,7 +33,7 @@ autoload -Uz compinit && {
 }
 
 # Enable fancy-pants on-line help
-unalias run-help
+unalias run-help 2> /dev/null
 autoload -Uz run-help
 
 # Print timing stats for commands that run over 10 sec
@@ -65,6 +70,7 @@ fi
 # Add a precmd hook to get VCS info for the prompt; see zshcontrib(1)
 autoload -Uz vcs_info && {
     zstyle ':vcs_info:*' enable git hg svn
+
     zstyle ':vcs_info:*' formats ' (%s:%b)'
     zstyle ':vcs_info:*' actionformats ' (%s:%b|%a)'
     zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
@@ -82,7 +88,7 @@ autoload -Uz vcs_info && {
 
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
-# $ZDOTDIR/startup
-for script in ${ZDOTDIR}/startup/*.zshrc(N); do
-    . ${script}
+# __PREFIX__/.zsh/startup.
+for script in __PREFIX__/.zsh/startup/*.zshrc(N); do
+    . $script
 done

@@ -1,8 +1,6 @@
-ZDOTDIR=${HOME}/.zsh
-
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
-# $ZDOTDIR/startup.
-for script in ${ZDOTDIR}/startup/*.zshenv(N); do
-    . ${script}
+# __PREFIX__/.zsh/startup.
+for script in __PREFIX__/.zsh/startup/*.zshenv(N); do
+    . $script
 done
