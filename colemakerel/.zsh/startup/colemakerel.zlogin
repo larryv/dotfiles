@@ -1,5 +1,20 @@
 #
-# ZLE pokery-diggery for the Colemak keyboard layout.
+# Pokery-diggery for using Colemak on a QWERTY keyboard.
+#
+
+
+# None of this is really applicable to a non-interactive shell.
+[[ -o INTERACTIVE ]] || return 0
+
+# Configure less(1).
+export LESSKEY=__PREFIX__/.colemakerel/less
+
+# Configure readline(3).
+export INPUTRC=__PREFIX__/.colemakerel/inputrc
+
+
+#
+# Configure ZLE.
 #
 
 bindkey -N emacs_colemak emacs

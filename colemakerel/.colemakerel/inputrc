@@ -42,10 +42,14 @@ $if mode=emacs
 "\M-\C-n":  vi-editing-mode
 
 # Bash
-"\M-\C-f":  shell-expand-line
-"\C-y":     operate-and-get-next
-"\C-x\C-f": edit-and-execute-command
-"\M-d":     glob-complete-word
-"\C-xd":    glob-list-expansions
+#
+# TODO: Make these conditional somehow? The Scala interpreter throws
+# warnings for these.
+#
+#"\M-\C-f":  shell-expand-line
+#"\C-y":     operate-and-get-next
+#"\C-x\C-f": edit-and-execute-command
+#"\M-d":     glob-complete-word
+#"\C-xd":    glob-list-expansions
 
 $endif
