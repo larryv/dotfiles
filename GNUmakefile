@@ -37,11 +37,12 @@ SUBSTITUTIONS += $(call encode,s|__EMAIL__|$(EMAIL)|g)
 MODULES := $(patsubst %/,%,$(wildcard */))
 
 define create_module_DOTFILES
-$(1)_DOTFILES := $(patsubst $(1)/%,$(prefix)/%,\
-    $(shell find $(1) -type f ! \( -name module.mk -o \
-                                   -name '*.sw?' -o \
-                                   -name '*~' \)\
-    ))
+DOTFILES := $$(shell find $(1) -type f ! \( -name module.mk -o \
+                                            -name '*.sw?' -o \
+                                            -name '*~' \))
+DOTFILES := $$(patsubst $(1)/%,%,$$(DOTFILES))
+DOTFILES := $$(patsubst _%,.%,$$(DOTFILES))
+$(1)_DOTFILES := $$(addprefix $$(prefix)/,$$(DOTFILES))
 endef
 
 $(foreach module,$(MODULES),$(eval $(call create_module_DOTFILES,$(module))))
@@ -62,7 +63,10 @@ SED_SCRIPTS := $(foreach sub,$(SUBSTITUTIONS),-e '$(call decode,$(sub))')
 .DELETE_ON_ERROR:
 # mkdir -p may cause race conditions
 .NOTPARALLEL:
-$(prefix)/% : %
+.SECONDEXPANSION:
+
+REPLACELEADINGDOTWITHUNDERSCORE = $(patsubst .%,_%,$*)
+$(prefix)/% : $$(REPLACELEADINGDOTWITHUNDERSCORE)
 	@mkdir -p -- "$(dir $@)"
 	@printf $(HEADER) > "$@"
 	@sed -E $(SED_SCRIPTS) "$<" >> "$@"
