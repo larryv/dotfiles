@@ -17,7 +17,7 @@ HISTFILE=$HOME/.zsh_history
 # a directory with a quoted space in its name.
 if [[ ${OSTYPE} == darwin* ]]; then
     #hf (); emulate zsh -c "open -a 'Hex Fiend' $*"
-    alias hf=open -a 'Hex Fiend'
+    alias hf="open -a 'Hex Fiend'"
 fi
 #ls (); emulate zsh -c 'command ls -AFh '"$argv[*]"
 alias ls='ls -AFh'
