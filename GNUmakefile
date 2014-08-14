@@ -5,7 +5,7 @@ prefix := $(wildcard ~)
 NAME := Lawrence Velázquez
 EMAIL := $(subst ALPHA,@,$(subst DELTA,.,larryvALPHAalumDELTAmitDELTAedu))
 MACPORTS := /opt/local
-COLEMAKEREL := $(wildcard ~/.colemakerel)
+COLEMAKEREL := $(HOME)/.colemakerel
 
 
 # Template substitution helpers.
