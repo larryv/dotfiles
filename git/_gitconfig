@@ -1,5 +1,6 @@
 [alias]
 	diffc = diff --cached
+	sb = show-branch
 [color]
 	branch = auto
 	diff = auto
