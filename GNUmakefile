@@ -3,7 +3,7 @@
 prefix := $(wildcard ~)
 
 NAME := Lawrence Velázquez
-EMAIL := $(subst ALPHA,@,$(subst DELTA,.,larryvALPHAalumDELTAmitDELTAedu))
+EMAIL := $(subst ALPHA,@,$(subst DELTA,.,vqALPHAlarryvDELTAme))
 MACPORTS := /opt/local
 COLEMAKEREL := $(HOME)/.colemakerel
 
