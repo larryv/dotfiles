@@ -1,7 +1,9 @@
 [alias]
-	diffc = diff --cached
+	d = diff
+	dc = diff --cached
 	rc = rebase --continue
 	ri = rebase --interactive
+	s = status
 	sb = show-branch
 [color]
 	branch = auto
