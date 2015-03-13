@@ -7,8 +7,8 @@ RPS1='%B%$((${COLUMNS} / 2))<..<%~%b'
 
 # History
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY
-HISTSIZE=1000
 SAVEHIST=1000000
+HISTSIZE=$SAVEHIST
 HISTFILE=$HOME/.zsh_history
 
 # Custom commands
