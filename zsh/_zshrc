@@ -32,9 +32,9 @@ autoload -Uz compinit && {
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
 }
 
-# Enable fancy-pants on-line help
-unalias run-help 2> /dev/null
-autoload -Uz run-help
+# Enable various user contributions; see zshcontrib(1)
+unalias run-help zmv 2>/dev/null
+autoload -Uz run-help zmv
 
 # Print timing stats for commands that run over 10 sec
 REPORTTIME=10
