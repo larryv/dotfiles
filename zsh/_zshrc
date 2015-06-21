@@ -92,3 +92,5 @@ autoload -Uz vcs_info && {
 for script in __PREFIX__/.zsh/startup/*.zshrc(N); do
     . $script
 done
+
+# vim: filetype=zsh

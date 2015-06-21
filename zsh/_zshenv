@@ -4,3 +4,5 @@
 for script in __PREFIX__/.zsh/startup/*.zshenv(N); do
     . $script
 done
+
+# vim: filetype=zsh

@@ -18,3 +18,5 @@ fi
 for script in __PREFIX__/.zsh/startup/*.zlogin(N); do
     . $script
 done
+
+# vim: filetype=zsh
