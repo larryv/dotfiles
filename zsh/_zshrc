@@ -6,7 +6,7 @@ PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((${SHLVL} * 2))::%#:)}%f%b '
 RPS1='%B%$((${COLUMNS} / 2))<..<%~%b'
 
 # History
-setopt EXTENDED_HISTORY INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY INC_APPEND_HISTORY_TIME
 SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
 HISTFILE=$HOME/.zsh_history
