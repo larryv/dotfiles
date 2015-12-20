@@ -20,3 +20,5 @@ then
     fi
     unset mp_prefix mp_bin
 fi
+
+# vim: filetype=zsh
