@@ -15,7 +15,8 @@ HISTFILE=$HOME/.zsh_history
 # TODO: Make the function versions handle argument quoting properly.
 # This currently fails pretty badly. Just try running "ls" on
 # a directory with a quoted space in its name.
-if [[ ${OSTYPE} == darwin* ]]; then
+if [[ ${OSTYPE} == darwin* ]]
+then
     #hf (); emulate zsh -c "open -a 'Hex Fiend' $*"
     alias hf="open -a 'Hex Fiend'"
 fi
@@ -43,7 +44,8 @@ REPORTTIME=10
 # Adapted from OS X's /etc/bashrc and the slightly-incorrect answer at
 # http://stackoverflow.com/a/187853/50102.
 typeset -a precmd_functions
-if [[ ${TERM_PROGRAM} == Apple_Terminal ]]; then
+if [[ ${TERM_PROGRAM} == Apple_Terminal ]]
+then
     function update_terminal_cwd {
         emulate -L zsh
 
@@ -58,7 +60,8 @@ if [[ ${TERM_PROGRAM} == Apple_Terminal ]]; then
         # running inside tmux, use a "wrapper" sequence to pass the
         # original sequence through.  See
         # http://sourceforge.net/mailarchive/message.php?msg_id=27190530.
-        if [[ -n ${TMUX} ]]; then
+        if [[ -n ${TMUX} ]]
+        then
             printf '\ePtmux;\e\e]7;%s\a\e\' "file://${host}${cwd}"
         else
             printf '\e]7;%s\a' "file://${host}${cwd}"
@@ -89,7 +92,8 @@ autoload -Uz vcs_info && {
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
 # __PREFIX__/.zsh/startup.
-for script in __PREFIX__/.zsh/startup/*.zshrc(N); do
+for script in __PREFIX__/.zsh/startup/*.zshrc(N)
+do
     . $script
 done
 
