@@ -91,6 +91,14 @@ autoload -Uz vcs_info && {
     RPS1+='${vcs_info_msg_0_}'
 }
 
+# Environment variables that are only useful in interactive shells.
+if [[ -o LOGIN ]]
+then
+    export EDITOR=vim
+    export GREP_OPTIONS='--color=auto'
+    export PAGER=less
+fi
+
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
 # __PREFIX__/.zsh/startup.
