@@ -2,3 +2,5 @@
 # prefix key.
 
 [[ -o LOGIN ]] && stty -ixon
+
+# vim: filetype=zsh
