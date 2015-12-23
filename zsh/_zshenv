@@ -1,8 +1,8 @@
 # Set JAVA_HOME dynamically, if a JVM is installed
-if [[ -o LOGIN && ${OSTYPE} == darwin* ]]
+if [[ -o LOGIN && $OSTYPE == darwin* ]]
 then
     export JAVA_HOME="$(/usr/libexec/java_home -F 2> /dev/null)"
-    [[ -z ${JAVA_HOME} ]] && unset JAVA_HOME
+    [[ -z $JAVA_HOME ]] && unset JAVA_HOME
 fi
 
 # Source any "topic" scripts. Customizations to enhance the

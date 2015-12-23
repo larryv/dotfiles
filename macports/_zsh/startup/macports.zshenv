@@ -4,7 +4,7 @@
 # existing MacPorts entries back to the beginning of PATH; for login
 # shells, prepend all entries and remove duplicates.
 
-if [[ ${OSTYPE} == darwin* ]]
+if [[ $OSTYPE == darwin* ]]
 then
     mp_prefix=__MACPORTS__
     mp_bin=( ${mp_prefix}/bin ${mp_prefix}/sbin )
@@ -12,11 +12,11 @@ then
     then
         # zsh 5.0.0: path=(${mp_bin:*path} ${path:|mp_bin})
         mp_bin=( ${(M)mp_bin:#${(~j:|:)path}} )
-        path=( ${mp_bin} ${path} ) && path=( ${(u)path} )
-    elif [[ -d ${mp_prefix} ]]
+        path=( $mp_bin $path ) && path=( ${(u)path} )
+    elif [[ -d $mp_prefix ]]
     then
         # zsh 5.0.0: path=(${mp_bin} ${path:|mp_bin})
-        path=( ${mp_bin} ${path} ) && path=( ${(u)path} )
+        path=( $mp_bin $path ) && path=( ${(u)path} )
     fi
     unset mp_prefix mp_bin
 fi
