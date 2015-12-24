@@ -6,19 +6,19 @@
 
 if [[ $OSTYPE == darwin* ]]
 then
-    macports_prefix=__MACPORTS__
-    macports_bin=( ${macports_prefix}/bin ${macports_prefix}/sbin )
+    macports_path=( __MACPORTS__/bin __MACPORTS__/sbin )
     if [[ ! -o LOGIN ]]
     then
-        # zsh 5.0.0: path=(${macports_bin:*path} ${path:|macports_bin})
-        macports_bin=( ${(M)macports_bin:#${(~j:|:)path}} )
-        path=( $macports_bin $path ) && path=( ${(u)path} )
-    elif [[ -d $macports_prefix ]]
-    then
-        # zsh 5.0.0: path=(${macports_bin} ${path:|macports_bin})
-        path=( $macports_bin $path ) && path=( ${(u)path} )
+        # zsh 5.0.0: path=(${macports_path:*path} ${path:|macports_path})
+        macports_path=( ${(M)macports_path:#${(~j:|:)path}} )
+        path=( $macports_path $path ) && path=( ${(u)path} )
+    else
+        # zsh 5.0.0: path=(${macports_path} ${path:|macports_path})
+        # Abuse glob qualifiers to add only the path entries that exist and are
+        # directories (see "Glob Qualifiers" section of zshexpn(1)).
+        path=( $macports_path(/N) $path ) && path=( ${(u)path} )
     fi
-    unset macports_prefix macports_bin
+    unset macports_path
 fi
 
 # vim: filetype=zsh
