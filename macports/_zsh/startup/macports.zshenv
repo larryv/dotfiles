@@ -10,14 +10,13 @@ then
     if [[ ! -o LOGIN ]]
     then
         # zsh 5.0.0: path=(${macports_path:*path} ${path:|macports_path})
-        macports_path=( ${(M)macports_path:#${(~j:|:)path}} )
-        path=( $macports_path $path ) && path=( ${(u)path} )
+        path=( ${(M)macports_path:#${(~j:|:)path}} $path )
     else
-        # zsh 5.0.0: path=(${macports_path} ${path:|macports_path})
         # Abuse glob qualifiers to add only the path entries that exist and are
         # directories (see "Glob Qualifiers" section of zshexpn(1)).
-        path=( $macports_path(/N) $path ) && path=( ${(u)path} )
+        path=( $macports_path(/N) $path )
     fi
+    path=( ${(u)path} )
     unset macports_path
 fi
 
