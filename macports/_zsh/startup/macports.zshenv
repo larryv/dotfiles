@@ -1,25 +1,24 @@
 macports_path=( __MACPORTS__/bin __MACPORTS__/sbin )
 
-# OS X's default /etc/zshenv runs path_helper(8), which screws up PATH
-# if it's in the environment already (e.g., if zsh is run from the
-# command line as a non-login shell). For non-login shells, move any
-# existing MacPorts entries back to the beginning of PATH; for login
-# shells, prepend all entries and remove duplicates.
+# On OS X Yosemite and earlier, the system-installed /etc/zshenv
+# unconditionally sets the command path using path_helper(8), which
+# mangles a pre-existing path (e.g., if zsh is run from the command line
+# as a non-login shell) by pushing the system's path entries to the
+# front. Repair the damage by moving MacPorts' entries back to their
+# rightful place.
 
-if [[ $OSTYPE == darwin* ]]
+if [[ $OSTYPE == darwin* ]] &&
+    /usr/bin/grep -qs /usr/libexec/path_helper /etc/zshenv
 then
     # zsh 5.0.0: path=(${macports_path:*path} ${path:|macports_path})
     path=( ${(M)macports_path:#${(~j:|:)path}} $path )
     path=( ${(u)path} )
 fi
 
-# Abuse glob qualifiers to add only the path entries that exist and are
-# directories (see "Glob Qualifiers" section of zshexpn(1)).
-if [[ -o LOGIN ]]
+# In login shells, macports.zprofile handles this.
+if [[ ! -o LOGIN ]]
 then
-    path=( $macports_path(/N) $path )
+    unset macports_path
 fi
-
-unset macports_path
 
 # vim: filetype=zsh

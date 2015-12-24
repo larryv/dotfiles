@@ -1,0 +1,10 @@
+# Source any "topic" scripts. Customizations to enhance the
+# functionality of external programs should be placed in
+# __PREFIX__/.zsh/startup.
+
+for script in __PREFIX__/.zsh/startup/*.zprofile(N)
+do
+    . $script
+done
+
+# vim: filetype=zsh
