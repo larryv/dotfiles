@@ -101,8 +101,8 @@ fi
 
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
-# __PREFIX__/.zsh/startup.
-for script in __PREFIX__/.zsh/startup/*.zshrc(N)
+# __PREFIX__/.zsh.
+for script in __PREFIX__/.zsh/*.zshrc(N)
 do
     . $script
 done
