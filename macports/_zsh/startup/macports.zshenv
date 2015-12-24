@@ -6,19 +6,19 @@
 
 if [[ $OSTYPE == darwin* ]]
 then
-    mp_prefix=__MACPORTS__
-    mp_bin=( ${mp_prefix}/bin ${mp_prefix}/sbin )
+    macports_prefix=__MACPORTS__
+    macports_bin=( ${macports_prefix}/bin ${macports_prefix}/sbin )
     if [[ ! -o LOGIN ]]
     then
-        # zsh 5.0.0: path=(${mp_bin:*path} ${path:|mp_bin})
-        mp_bin=( ${(M)mp_bin:#${(~j:|:)path}} )
-        path=( $mp_bin $path ) && path=( ${(u)path} )
-    elif [[ -d $mp_prefix ]]
+        # zsh 5.0.0: path=(${macports_bin:*path} ${path:|macports_bin})
+        macports_bin=( ${(M)macports_bin:#${(~j:|:)path}} )
+        path=( $macports_bin $path ) && path=( ${(u)path} )
+    elif [[ -d $macports_prefix ]]
     then
-        # zsh 5.0.0: path=(${mp_bin} ${path:|mp_bin})
-        path=( $mp_bin $path ) && path=( ${(u)path} )
+        # zsh 5.0.0: path=(${macports_bin} ${path:|macports_bin})
+        path=( $macports_bin $path ) && path=( ${(u)path} )
     fi
-    unset mp_prefix mp_bin
+    unset macports_prefix macports_bin
 fi
 
 # vim: filetype=zsh
