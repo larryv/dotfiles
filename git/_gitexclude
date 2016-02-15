@@ -8,6 +8,3 @@
 Session.vim
 tags
 TAGS
-
-# Debugging garbage
-*.dSYM/
