@@ -91,7 +91,9 @@ autoload -Uz vcs_info && {
     RPS1+='${vcs_info_msg_0_}'
 }
 
-# Environment variables that are only useful in interactive shells.
+# Set environment variables here because the zsh documentation
+# discourages doing so in .zprofile or .zlogin (see
+# http://zsh.sourceforge.net/Intro/intro_3.html).
 if [[ -o LOGIN ]]
 then
     export EDITOR=vim

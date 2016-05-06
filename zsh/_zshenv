@@ -1,3 +1,7 @@
+# Set environment variables here because the zsh documentation
+# discourages doing so in .zprofile or .zlogin (see
+# http://zsh.sourceforge.net/Intro/intro_3.html).
+
 # Set JAVA_HOME dynamically, if a JVM is installed
 if [[ -o LOGIN && $OSTYPE == darwin* ]]
 then
