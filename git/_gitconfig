@@ -3,6 +3,7 @@
 	ca = commit --verbose --amend
 	d = diff
 	dc = diff --cached
+	l = log
 	rc = rebase --continue
 	ri = rebase --interactive
 	s = status
