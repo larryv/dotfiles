@@ -1,8 +1,6 @@
 [alias]
 	c = commit --verbose
-	ca = commit --verbose --all
-	cam = commit --verbose --amend
-	caam = commit --verbose --all --amend
+	ca = commit --verbose --amend
 	d = diff
 	dc = diff --cached
 	rc = rebase --continue
