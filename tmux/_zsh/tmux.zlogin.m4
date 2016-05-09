@@ -1,3 +1,5 @@
+__header__
+
 # Disable terminal output flow control to allow CTRL-Q to be the tmux
 # prefix key.
 

@@ -1,3 +1,5 @@
+__header__
+
 # Set environment variables here because the zsh documentation
 # discourages doing so in .zprofile or .zlogin (see
 # http://zsh.sourceforge.net/Intro/intro_3.html).
@@ -17,4 +19,4 @@ do
     . $script
 done
 
-# vim: filetype=zsh
+m4_ifelse(« vim: set filetype=zsh:»)m4_dnl

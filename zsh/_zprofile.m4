@@ -1,3 +1,5 @@
+__header__
+
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
 # __zsh__.
@@ -7,4 +9,4 @@ do
     . $script
 done
 
-# vim: filetype=zsh
+m4_ifelse(« vim: set filetype=zsh:»)m4_dnl

@@ -1,3 +1,5 @@
+__header__
+
 # Finder pref files
 .DS_Store
 

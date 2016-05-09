@@ -1,3 +1,5 @@
+__header__
+
 # Tell Lynx where to find its configuration.
 if [[ -o LOGIN ]]
 then

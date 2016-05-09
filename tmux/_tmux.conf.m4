@@ -1,3 +1,5 @@
+__header__
+
 # -----
 # tmux customizations
 # -----
@@ -32,3 +34,5 @@ if-shell 'command -v reattach-to-user-namespace >/dev/null' \
 # Source Colemak keybindings if present.
 if-shell "[ -r '__prefix__/.tmux.conf.colemakerel' ]" \
     "source-file '__prefix__/.tmux.conf.colemakerel'"
+
+m4_ifelse(« vim: set filetype=tmux:»)m4_dnl

@@ -1,3 +1,5 @@
+__header__
+
 INCLUDE:__lynx__/lynx.cfg.local
 
 CHARACTER_SET:utf-8     # Terminal charset
@@ -11,3 +13,5 @@ DEFAULT_BOOKMARK_FILE:__lynx__/bookmarks.html
 SAVE_SPACE:__LYNX_DOWNLOADS__
 
 #INCLUDE:~/.lynx/coleslaw.cfg for KEYMAP
+
+m4_ifelse(« vim: set filetype=lynx:»)m4_dnl

@@ -1,10 +1,9 @@
 lynx := $(prefix)/.lynx
-SUBSTITUTIONS += s|__lynx__|$(lynx)|g
+macros += lynx
 
-uname := $(shell uname)
-ifeq ($(uname),Darwin)
-    LYNX_DOWNLOADS := ~/Downloads
+ifeq ($(shell uname),Darwin)
+    LYNX_DOWNLOADS := $(HOME)/Downloads
 else
-    LYNX_DOWNLOADS := ~
+    LYNX_DOWNLOADS := $(HOME)
 endif
-SUBSTITUTIONS += s|__LYNX_DOWNLOADS__|$(wildcard $(LYNX_DOWNLOADS))|g
+macros += LYNX_DOWNLOADS

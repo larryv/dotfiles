@@ -1,3 +1,5 @@
+__header__
+
 # Do this from .zprofile to mimic OS X's behavior in El Capitan and
 # later. Abuse glob qualifiers to add only the path entries that exist
 # and are directories (see "Glob Qualifiers" section of zshexpn(1)).

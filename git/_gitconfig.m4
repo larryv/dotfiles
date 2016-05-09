@@ -1,3 +1,5 @@
+__header__
+
 [alias]
 	c = commit --verbose
 	ca = commit --verbose --amend
@@ -19,3 +21,5 @@
 
 [include]
 	path = .gitconfig.local
+
+m4_ifelse(« vim: set filetype=gitconfig:»)m4_dnl

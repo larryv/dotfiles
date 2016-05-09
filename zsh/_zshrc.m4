@@ -1,3 +1,5 @@
+__header__
+
 # Left prompt: Hostname, history number, and privileges/shell-nesting
 #   indicator, colored based on last exit status
 # Right prompt: Current working dir, truncated to half screen width
@@ -109,4 +111,4 @@ do
     . $script
 done
 
-# vim: filetype=zsh
+m4_ifelse(« vim: set filetype=zsh:»)m4_dnl
