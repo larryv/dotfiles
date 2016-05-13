@@ -16,9 +16,6 @@
 	excludesfile = __PREFIX__/.gitexclude
 [sendemail]
 	suppresscc = self
-[user]
-	name = __NAME__
-	email = __EMAIL__
 
 [include]
 	path = .gitconfig.local
