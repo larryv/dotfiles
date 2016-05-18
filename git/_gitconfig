@@ -13,7 +13,7 @@
 	diff = auto
 [core]
 	autocrlf = input
-	excludesfile = __PREFIX__/.gitexclude
+	excludesfile = __prefix__/.gitexclude
 [sendemail]
 	suppresscc = self
 
