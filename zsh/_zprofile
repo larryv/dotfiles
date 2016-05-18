@@ -1,8 +1,8 @@
 # Source any "topic" scripts. Customizations to enhance the
 # functionality of external programs should be placed in
-# __PREFIX__/.zsh.
+# __zsh__.
 
-for script in __PREFIX__/.zsh/*.zprofile(N)
+for script in __zsh__/*.zprofile(N)
 do
     . $script
 done

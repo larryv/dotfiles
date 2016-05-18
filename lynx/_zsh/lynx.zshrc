@@ -1,7 +1,7 @@
 # Tell Lynx where to find its configuration.
 if [[ -o LOGIN ]]
 then
-    export LYNX_CFG=__PREFIX__/.lynx/lynx.cfg
+    export LYNX_CFG=__lynx__/lynx.cfg
 fi
 
 # vim: filetype=zsh
