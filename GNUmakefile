@@ -12,16 +12,21 @@ macros := prefix
 
 VPATH := git lynx macports mercurial tmux zsh
 
-define create_module_DOTFILES
-DOTFILES := $$(shell find $(1) -type f ! \( -name module.mk -o \
-                                            -name '*.sw?' -o \
-                                            -name '*~' \))
-DOTFILES := $$(patsubst $(1)/%.m4,%,$$(DOTFILES))
-DOTFILES := $$(patsubst _%,.%,$$(DOTFILES))
-$(1)_DOTFILES := $$(addprefix $$(prefix)/,$$(DOTFILES))
+define load_module
+$(1)_DOTFILES := $$(shell find $(1) -type f ! \( -name module.mk -o \
+                                                 -name '*.sw?' -o \
+                                                 -name '*~' \))
+$(1)_DOTFILES := $$(patsubst $(1)/%.m4,%,$$($(1)_DOTFILES))
+$(1)_DOTFILES := $$(patsubst _%,.%,$$($(1)_DOTFILES))
+$(1)_DOTFILES := $$(addprefix $$(prefix)/,$$($(1)_DOTFILES))
+
+.PHONY: $(1) $(1)-install $(1)-uninstall
+$(1) $(1)-install: $$($(1)_DOTFILES)
+$(1)-uninstall:
+	-rm -R $$($(1)_DOTFILES)
 endef
 
-$(foreach module,$(VPATH),$(eval $(call create_module_DOTFILES,$(module))))
+$(foreach module,$(VPATH),$(eval $(call load_module,$(module))))
 
 
 # Use "wildcard" to weed out nonexistent submakefiles.
@@ -56,18 +61,6 @@ install: $(ALL_DOTFILES)
 .PHONY: uninstall
 uninstall:
 	-rm -R $(ALL_DOTFILES)
-
-
-# Create module-specific install/uninstall targets.
-
-define create_module_targets
-.PHONY: $(1) $(1)-install $(1)-uninstall
-$(1) $(1)-install: $$($(1)_DOTFILES)
-$(1)-uninstall:
-	-rm -R $$($(1)_DOTFILES)
-endef
-
-$(foreach module,$(VPATH),$(eval $(call create_module_targets,$(module))))
 
 
 # Flotsam and jetsam
