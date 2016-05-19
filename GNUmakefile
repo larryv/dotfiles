@@ -24,9 +24,8 @@ endef
 $(foreach module,$(VPATH),$(eval $(call create_module_DOTFILES,$(module))))
 
 
-# Module-specific settings.
-
-include $(addsuffix /module.mk,$(VPATH))
+# Use "wildcard" to weed out nonexistent submakefiles.
+include $(wildcard $(addsuffix /module.mk,$(VPATH)))
 
 
 # The default rule does substitutions on the source templates and writes
