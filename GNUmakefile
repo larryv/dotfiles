@@ -27,7 +27,7 @@ $(1)_DOTFILES := $$(addprefix $$(prefix)/,$$($(1)_DOTFILES))
 .PHONY: $(1) $(1)-install $(1)-uninstall
 $(1) $(1)-install: $$($(1)_DOTFILES)
 $(1)-uninstall:
-	-rm -R $$($(1)_DOTFILES)
+	rm -fR $$($(1)_DOTFILES)
 endef
 
 $(foreach module,$(VPATH),$(eval $(call load_module,$(module))))
@@ -49,9 +49,9 @@ defines := $(foreach macro,$(macros),-D __$(macro)__='$($(macro))')
 
 src = $(patsubst .%,_%,$*).m4
 $(prefix)/% : $$(src) common.m4
-	@mkdir -p -- "$(dir $@)"
-	@'$(or $(M4),m4)' -P $(defines) common.m4 "$<" > "$@"
-	@printf "Wrote $@\n" >&2
+	@mkdir -p -- "$$(dirname '$@')"
+	@'$(or $(M4),m4)' -P $(defines) common.m4 '$<' > '$@'
+	@printf 'Wrote %s\n' '$@' >&2
 
 
 # Flotsam and jetsam
