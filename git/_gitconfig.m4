@@ -8,6 +8,8 @@ __header__
 	l = log
 	rc = rebase --continue
 	ri = rebase --interactive
+	rim = rebase --interactive master
+	riom = rebase --interactive origin/master
 	s = status
 	sb = show-branch
 [color]
