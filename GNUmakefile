@@ -20,9 +20,8 @@ define load_module
 $(1)_DOTFILES := $$(shell find $(1) -type f ! \( -name module.mk -o \
                                                  -name '*.sw?' -o \
                                                  -name '*~' \))
-$(1)_DOTFILES := $$(patsubst $(1)/%.m4,%,$$($(1)_DOTFILES))
-$(1)_DOTFILES := $$(patsubst _%,.%,$$($(1)_DOTFILES))
-$(1)_DOTFILES := $$(addprefix $$(prefix)/,$$($(1)_DOTFILES))
+$(1)_DOTFILES := $$(subst /_,/.,$$($(1)_DOTFILES))
+$(1)_DOTFILES := $$(patsubst $(1)%.m4,$$(prefix)%,$$($(1)_DOTFILES))
 
 .PHONY: $(1) $(1)-install $(1)-uninstall
 $(1) $(1)-install: $$($(1)_DOTFILES)
@@ -47,7 +46,7 @@ defines := $(foreach macro,$(macros),-D __$(macro)__='$($(macro))')
 .NOTPARALLEL:
 .SECONDEXPANSION:
 
-src = $(patsubst .%,_%,$*).m4
+src = $(patsubst .%,_%,$(subst /.,/_,$*)).m4
 $(prefix)/% : $$(src) common.m4
 	@mkdir -p -- "$$(dirname '$@')"
 	@'$(or $(M4),m4)' -P $(defines) common.m4 '$<' > '$@'
