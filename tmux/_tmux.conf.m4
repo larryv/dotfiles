@@ -4,11 +4,6 @@ __header__
 # tmux customizations
 # -----
 
-# Use C-q for prefix. Only works if term output flow control is disabled
-set-option -g prefix C-q
-unbind-key C-b
-bind-key C-q send-prefix
-
 # Reduce Esc timeout, mainly for vim
 set-option -gs escape-time 50
 
