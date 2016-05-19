@@ -12,6 +12,10 @@ macros := prefix
 
 VPATH := git lynx macports mercurial tmux zsh
 
+.PHONY: install uninstall
+install: $(addsuffix -install,$(VPATH))
+uninstall: $(addsuffix -uninstall,$(VPATH))
+
 define load_module
 $(1)_DOTFILES := $$(shell find $(1) -type f ! \( -name module.mk -o \
                                                  -name '*.sw?' -o \
@@ -48,19 +52,6 @@ $(prefix)/% : $$(src) common.m4
 	@mkdir -p -- "$(dir $@)"
 	@'$(or $(M4),m4)' -P $(defines) common.m4 "$<" > "$@"
 	@printf "Wrote $@\n" >&2
-
-
-# Install and uninstall all modules.
-
-ALL_DOTFILES := $(foreach module,$(VPATH),$($(module)_DOTFILES))
-
-.DEFAULT_GOAL := install
-.PHONY: install
-install: $(ALL_DOTFILES)
-
-.PHONY: uninstall
-uninstall:
-	-rm -R $(ALL_DOTFILES)
 
 
 # Flotsam and jetsam
