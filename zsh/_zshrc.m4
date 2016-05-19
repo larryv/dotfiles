@@ -1,19 +1,20 @@
 __header__
 
-# Left prompt: Hostname, history number, and privileges/shell-nesting
-#   indicator, colored based on last exit status
-# Right prompt: Current working dir, truncated to half screen width
+# Left: Hostname, history number, and privileges/shell-nesting
+#   indicator, colored based on last exit status.
+# Right: Current working directory, truncated to half screen width.
 setopt PROMPT_SUBST
 PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((SHLVL * 2))::%#:)}%f%b '
 RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 
-# History
+# History.
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY_TIME
 SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
 HISTFILE=$HOME/.zsh_history
 
-# Custom commands
+# Custom commands.
+#
 # TODO: Make the function versions handle argument quoting properly.
 # This currently fails pretty badly. Just try running "ls" on
 # a directory with a quoted space in its name.
@@ -25,23 +26,23 @@ fi
 #ls (); emulate zsh -c 'command ls -AFh '"$argv[*]"
 alias ls='ls -AFh'
 
-# Treat slashes as word separators
+# Treat slashes as word separators.
 WORDCHARS=${WORDCHARS/\//}
 
-# Dress up tab completion
+# Dress up tab completion.
 autoload -Uz compinit && {
     compinit
     zstyle ':completion:*:descriptions' format '%B%d%b'
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
 }
 
-# Enable various user contributions; see zshcontrib(1)
+# Enable various user contributions (see zshcontrib(1)).
 contribs=( run-help zmv )
 unalias "$contribs[@]" 2>/dev/null
 autoload -Uz "$contribs[@]"
 unset contribs
 
-# Print timing stats for commands that run over 10 sec
+# Print timing stats for commands that run over 10 seconds.
 REPORTTIME=10
 
 # Add a precmd hook to identify the working dir to Terminal.app.
@@ -74,7 +75,7 @@ then
     precmd_functions+=update_terminal_cwd
 fi
 
-# Add a precmd hook to get VCS info for the prompt; see zshcontrib(1)
+# Add a precmd hook to get VCS info for the prompt (see zshcontrib(1)).
 autoload -Uz vcs_info && {
     zstyle ':vcs_info:*' enable git hg svn
 
@@ -93,9 +94,9 @@ autoload -Uz vcs_info && {
     RPS1+='${vcs_info_msg_0_}'
 }
 
-# Set environment variables here because the zsh documentation
-# discourages doing so in .zprofile or .zlogin (see
-# http://zsh.sourceforge.net/Intro/intro_3.html).
+# The zsh documentation discourages setting environment variables in
+# .zprofile or .zlogin (http://zsh.sourceforge.net/Intro/intro_3.html),
+# so do it here.
 if [[ -o LOGIN ]]
 then
     export EDITOR=vim
@@ -103,9 +104,7 @@ then
     export PAGER=less
 fi
 
-# Source any "topic" scripts. Customizations to enhance the
-# functionality of external programs should be placed in
-# __zsh__.
+# Source application-specific "topic" scripts.
 for script in __zsh__/*.zshrc(N)
 do
     . $script

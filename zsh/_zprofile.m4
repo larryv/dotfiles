@@ -1,9 +1,6 @@
 __header__
 
-# Source any "topic" scripts. Customizations to enhance the
-# functionality of external programs should be placed in
-# __zsh__.
-
+# Source application-specific "topic" scripts.
 for script in __zsh__/*.zprofile(N)
 do
     . $script

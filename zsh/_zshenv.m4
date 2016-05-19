@@ -1,19 +1,17 @@
 __header__
 
-# Set environment variables here because the zsh documentation
-# discourages doing so in .zprofile or .zlogin (see
-# http://zsh.sourceforge.net/Intro/intro_3.html).
+# The zsh documentation discourages setting environment variables in
+# .zprofile or .zlogin (http://zsh.sourceforge.net/Intro/intro_3.html),
+# so do it here.
 
-# Set JAVA_HOME dynamically, if a JVM is installed
+# Set JAVA_HOME dynamically, if a JVM is installed.
 if [[ -o LOGIN && $OSTYPE == darwin* ]]
 then
     export JAVA_HOME="$(/usr/libexec/java_home -F 2> /dev/null)"
     [[ -z $JAVA_HOME ]] && unset JAVA_HOME
 fi
 
-# Source any "topic" scripts. Customizations to enhance the
-# functionality of external programs should be placed in
-# __zsh__.
+# Source application-specific "topic" scripts.
 for script in __zsh__/*.zshenv(N)
 do
     . $script

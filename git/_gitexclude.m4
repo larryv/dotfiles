@@ -1,9 +1,9 @@
 __header__
 
-# Finder pref files
+# OS X garbage
 .DS_Store
 
-# Editor-specific garbage
+# Text editing garbage
 *~
 *.sw?
 *.tmproj
