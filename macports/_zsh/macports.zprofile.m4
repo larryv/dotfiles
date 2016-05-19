@@ -8,4 +8,4 @@ __header__
 path=( $macports_path(/N) $path )
 unset macports_path
 
-# vim: filetype=zsh
+# vim: set filetype=zsh:

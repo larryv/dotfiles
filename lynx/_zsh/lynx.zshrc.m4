@@ -5,4 +5,4 @@ then
     export LYNX_CFG=__lynx__/lynx.cfg
 fi
 
-# vim: filetype=zsh
+# vim: set filetype=zsh:

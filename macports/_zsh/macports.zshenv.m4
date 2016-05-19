@@ -23,4 +23,4 @@ then
     unset macports_path
 fi
 
-# vim: filetype=zsh
+# vim: set filetype=zsh:
