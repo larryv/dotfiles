@@ -2,6 +2,8 @@ ifeq ($(or $(VERBOSE),0),0)
     quiet := @
 endif
 
+UMASK := 077
+
 # Template parameters.
 prefix := $(wildcard ~)
 macros := prefix
@@ -43,15 +45,15 @@ include $(wildcard $(addsuffix /module.mk,$(VPATH)))
 # Generate the M4 command-line definitions.
 defines := $(foreach macro,$(macros),-D __$(macro)__='$($(macro))')
 
-.DELETE_ON_ERROR:
 # mkdir -p may cause race conditions
 .NOTPARALLEL:
 .SECONDEXPANSION:
 
 src = $(patsubst .%,_%,$(subst /.,/_,$*)).m4
 $(prefix)/% : $$(src) common.m4
-	$(quiet)mkdir -p -- "$$(dirname '$@')"
-	$(quiet)'$(or $(M4),m4)' -P $(defines) common.m4 '$<' > '$@'
+	$(quiet)umask $(UMASK) && \
+mkdir -p -- "$$(dirname '$@')" && \
+'$(or $(M4),m4)' -P $(defines) common.m4 '$<' > '$@'
 	@printf '$(if $(quiet),Wrote %s)\n' '$@' >&2
 
 # Flotsam and jetsam
