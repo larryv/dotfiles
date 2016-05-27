@@ -52,9 +52,7 @@ src = $(patsubst .%,_%,$(subst /.,/_,$*)).m4
 $(prefix)/% : $$(src) common.m4
 	$(quiet)mkdir -p -- "$$(dirname '$@')"
 	$(quiet)'$(or $(M4),m4)' -P $(defines) common.m4 '$<' > '$@'
-ifdef quiet
-	@printf 'Wrote %s\n' '$@' >&2
-endif
+	@printf '$(if $(quiet),Wrote %s)\n' '$@' >&2
 
 # Flotsam and jetsam
 SHELL := /bin/sh
