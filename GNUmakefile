@@ -39,8 +39,7 @@ endef
 $(foreach module,$(VPATH),$(eval $(call load_module,$(module))))
 
 # Modules can use submakefiles to define their own macros and whatnot.
-# Use "wildcard" to weed out paths that don't refer to existing files.
-include $(wildcard $(addsuffix /module.mk,$(VPATH)))
+sinclude $(addsuffix /module.mk,$(VPATH))
 
 # Generate the M4 command-line definitions.
 defines := $(foreach macro,$(macros),-D __$(macro)__='$($(macro))')
