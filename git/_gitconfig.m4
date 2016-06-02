@@ -18,6 +18,8 @@ __header__
 [core]
 	autocrlf = input
 	excludesfile = __prefix__/.gitexclude
+[gpg]
+	program = gpg2
 [sendemail]
 	suppresscc = self
 
