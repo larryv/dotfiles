@@ -17,7 +17,7 @@ macros := prefix
 # - "make install": install all dotfiles
 # - "make uninstall": delete all dotfiles
 
-VPATH := git lynx macports mercurial tmux zsh
+VPATH := git gnupg lynx macports mercurial tmux zsh
 
 .PHONY: install uninstall
 install: $(addsuffix -install,$(VPATH))
