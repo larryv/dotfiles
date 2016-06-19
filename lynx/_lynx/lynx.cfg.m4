@@ -13,7 +13,7 @@ DEFAULT_BOOKMARK_FILE:__lynx__/bookmarks.html
 
 SAVE_SPACE:__LYNX_DOWNLOADS__
 
-# Future Colemakerel integration.
-#INCLUDE:~/.lynx/coleslaw.cfg for KEYMAP
+# Use Colemakerel key mapping if present.
+INCLUDE:__lynx__/lynx.cfg.colemakerel for KEYMAP
 
 m4_ifelse(« vim: set filetype=lynx:»)m4_dnl
