@@ -6,6 +6,7 @@ __header__
 	d = diff
 	dc = diff --cached
 	l = log
+	lom = log origin/master..
 	rc = rebase --continue
 	ri = rebase --interactive
 	rim = rebase --interactive master
