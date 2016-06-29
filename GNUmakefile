@@ -8,6 +8,12 @@ UMASK := 077
 prefix := $(wildcard ~)
 macros := prefix
 
+# Flotsam and jetsam.
+SHELL := /bin/sh
+.NOTPARALLEL:           # mkdir -p may cause race conditions.
+.SECONDEXPANSION:
+.SUFFIXES:
+
 # Treat each child directory listed in VPATH as a "module". Generate
 # per-module targets and prerequisites based on directory contents.
 # For example:
@@ -43,17 +49,9 @@ sinclude $(addsuffix /module.mk,$(VPATH))
 # Generate the M4 command-line definitions.
 defines := $(foreach macro,$(macros),-D __$(macro)__='$($(macro))')
 
-# mkdir -p may cause race conditions
-.NOTPARALLEL:
-.SECONDEXPANSION:
-
 src = $(patsubst .%,_%,$(subst /.,/_,$*)).m4
 $(prefix)/% : $$(src) common.m4
 	$(quiet)umask $(UMASK) && \
 mkdir -p -- "$$(dirname '$@')" && \
 '$(or $(M4),m4)' -P $(defines) common.m4 '$<' > '$@'
 	@printf '$(if $(quiet),Wrote %s)\n' '$@' >&2
-
-# Flotsam and jetsam
-SHELL := /bin/sh
-.SUFFIXES:
