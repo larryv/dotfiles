@@ -11,7 +11,7 @@ COOKIE_FILE:__lynx__/cookies
 
 DEFAULT_BOOKMARK_FILE:__lynx__/bookmarks.html
 
-SAVE_SPACE:__LYNX_DOWNLOADS__
+SAVE_SPACE:__LYNX_SAVE__
 
 # Use Colemakerel key mapping if present.
 INCLUDE:__lynx__/lynx.cfg.colemakerel for KEYMAP
