@@ -1,9 +1,9 @@
 lynx := $(prefix)/.lynx
 macros += lynx
 
-ifneq ($(wildcard $(HOME)/Downloads),)
-    LYNX_DOWNLOADS := $(HOME)/Downloads
+ifneq ($(wildcard ~/Downloads),)
+    LYNX_DOWNLOADS := $(wildcard ~/Downloads)
 else
-    LYNX_DOWNLOADS := $(HOME)
+    LYNX_DOWNLOADS := $(wildcard ~)
 endif
 macros += LYNX_DOWNLOADS

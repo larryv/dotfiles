@@ -11,7 +11,7 @@ RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY_TIME
 SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
-HISTFILE=$HOME/.zsh_history
+HISTFILE=~/.zsh_history
 
 # Custom commands.
 #
