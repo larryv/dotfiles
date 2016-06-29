@@ -1,8 +1,8 @@
 __header__
 
-# Do this from .zprofile to mimic OS X's behavior in El Capitan and
-# later. Abuse glob qualifiers to add only the path entries that exist
-# and are directories (see "Glob Qualifiers" section of zshexpn(1)).
+# Modify the path from .zprofile because OS X El Capitan (and later)
+# sets it initially in /etc/zprofile. Abuse glob qualifiers to filter
+# out invalid entries (see "Glob Qualifiers" section of zshexpn(1)).
 # macports_path is an array parameter created in macports.zshenv.
 
 path=( $macports_path(/N) $path )

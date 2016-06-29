@@ -6,7 +6,7 @@ set-option -gs escape-time 50
 # Make windows 1-indexed. I forget why.
 set-option -g base-index 1
 
-# Pass window titles to terminal.
+# Pass window titles to the terminal.
 set-option -g set-titles on
 set-option -g set-titles-string '#W'
 

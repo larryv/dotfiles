@@ -2,7 +2,7 @@ __header__
 
 INCLUDE:__lynx__/lynx.cfg.local
 
-# The encoding I use with OS X Terminal. Change for other systems.
+# The encoding I use with OS X Terminal; adjust as required.
 CHARACTER_SET:utf-8
 
 COOKIE_ACCEPT_DOMAINS:trac.macports.org

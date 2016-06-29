@@ -1,9 +1,9 @@
 __header__
 
-# OS X garbage
+# OS X garbage.
 .DS_Store
 
-# Text editing garbage
+# Text editing garbage.
 *~
 *.sw?
 *.tmproj

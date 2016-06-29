@@ -13,11 +13,11 @@ if [[ $OSTYPE == darwin* ]] &&
     /usr/bin/grep -qs /usr/libexec/path_helper /etc/zshenv
 then
     # zsh 5.0.0: path=(${macports_path:*path} ${path:|macports_path})
-    path=( ${(M)macports_path:#${(~j:|:)path}} $path )
-    path=( ${(u)path} )
+    path=(${(M)macports_path:#${(~j:|:)path}} $path)
+    path=(${(u)path})
 fi
 
-# In login shells, macports.zprofile handles this.
+# macports.zprofile handles this in login shells.
 if [[ ! -o LOGIN ]]
 then
     unset macports_path

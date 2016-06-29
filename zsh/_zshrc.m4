@@ -26,7 +26,7 @@ fi
 #ls (); emulate zsh -c 'command ls -AFh '"$argv[*]"
 alias ls='ls -AFh'
 
-# Treat slashes as word separators.
+# Don't treat slashes as word characters.
 WORDCHARS=${WORDCHARS/\//}
 
 # Dress up tab completion.
@@ -45,8 +45,8 @@ unset contribs
 # Print timing stats for commands that run over 10 seconds.
 REPORTTIME=10
 
-# Add a precmd hook to identify the working dir to Terminal.app.
-# Adapted from OS X's /etc/bashrc and the slightly-incorrect answer at
+# Identify the working directory to Terminal.app. Adapted from OS X's
+# /etc/bashrc and the slightly-incorrect answer at
 # http://stackoverflow.com/a/187853/50102.
 typeset -a precmd_functions
 if [[ $TERM_PROGRAM == Apple_Terminal ]]
@@ -54,17 +54,16 @@ then
     function update_terminal_cwd {
         emulate -L zsh
 
-        # Percent-escape entire path.  Non-intuitively, must *disable*
+        # Percent-escape entire path. Non-intuitively, we must *disable*
         # MULTIBYTE to correctly encode multibyte Unicode characters.
         setopt EXTENDED_GLOB NO_MULTIBYTE
         local nonslash='(#m)[^/]'
         local host=${HOSTNAME//${~nonslash}/%$(( [##16] ##${MATCH} ))}
         local cwd=${PWD//${~nonslash}/%$(( [##16] ##${MATCH} ))}
 
-        # Send custom escape sequence to Terminal.app.  If zsh is
-        # running inside tmux, use a "wrapper" sequence to pass the
-        # original sequence through.  See
-        # http://sourceforge.net/mailarchive/message.php?msg_id=27190530.
+        # Send escape sequence to Terminal.app. If running inside tmux,
+        # use a "wrapper" sequence to protect the original (see
+        # http://sourceforge.net/mailarchive/message.php?msg_id=27190530).
         if [[ -n $TMUX ]]
         then
             printf '\ePtmux;\e\e]7;%s\a\e\' "file://${host}${cwd}"
@@ -75,7 +74,7 @@ then
     precmd_functions+=update_terminal_cwd
 fi
 
-# Add a precmd hook to get VCS info for the prompt (see zshcontrib(1)).
+# Get VCS info for the prompt (see zshcontrib(1)).
 autoload -Uz vcs_info && {
     zstyle ':vcs_info:*' enable git hg svn
 
