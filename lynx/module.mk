@@ -1,7 +1,7 @@
 lynx := $(prefix)/.lynx
 macros += lynx
 
-ifeq ($(shell uname),Darwin)
+ifneq ($(wildcard $(HOME)/Downloads),)
     LYNX_DOWNLOADS := $(HOME)/Downloads
 else
     LYNX_DOWNLOADS := $(HOME)
