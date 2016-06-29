@@ -36,7 +36,7 @@ $(1)_DOTFILES := $$(subst /_,/.,$$($(1)_DOTFILES))
 $(1)_DOTFILES := $$(patsubst $(1)%.m4,$$(prefix)%,$$($(1)_DOTFILES))
 
 .PHONY: $(1) $(1)-install $(1)-uninstall
-$(1) $(1)-install: $$($(1)_DOTFILES)
+$(1) $(1)-install: $$$$($(1)_DOTFILES)
 $(1)-uninstall:
 	rm -fR $$($(1)_DOTFILES)
 endef
