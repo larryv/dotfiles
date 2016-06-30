@@ -1,2 +1,2 @@
-gnupg := $(prefix)/.gnupg
-macros += gnupg
+gnupg_dir := $(prefix)/.gnupg
+macros += gnupg_dir

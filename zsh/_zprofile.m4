@@ -1,7 +1,7 @@
 __header__
 
 # Source application-specific "topic" scripts.
-for script in __zsh__/*.zprofile(N)
+for script in __zsh_dir__/*.zprofile(N)
 do
     . $script
 done

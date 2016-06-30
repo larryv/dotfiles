@@ -104,7 +104,7 @@ then
 fi
 
 # Source application-specific "topic" scripts.
-for script in __zsh__/*.zshrc(N)
+for script in __zsh_dir__/*.zshrc(N)
 do
     . $script
 done

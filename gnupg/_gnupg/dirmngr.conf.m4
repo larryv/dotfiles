@@ -4,7 +4,7 @@ __header__
 # automatically uses the necessary CA certificate [1]; install it
 # manually for older versions [2].
 keyserver hkps://hkps.pool.sks-keyservers.net
-#hkp-cacert __gnupg__/sks-keyservers.netCA.pem
+#hkp-cacert __gnupg_dir__/sks-keyservers.netCA.pem
 
 
 # This configuration assumes GnuPG 2.1.11. Any and all rationales are
