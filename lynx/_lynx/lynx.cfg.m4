@@ -2,9 +2,9 @@ __header__
 
 INCLUDE:__lynx_dir__/lynx.cfg.local
 
-# The encoding I use with OS X Terminal; adjust as required.
-CHARACTER_SET:utf-8
+m4_ifdef(«__LYNX_CHARSET__», «CHARACTER_SET:__LYNX_CHARSET__
 
+»)m4_dnl
 COOKIE_ACCEPT_DOMAINS:trac.macports.org
 PERSISTENT_COOKIES:TRUE
 COOKIE_FILE:__lynx_dir__/cookies
