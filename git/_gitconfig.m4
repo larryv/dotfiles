@@ -18,6 +18,12 @@ __header__
 [core]
 	autocrlf = input
 	excludesfile = __prefix__/.gitexclude
+m4_syscmd(«test -f /System/Library/LaunchDaemons/com.apple.revisiond.plist»)m4_dnl
+m4_ifelse(m4_sysval, «0», «m4_dnl
+	# Avoid problems with OS X revisiond.
+	# http://www.git-tower.com/blog/make-git-rebase-safe-on-osx
+	trustctime = false
+»)m4_dnl
 [gpg]
 	program = gpg2
 [sendemail]
