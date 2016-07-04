@@ -2,8 +2,8 @@ __header__
 
 [alias]
 	a = add
-	c = commit --verbose
-	ca = commit --verbose --amend
+	c = commit
+	ca = commit --amend
 	d = diff
 	dc = diff --cached
 	l = log
@@ -17,6 +17,9 @@ __header__
 [color]
 	branch = auto
 	diff = auto
+[commit]
+	# Requires 2.9.0 or later.
+	verbose = true
 [core]
 	autocrlf = input
 	excludesfile = __prefix__/.gitexclude
