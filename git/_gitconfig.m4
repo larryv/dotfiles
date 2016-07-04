@@ -1,17 +1,12 @@
 __header__
 
 [alias]
-	a = add
 	c = commit
 	ca = commit --amend
 	d = diff
 	dc = diff --cached
-	l = log
-	lom = log origin/master..
-	rc = rebase --continue
-	ri = rebase --interactive
-	rim = rebase --interactive master
-	riom = rebase --interactive origin/master
+	rb = rebase
+	rbc = rebase --continue
 	s = status
 	sb = show-branch
 [color]
