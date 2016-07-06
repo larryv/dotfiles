@@ -1,8 +1,7 @@
 __header__
 
-if [[ -o LOGIN ]]
-then
-    export LYNX_CFG=__lynx_dir__/lynx.cfg
-fi
+[[ -o LOGIN ]] || return 0
+
+export LYNX_CFG=__lynx_dir__/lynx.cfg
 
 # vim: set filetype=zsh:
