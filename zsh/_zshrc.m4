@@ -100,7 +100,7 @@ if [[ -o LOGIN ]]
 then
     export EDITOR=vim
     export GREP_OPTIONS='--color=auto'
-    export PAGER=less
+    export PAGER='less -S'
 fi
 
 # Source application-specific "topic" scripts.
