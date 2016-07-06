@@ -17,4 +17,5 @@ m4_ifdef(«__LYNX_SAVE__», «SAVE_SPACE:__LYNX_SAVE__
 # Use Colemakerel key mapping if present.
 INCLUDE:__lynx_dir__/lynx.cfg.colemakerel for KEYMAP
 
-m4_ifelse(« vim: set filetype=lynx:»)m4_dnl
+m4_divert(«-1»)
+vim: set filetype=lynx:

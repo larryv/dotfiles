@@ -109,4 +109,5 @@ do
     . $script
 done
 
-m4_ifelse(« vim: set filetype=zsh:»)m4_dnl
+m4_divert(«-1»)
+vim: set filetype=zsh:

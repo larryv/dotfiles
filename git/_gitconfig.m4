@@ -32,4 +32,5 @@ m4_ifelse(m4_sysval, «0», «m4_dnl
 [include]
 	path = .gitconfig.local
 
-m4_ifelse(« vim: set filetype=gitconfig:»)m4_dnl
+m4_divert(«-1»)
+vim: set filetype=gitconfig:

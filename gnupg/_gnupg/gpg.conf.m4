@@ -63,4 +63,5 @@ with-fingerprint
 #   9. "Whats the best custom compression method to use when I have SSL?"
 #      <http://security.stackexchange.com/a/39914/1596>
 
-m4_ifelse(« vim: set filetype=gpg:»)m4_dnl
+m4_divert(«-1»)
+vim: set filetype=gpg:
