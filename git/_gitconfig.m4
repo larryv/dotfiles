@@ -17,7 +17,7 @@ __header__
 	verbose = true
 [core]
 	autocrlf = input
-	excludesfile = __prefix__/.gitexclude
+	excludesFile = __prefix__/.gitexclude
 m4_syscmd(«test -f /System/Library/LaunchDaemons/com.apple.revisiond.plist»)m4_dnl
 m4_ifelse(m4_sysval, «0», «m4_dnl
 	# Avoid problems with OS X revisiond.
