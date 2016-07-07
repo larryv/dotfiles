@@ -70,7 +70,7 @@ REPORTTIME=10
 # http://stackoverflow.com/a/187853/50102.
 if [[ $TERM_PROGRAM == Apple_Terminal ]]
 then
-    function update_terminal_cwd {
+    function update_terminal_pwd {
         emulate -L zsh
 
         # Percent-escape entire path. Non-intuitively, we must *disable*
@@ -78,19 +78,15 @@ then
         setopt EXTENDED_GLOB NO_MULTIBYTE
         local nonslash='(#m)[^/]'
         local host=${HOSTNAME//${~nonslash}/%$(([##16] ##${MATCH}))}
-        local cwd=${PWD//${~nonslash}/%$(([##16] ##${MATCH}))}
+        local pwd=${PWD//${~nonslash}/%$(([##16] ##${MATCH}))}
 
         # Send escape sequence to Terminal.app. If running inside tmux,
         # use a "wrapper" sequence to protect the original (see
         # http://sourceforge.net/mailarchive/message.php?msg_id=27190530).
-        if [[ -n $TMUX ]]
-        then
-            printf '\ePtmux;\e\e]7;%s\a\e\' "file://${host}${cwd}"
-        else
-            printf '\e]7;%s\a' "file://${host}${cwd}"
-        fi
+        local seq="${TMUX:+\ePtmux;\e}\e]7;%s\a${TMUX:+\e\\}"
+        printf $seq file://${host}${pwd}
     }
-    precmd_functions+=update_terminal_cwd
+    precmd_functions+=update_terminal_pwd
 fi
 
 # The zsh documentation discourages setting environment variables from
