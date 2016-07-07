@@ -9,13 +9,11 @@ macports_path=(__MACPORTS__/bin __MACPORTS__/sbin)
 # front. Repair the damage by moving MacPorts' entries back to their
 # rightful place.
 
-if [[ $OSTYPE == darwin* ]] &&
-    /usr/bin/grep -qs /usr/libexec/path_helper /etc/zshenv
-then
+/usr/bin/grep -qs /usr/libexec/path_helper /etc/zshenv && {
     # zsh 5.0.0: path=(${macports_path:*path} ${path:|macports_path})
     path=(${(M)macports_path:#${(~j:|:)path}} $path)
     path=(${(u)path})
-fi
+}
 
 # macports.zprofile handles this in login shells.
 if [[ ! -o LOGIN ]]
