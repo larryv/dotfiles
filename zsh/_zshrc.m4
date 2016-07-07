@@ -7,6 +7,26 @@ setopt PROMPT_SUBST
 PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((SHLVL * 2))::%#:)}%f%b '
 RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 
+# Get VCS info for the prompt (see zshcontrib(1)).
+typeset -a precmd_functions
+autoload -Uz vcs_info && {
+    zstyle ':vcs_info:*' enable git hg svn
+
+    zstyle ':vcs_info:*' formats ' (%s:%b)'
+    zstyle ':vcs_info:*' actionformats ' (%s:%b|%a)'
+    zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
+
+    # Color-code git info based on repo status
+    zstyle ':vcs_info:git:*' check-for-changes true
+    zstyle ':vcs_info:git:*' unstagedstr '%F{red}'
+    zstyle ':vcs_info:git:*' stagedstr '%F{yellow}'
+    zstyle ':vcs_info:git:*' formats ' %F{green}%u%c(%s:%b)%f'
+    zstyle ':vcs_info:git:*' actionformats ' %F{green}%u%c(%s:%b|%a)%f'
+
+    precmd_functions+=vcs_info
+    RPS1+='${vcs_info_msg_0_}'
+}
+
 # History.
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY_TIME
 SAVEHIST=1000000
@@ -48,7 +68,6 @@ REPORTTIME=10
 # Identify the working directory to Terminal.app. Adapted from OS X's
 # /etc/bashrc and the slightly-incorrect answer at
 # http://stackoverflow.com/a/187853/50102.
-typeset -a precmd_functions
 if [[ $TERM_PROGRAM == Apple_Terminal ]]
 then
     function update_terminal_cwd {
@@ -73,25 +92,6 @@ then
     }
     precmd_functions+=update_terminal_cwd
 fi
-
-# Get VCS info for the prompt (see zshcontrib(1)).
-autoload -Uz vcs_info && {
-    zstyle ':vcs_info:*' enable git hg svn
-
-    zstyle ':vcs_info:*' formats ' (%s:%b)'
-    zstyle ':vcs_info:*' actionformats ' (%s:%b|%a)'
-    zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
-
-    # Color-code git info based on repo status
-    zstyle ':vcs_info:git:*' check-for-changes true
-    zstyle ':vcs_info:git:*' unstagedstr '%F{red}'
-    zstyle ':vcs_info:git:*' stagedstr '%F{yellow}'
-    zstyle ':vcs_info:git:*' formats ' %F{green}%u%c(%s:%b)%f'
-    zstyle ':vcs_info:git:*' actionformats ' %F{green}%u%c(%s:%b|%a)%f'
-
-    precmd_functions+=vcs_info
-    RPS1+='${vcs_info_msg_0_}'
-}
 
 # The zsh documentation discourages setting environment variables in
 # .zprofile or .zlogin (http://zsh.sourceforge.net/Intro/intro_3.html),
