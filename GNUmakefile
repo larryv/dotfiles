@@ -2,6 +2,7 @@ ifeq ($(or $(VERBOSE),0),0)
     quiet := @
 endif
 
+# The GnuPG dotfiles require restrictive permissions.
 UMASK := 077
 
 # Template parameters.
@@ -43,10 +44,11 @@ endef
 
 $(foreach module,$(VPATH),$(eval $(call load_module,$(module))))
 
-# Modules can use submakefiles to define their own macros and whatnot.
+# Modules can use submakefiles to define their own macros or otherwise
+# alter the install process.
 sinclude $(addsuffix /module.mk,$(VPATH))
 
-# Generate the M4 command-line definitions.
+# Generate the command-line macro definitions.
 defines := $(foreach macro,$(macros),-D __$(macro)__='$($(macro))')
 
 src = $(patsubst .%,_%,$(subst /.,/_,$*)).m4

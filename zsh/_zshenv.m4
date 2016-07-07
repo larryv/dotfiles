@@ -1,6 +1,6 @@
 __header__
 
-# The zsh documentation discourages setting environment variables in
+# The zsh documentation discourages setting environment variables from
 # .zprofile or .zlogin (http://zsh.sourceforge.net/Intro/intro_3.html),
 # so do it here.
 

@@ -1,6 +1,6 @@
 __header__
 
-# Reduce Esc timeout to reduce interference with vim.
+# Reduce Esc timeout to accommodate Vim.
 set-option -gs escape-time 50
 
 # Make windows 1-indexed. I forget why.

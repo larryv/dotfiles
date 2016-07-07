@@ -13,7 +13,7 @@ __header__
 	branch = auto
 	diff = auto
 [commit]
-	# Requires 2.9.0 or later.
+	# Requires Git 2.9.0 or later.
 	verbose = true
 [core]
 	autocrlf = input

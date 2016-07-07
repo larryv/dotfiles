@@ -7,7 +7,7 @@ setopt PROMPT_SUBST
 PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((SHLVL * 2))::%#:)}%f%b '
 RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 
-# Get VCS info for the prompt (see zshcontrib(1)).
+# Add VCS info to the right-hand prompt (see zshcontrib(1)).
 typeset -a precmd_functions
 autoload -Uz vcs_info && {
     zstyle ':vcs_info:*' enable git hg svn
@@ -33,7 +33,7 @@ SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
 HISTFILE=~/.zsh_history
 
-# Custom commands.
+# Aliases.
 #
 # TODO: Make the function versions handle argument quoting properly.
 # This currently fails pretty badly. Just try running "ls" on
@@ -77,8 +77,8 @@ then
         # MULTIBYTE to correctly encode multibyte Unicode characters.
         setopt EXTENDED_GLOB NO_MULTIBYTE
         local nonslash='(#m)[^/]'
-        local host=${HOSTNAME//${~nonslash}/%$(( [##16] ##${MATCH} ))}
-        local cwd=${PWD//${~nonslash}/%$(( [##16] ##${MATCH} ))}
+        local host=${HOSTNAME//${~nonslash}/%$(([##16] ##${MATCH}))}
+        local cwd=${PWD//${~nonslash}/%$(([##16] ##${MATCH}))}
 
         # Send escape sequence to Terminal.app. If running inside tmux,
         # use a "wrapper" sequence to protect the original (see
@@ -93,7 +93,7 @@ then
     precmd_functions+=update_terminal_cwd
 fi
 
-# The zsh documentation discourages setting environment variables in
+# The zsh documentation discourages setting environment variables from
 # .zprofile or .zlogin (http://zsh.sourceforge.net/Intro/intro_3.html),
 # so do it here.
 if [[ -o LOGIN ]]

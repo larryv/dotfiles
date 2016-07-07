@@ -1,5 +1,8 @@
 __header__
 
+# This configuration assumes GnuPG 2.1.11. Any and all rationales are
+# naïve. I have no idea what I'm doing.
+
 # Preferences for negotiating with recipients. Ciphers and digests are
 # ordered roughly by strength. List as many as possible to reduce the
 # chance of settling on a weak fallback [8].
@@ -31,17 +34,14 @@ no-emit-version
 bzip2-compress-level 9
 compress-level 9
 
-# Ignore recipients' keyserver preferences.[7]
+# Ignore recipients' keyserver preferences [7].
 keyserver-options no-honor-keyserver-url
 
-# Minimize opportunities for visual spoofing.[7]
+# Minimize opportunities for visual spoofing [7].
 keyid-format 0xlong
 with-fingerprint
 
 
-# This configuration assumes GnuPG 2.1.11. Any and all rationales are
-# naïve. I have no idea what I'm doing.
-#
 # References:
 #
 #   1. "BREACH - a new attack against HTTP. What can be done?"

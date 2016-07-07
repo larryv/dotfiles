@@ -7,9 +7,6 @@ keyserver hkps://hkps.pool.sks-keyservers.net
 #hkp-cacert __gnupg_dir__/sks-keyservers.netCA.pem
 
 
-# This configuration assumes GnuPG 2.1.11. Any and all rationales are
-# naïve. I have no idea what I'm doing.
-#
 # References:
 #
 #   1. "[Announce] GnuPG 2.1.11 released"
