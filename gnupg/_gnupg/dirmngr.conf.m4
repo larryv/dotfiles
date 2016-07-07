@@ -16,5 +16,5 @@ keyserver hkps://hkps.pool.sks-keyservers.net
 #      <https://lists.gnupg.org/pipermail/gnupg-announce/2016q1/000383.html>
 #   2. "OpenPGP Best Practices"
 #      <https://help.riseup.net/en/security/message-security/openpgp/best-practices>
-
-m4_ifelse(« vim: set filetype=gpg:»)m4_dnl
+#
+# vim: set filetype=gpg:
