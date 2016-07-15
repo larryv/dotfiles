@@ -5,13 +5,13 @@ __header__
 
 # Preferences for negotiating with recipients. Ciphers and digests are
 # ordered roughly by strength. List as many as possible to reduce the
-# chance of settling on a weak fallback [8].
+# chance of settling on a weak fallback [9].
 #   - Blowfish-128, CAST5, IDEA, and 3DES-168 are not suitable for
 #     encrypting large files due to small block size [3].
-#   - Blowfish has issues with weak keys, apparently [8].
+#   - Blowfish has issues with weak keys, apparently [9].
 #   - IDEA is last because I just don't like the sound of it [2].
 #   - Try to avoid compression, which leaks information about data
-#     contents [1][5][9].
+#     contents [1][5][10].
 personal-cipher-preferences AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH 3DES IDEA
 personal-digest-preferences SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1
 personal-compress-preferences Uncompressed BZIP2 ZLIB ZIP
@@ -37,8 +37,7 @@ compress-level 9
 # Ignore recipients' keyserver preferences [7].
 keyserver-options no-honor-keyserver-url
 
-# Minimize opportunities for visual spoofing [7].
-keyid-format 0xlong
+# Show fingerprints where possible because key IDs are garbage [8].
 with-fingerprint
 
 
@@ -58,9 +57,11 @@ with-fingerprint
 #      <https://bugs.gnupg.org/gnupg/issue1800>
 #   7. "OpenPGP Best Practices"
 #      <https://help.riseup.net/en/security/message-security/openpgp/best-practices>
-#   8. "Ranked Order of Security for Encryption Algorithm Preferences:
+#   8. "OpenPGP Key IDs are not useful"
+#      <https://debian-administration.org/users/dkg/weblog/105>
+#   9. "Ranked Order of Security for Encryption Algorithm Preferences:
 #      For GPG" <http://superuser.com/q/968566/6528>
-#   9. "Whats the best custom compression method to use when I have SSL?"
+#  10. "Whats the best custom compression method to use when I have SSL?"
 #      <http://security.stackexchange.com/a/39914/1596>
 
 m4_divert(«-1»)
