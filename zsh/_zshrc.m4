@@ -8,8 +8,12 @@ PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((SHLVL * 2))::%#:)}%f%b '
 RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 
 # Add VCS info to the right-hand prompt (see zshcontrib(1)).
-typeset -a precmd_functions
 autoload -Uz vcs_info && {
+    typeset -a precmd_functions
+    precmd_functions+=vcs_info
+
+    RPS1+='${vcs_info_msg_0_}'
+
     zstyle ':vcs_info:*' enable git hg svn
 
     zstyle ':vcs_info:*' formats ' (%s:%b)'
@@ -22,9 +26,6 @@ autoload -Uz vcs_info && {
     zstyle ':vcs_info:git:*' stagedstr '%F{yellow}'
     zstyle ':vcs_info:git:*' formats ' %F{green}%u%c(%s:%b)%f'
     zstyle ':vcs_info:git:*' actionformats ' %F{green}%u%c(%s:%b|%a)%f'
-
-    precmd_functions+=vcs_info
-    RPS1+='${vcs_info_msg_0_}'
 }
 
 # History.
@@ -70,6 +71,9 @@ REPORTTIME=10
 # http://stackoverflow.com/a/187853/50102.
 if [[ $TERM_PROGRAM == Apple_Terminal ]]
 then
+    typeset -a precmd_functions
+    precmd_functions+=update_terminal_pwd
+
     function update_terminal_pwd {
         emulate -L zsh
 
@@ -86,7 +90,6 @@ then
         local seq="${TMUX:+\ePtmux;\e}\e]7;%s\a${TMUX:+\e\\}"
         printf $seq file://${host}${pwd}
     }
-    precmd_functions+=update_terminal_pwd
 fi
 
 # The zsh documentation discourages setting environment variables from
