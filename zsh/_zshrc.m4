@@ -100,12 +100,12 @@ fi
 if [[ -o LOGIN ]]
 then
     export EDITOR=vim
-    export GREP_OPTIONS='--color=auto'
+    export GREP_OPTIONS=--color=auto
     export PAGER='less -S'
 fi
 
 # Source application-specific "topic" scripts.
-for script in __zsh_dir__/*.zshrc(N)
+for script in '__zsh_dir__'/*.zshrc(N)
 do
     . $script
 done

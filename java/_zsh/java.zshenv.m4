@@ -11,7 +11,7 @@ __header__
 # even necessary.
 function {
     local jh
-    jh="$(/usr/libexec/java_home -F)" && export JAVA_HOME=$jh
+    jh=$(/usr/libexec/java_home -F) && export JAVA_HOME="$jh"
 } 2>/dev/null
 
 m4_divert(«-1»)
