@@ -26,6 +26,8 @@ autoload -Uz vcs_info && {
     zstyle ':vcs_info:git:*' stagedstr '%F{yellow}'
     zstyle ':vcs_info:git:*' formats ' %F{green}%u%c(%s:%b)%f'
     zstyle ':vcs_info:git:*' actionformats ' %F{green}%u%c(%s:%b|%a)%f'
+
+    zstyle ':vcs_info:*' disable-patterns "~/Projects/gcc(|/*)"
 }
 
 # History.
