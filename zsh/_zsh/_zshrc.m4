@@ -8,7 +8,7 @@ PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((SHLVL * 2))::%#:)}%f%b '
 RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 
 # Add VCS info to the right-hand prompt (see zshcontrib(1)).
-autoload -Uz vcs_info && {
+autoload -Uz vcs_info && vcs_info_printsys &>/dev/null && {
     typeset -a precmd_functions
     precmd_functions+=vcs_info
 
@@ -53,8 +53,7 @@ alias ls='ls -AFh'
 WORDCHARS=${WORDCHARS/\//}
 
 # Dress up tab completion.
-autoload -Uz compinit && {
-    compinit
+autoload -Uz compinit && compinit && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
 }
