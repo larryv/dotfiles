@@ -5,7 +5,7 @@ __header__
 # out invalid entries (see "Glob Qualifiers" section of zshexpn(1)).
 # macports_path is an array parameter created in macports.zshenv.
 
-path=($macports_path(/N) $path)
+path=(${^macports_path}(/N) $path)
 unset macports_path
 
 # vim: set filetype=zsh:
