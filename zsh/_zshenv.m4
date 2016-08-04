@@ -1,7 +1,9 @@
 __header__
 
+ZDOTDIR='__zsh_dir__'
+
 # Source application-specific "topic" scripts.
-for script in '__zsh_dir__'/*.zshenv(N)
+for script in $ZDOTDIR/*.zshenv(N)
 do
     . $script
 done

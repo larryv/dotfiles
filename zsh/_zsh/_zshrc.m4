@@ -34,7 +34,7 @@ autoload -Uz vcs_info && {
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY_TIME
 SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
-HISTFILE=~/.zsh_history
+HISTFILE=$ZDOTDIR/zsh_history
 
 # Aliases.
 #
@@ -105,7 +105,7 @@ then
 fi
 
 # Source application-specific "topic" scripts.
-for script in '__zsh_dir__'/*.zshrc(N)
+for script in $ZDOTDIR/*.zshrc(N)
 do
     . $script
 done
