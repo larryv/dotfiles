@@ -30,6 +30,19 @@ autoload -Uz vcs_info && vcs_info_printsys &>/dev/null && {
     zstyle ':vcs_info:*' disable-patterns "~/Projects/gcc(|/*)"
 }
 
+# Send current working directory to the terminal emulator.
+autoload -Uz update-terminal-pwd && update-terminal-pwd 2>/dev/null && {
+    typeset -a precmd_functions
+    precmd_functions+=update-terminal-pwd
+}
+
+# Enable completion and other things.
+autoload -Uz run-help zmv
+autoload -Uz compinit && compinit && {
+    zstyle ':completion:*:descriptions' format '%B%d%b'
+    zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
+}
+
 # History.
 setopt EXTENDED_HISTORY INC_APPEND_HISTORY_TIME
 SAVEHIST=1000000
@@ -52,23 +65,8 @@ alias ls='ls -AFh'
 # Don't treat slashes as word characters.
 WORDCHARS=${WORDCHARS/\//}
 
-# Dress up tab completion.
-autoload -Uz compinit && compinit && {
-    zstyle ':completion:*:descriptions' format '%B%d%b'
-    zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
-}
-
-# Enable various user contributions (see zshcontrib(1)).
-autoload -Uz run-help zmv
-
 # Print timing stats for commands that run over 10 seconds.
 REPORTTIME=10
-
-# Send current working directory to the terminal emulator.
-autoload -Uz update-terminal-pwd && update-terminal-pwd 2>/dev/null && {
-    typeset -a precmd_functions
-    precmd_functions+=update-terminal-pwd
-}
 
 # The zsh documentation discourages setting environment variables from
 # .zprofile or .zlogin (http://zsh.sourceforge.net/Intro/intro_3.html),
