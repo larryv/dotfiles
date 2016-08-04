@@ -59,10 +59,7 @@ autoload -Uz compinit && compinit && {
 }
 
 # Enable various user contributions (see zshcontrib(1)).
-contribs=( run-help zmv )
-unalias "$contribs[@]" 2>/dev/null
-autoload -Uz "$contribs[@]"
-unset contribs
+autoload -Uz run-help zmv
 
 # Print timing stats for commands that run over 10 seconds.
 REPORTTIME=10
