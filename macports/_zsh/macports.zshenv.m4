@@ -10,9 +10,8 @@ macports_path=('__MACPORTS__'/bin '__MACPORTS__'/sbin)
 # rightful place.
 
 /usr/bin/grep -qs /usr/libexec/path_helper /etc/zshenv && {
-    # zsh 5.0.0: path=(${macports_path:*path} ${path:|macports_path})
+    # zsh 5.0.0: path=(${macports_path:*path} $path)
     path=(${(M)macports_path:#${(~j:|:)path}} $path)
-    path=(${(u)path})
 }
 
 # macports.zprofile handles this in login shells.
