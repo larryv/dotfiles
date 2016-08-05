@@ -64,31 +64,11 @@ autoload -Uz run-help zmv
 # Print timing stats for commands that run over 10 seconds.
 REPORTTIME=10
 
-# Identify the working directory to Terminal.app. Adapted from OS X's
-# /etc/bashrc and the slightly-incorrect answer at
-# http://stackoverflow.com/a/187853/50102.
-if [[ $TERM_PROGRAM == Apple_Terminal ]]
-then
+# Send current working directory to the terminal emulator.
+autoload -Uz update-terminal-pwd && update-terminal-pwd 2>/dev/null && {
     typeset -a precmd_functions
-    precmd_functions+=update_terminal_pwd
-
-    function update_terminal_pwd {
-        emulate -L zsh
-
-        # Percent-escape entire path. Non-intuitively, we must *disable*
-        # MULTIBYTE to correctly encode multibyte Unicode characters.
-        setopt EXTENDED_GLOB NO_MULTIBYTE
-        local nonslash='(#m)[^/]'
-        local host=${HOSTNAME//${~nonslash}/%$(([##16] ##${MATCH}))}
-        local pwd=${PWD//${~nonslash}/%$(([##16] ##${MATCH}))}
-
-        # Send escape sequence to Terminal.app. If running inside tmux,
-        # use a "wrapper" sequence to protect the original (see
-        # http://sourceforge.net/mailarchive/message.php?msg_id=27190530).
-        local seq="${TMUX:+\ePtmux;\e}\e]7;%s\a${TMUX:+\e\\}"
-        printf $seq file://${host}${pwd}
-    }
-fi
+    precmd_functions+=update-terminal-pwd
+}
 
 # The zsh documentation discourages setting environment variables from
 # .zprofile or .zlogin (http://zsh.sourceforge.net/Intro/intro_3.html),
