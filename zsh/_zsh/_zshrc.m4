@@ -37,7 +37,7 @@ autoload -Uz update-terminal-pwd && update-terminal-pwd 2>/dev/null && {
 }
 
 # Enable completion and other things.
-autoload -Uz run-help zmv
+autoload -Uz run-help
 autoload -Uz compinit && compinit && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
