@@ -8,7 +8,7 @@ PS1='[%m] %B%h %(?.%F{green}.%F{red})${(r:$((SHLVL * 2))::%#:)}%f%b '
 RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 
 # Add VCS info to the right-hand prompt (see zshcontrib(1)).
-autoload -Uz vcs_info && vcs_info_printsys &>/dev/null && {
+autoload -Uz vcs_info && vcs_info 2>/dev/null && {
     typeset -a precmd_functions
     precmd_functions+=vcs_info
 
