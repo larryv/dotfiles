@@ -20,7 +20,8 @@
 
 emulate -L zsh
 
-[[ ${TERM_PROGRAM} == Apple_Terminal ]] || return
+# TODO: Figure out how to communicate termimal type via SSH.
+[[ ${TERM_PROGRAM} == Apple_Terminal || -n ${SSH_TTY} ]] || return
 
 # Adapted from OS X's /etc/bashrc and the slightly-incorrect answer at
 # http://stackoverflow.com/a/187853/50102.
