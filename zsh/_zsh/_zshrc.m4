@@ -1,11 +1,14 @@
 __header__
 
+# For compatibility with zsh 4.3.6 and older, avoid the %F and %f prompt
+# escapes and set colors with raw SGR parameters throughout.
+
 # Left: Hostname, history number, and privileges/shell-nesting
-#   indicator, colored based on last exit status.
+#   indicator, colored green/red if last command succeeded/failed.
 # Right: Current working directory, truncated to half screen width.
 setopt PROMPT_SUBST
 PS1='[%m] %B%h '\
-'%(?.%F{green}.%F{red})${(r:$((SHLVL * 2))::%#:)}%f'\
+$'%(?.%{\e[32m%}.%{\e[31m%})${(r:$((SHLVL * 2))::%#:)}%{\e[0m%}'\
 '%b '
 RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 
@@ -22,12 +25,14 @@ autoload -Uz vcs_info && vcs_info 2>/dev/null && {
     zstyle ':vcs_info:*' actionformats '(%s:%b|%a)'
     zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
-    # Colorize based on repository status.
+    # Colorize based on repository status: Green/yellow/red for
+    # no/staged/unstaged changes, respectively.
     zstyle ':vcs_info:git:*' check-for-changes true
-    zstyle ':vcs_info:git:*' unstagedstr '%F{red}'
-    zstyle ':vcs_info:git:*' stagedstr '%F{yellow}'
-    zstyle ':vcs_info:git:*' formats '%F{green}%u%c(%s:%b)%f'
-    zstyle ':vcs_info:git:*' actionformats '%F{green}%u%c(%s:%b|%a)%f'
+    zstyle ':vcs_info:git:*' unstagedstr $'%{\e[31m%}'
+    zstyle ':vcs_info:git:*' stagedstr $'%{\e[33m%}'
+    zstyle ':vcs_info:git:*' formats $'%{\e[32m%}%u%c(%s:%b)%{\e[0m%}'
+    zstyle ':vcs_info:git:*' actionformats \
+            $'%{\e[32m%}%u%c(%s:%b|%a)%{\e[0m%}'
 
     zstyle ':vcs_info:*' disable-patterns \
             "~/Projects/(ast|gcc)(|/*)"
@@ -43,7 +48,8 @@ autoload -Uz update_terminal_pwd && update_terminal_pwd 2>/dev/null && {
 autoload -Uz run-help zargs zrecompile
 autoload -Uz compinit && compinit && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
-    zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
+    zstyle ':completion:*:warnings' format \
+            $'%B%{\e[31m%}No matches for %d%{\e[0m%}%b'
 }
 
 # Enable fancy globbing; stop at slashes when moving wordwise.
@@ -54,7 +60,10 @@ WORDCHARS=${WORDCHARS/\//}
 SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
 HISTFILE=$ZDOTDIR/zsh_history
-setopt EXTENDED_HISTORY INC_APPEND_HISTORY_TIME
+setopt EXTENDED_HISTORY
+# Requires zsh 5.0.6. Hopefully I'll never use a shell so old that it
+# requires setting APPEND_HISTORY explicitly.
+setopt INC_APPEND_HISTORY_TIME 2>/dev/null
 
 # Aliases.
 #
