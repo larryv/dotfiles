@@ -29,7 +29,7 @@ emulate -L zsh
 # Percent-encode the path. Non-intuitively, we must *disable* MULTIBYTE
 # to correctly encode multibyte Unicode characters.
 setopt EXTENDED_GLOB NO_MULTIBYTE
-local path=${HOSTNAME}${PWD}
+local path="$(hostname -s)${PWD}"
 local encodedpath=${path//(#m)[^\/]/%$(([##16] ##${MATCH}))}
 
 # The appropriate OSC escape sequence is mentioned in Terminal.app's
