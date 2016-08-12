@@ -1,4 +1,4 @@
-# update-terminal-pwd
+# update_terminal_pwd
 # -------------------
 #
 # Identify the current working directory to the terminal emulator. To
@@ -8,12 +8,12 @@
 #
 #     # With add-zsh-hook (requires zsh 4.3.4 or later).
 #     autoload -Uz add-zsh-hook
-#     add-zsh-hook -Uz chpwd update-terminal-pwd
+#     add-zsh-hook -Uz chpwd update_terminal_pwd
 #
 #     # Without add-zsh-hook.
-#     autoload -Uz update-terminal-pwd
+#     autoload -Uz update_terminal_pwd
 #     typeset -a chpwd_functions
-#     chpwd_functions+=update-terminal-pwd
+#     chpwd_functions+=update_terminal_pwd
 #
 # Currently supports OS X's Terminal.app.
 

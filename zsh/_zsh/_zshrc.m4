@@ -33,9 +33,9 @@ autoload -Uz vcs_info && vcs_info 2>/dev/null && {
 }
 
 # Send current working directory to the terminal emulator.
-autoload -Uz update-terminal-pwd && update-terminal-pwd 2>/dev/null && {
+autoload -Uz update_terminal_pwd && update_terminal_pwd 2>/dev/null && {
     typeset -a precmd_functions
-    precmd_functions+=update-terminal-pwd
+    precmd_functions+=update_terminal_pwd
 }
 
 # Enable completion and other things.
