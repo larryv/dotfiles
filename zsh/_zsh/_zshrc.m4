@@ -39,13 +39,14 @@ autoload -Uz update_terminal_pwd && update_terminal_pwd 2>/dev/null && {
 }
 
 # Enable completion and other things.
-autoload -Uz run-help
+autoload -Uz run-help zargs zrecompile
 autoload -Uz compinit && compinit && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
     zstyle ':completion:*:warnings' format '%B%F{red}No matches for %d%f%b'
 }
 
-# Don't treat slashes as word characters.
+# Enable fancy globbing; stop at slashes when moving wordwise.
+setopt EXTENDED_GLOB
 WORDCHARS=${WORDCHARS/\//}
 
 # History.
