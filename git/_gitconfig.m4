@@ -6,6 +6,7 @@ __header__
 	d = diff
 	dc = diff --cached
 	rb = rebase
+	rba = rebase --abort
 	rbc = rebase --continue
 	s = status
 	sb = show-branch
