@@ -55,5 +55,5 @@ src = $(patsubst .%,_%,$(subst /.,/_,$*)).m4
 $(prefix)/% : $$(src) common.m4
 	$(quiet)umask $(UMASK) && \
 mkdir -p -- "$$(dirname '$@')" && \
-'$(or $(M4),m4)' -P $(defines) common.m4 '$<' > '$@'
+'$(or $(M4),m4)' -P $(defines) common.m4 '$<' >'$@'
 	@printf '$(if $(quiet),Wrote %s)\n' '$@' >&2

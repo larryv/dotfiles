@@ -20,7 +20,7 @@
 
 emulate -L zsh
 
-[[ $TERM_PROGRAM == Apple_Terminal ]] || return
+[[ ${TERM_PROGRAM} == Apple_Terminal ]] || return
 
 # Adapted from OS X's /etc/bashrc and the slightly-incorrect answer at
 # http://stackoverflow.com/a/187853/50102.
@@ -31,11 +31,15 @@ setopt EXTENDED_GLOB NO_MULTIBYTE
 local path=${HOSTNAME}${PWD}
 local encodedpath=${path//(#m)[^\/]/%$(([##16] ##${MATCH}))}
 
+# The appropriate OSC escape sequence is mentioned in Terminal.app's
+# General Preferences.
+local fmt='\e]7;%s\a'
+
 # Inside tmux, wrap the sequence to pass it through (see
 # http://sourceforge.net/mailarchive/message.php?msg_id=27190530).
-local seq="${TMUX:+\ePtmux;\e}\e]7;%s\a${TMUX:+\e\\}"
+[[ -n $TMUX ]] && fmt='\ePtmux;\e'${fmt}'\e\'
 
-# Send final escape sequence to the terminal emulator.
-printf $seq file://$encodedpath
+# Send escape sequence to the terminal emulator.
+printf $fmt file://$encodedpath
 
 # vim: set filetype=zsh:
