@@ -29,7 +29,8 @@ autoload -Uz vcs_info && vcs_info 2>/dev/null && {
     zstyle ':vcs_info:git:*' formats '%F{green}%u%c(%s:%b)%f'
     zstyle ':vcs_info:git:*' actionformats '%F{green}%u%c(%s:%b|%a)%f'
 
-    zstyle ':vcs_info:*' disable-patterns "~/Projects/gcc(|/*)"
+    zstyle ':vcs_info:*' disable-patterns \
+            "~/Projects/(ast|gcc)(|/*)"
 }
 
 # Send current working directory to the terminal emulator.
