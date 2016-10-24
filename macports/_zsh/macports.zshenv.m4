@@ -9,7 +9,7 @@ macports_path=('__MACPORTS__'/bin '__MACPORTS__'/sbin)
 # front. Repair the damage by moving MacPorts' entries back to their
 # rightful place.
 
-/usr/bin/grep -qs /usr/libexec/path_helper /etc/zshenv && {
+command -p grep -qs /usr/libexec/path_helper /etc/zshenv && {
     # zsh 5.0.0: path=(${macports_path:*path} $path)
     path=(${(M)macports_path:#${(~j:|:)path}} $path)
 }
