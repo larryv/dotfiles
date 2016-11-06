@@ -88,7 +88,7 @@ REPORTTIME=10
 if [[ -o LOGIN ]]
 then
     export GREP_OPTIONS=--color=auto
-    export PAGER='less -S'
+    export PAGER=less
     export VISUAL=vim
 fi
 
