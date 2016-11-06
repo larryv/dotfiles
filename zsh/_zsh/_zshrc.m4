@@ -87,9 +87,9 @@ REPORTTIME=10
 # so do it here.
 if [[ -o LOGIN ]]
 then
-    export EDITOR=vim
     export GREP_OPTIONS=--color=auto
     export PAGER='less -S'
+    export VISUAL=vim
 fi
 
 # Source application-specific "topic" scripts.
