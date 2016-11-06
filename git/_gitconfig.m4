@@ -1,6 +1,8 @@
 __header__
 
 [alias]
+	a = add
+	au = add --update
 	c = commit
 	ca = commit --amend
 	d = diff
