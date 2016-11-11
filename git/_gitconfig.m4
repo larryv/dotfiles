@@ -2,6 +2,8 @@ __header__
 
 [alias]
 	a = add
+	ae = add --edit
+	ap = add --patch
 	au = add --update
 	c = commit
 	ca = commit --amend
