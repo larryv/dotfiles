@@ -26,18 +26,19 @@ default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELL
 s2k-digest-algo SHA512
 s2k-count 65011712
 
-# Omit metadata in ASCII armored output.
+# Omit some metadata [9][10] from output.
 no-comments
 no-emit-version
+throw-keyids
 
 # If we're going to compress, don't hold back.
 bzip2-compress-level 9
 compress-level 9
 
-# Ignore recipients' keyserver preferences [9].
+# Ignore recipients' keyserver preferences [11].
 keyserver-options no-honor-keyserver-url
 
-# Show fingerprints where possible because key IDs are garbage [10].
+# Show fingerprints where possible because key IDs are garbage [12].
 with-fingerprint
 
 
@@ -59,9 +60,13 @@ with-fingerprint
 #      <https://security.stackexchange.com/a/30457/1596>
 #   8. "Issue 1800: Allow s2k options for gpg --export-secret-key"
 #      <https://bugs.gnupg.org/gnupg/issue1800>
-#   9. "OpenPGP Best Practices"
+#   9. "What information is leaked from an OpenPGP encrypted file?"
+#      <https://security.stackexchange.com/q/25170/1596>
+#  10. "15 reasons not to start using PGP"
+#      <http://secushare.org/PGP#sec-2>
+#  11. "OpenPGP Best Practices"
 #      <https://help.riseup.net/en/security/message-security/openpgp/best-practices>
-#  10. "OpenPGP Key IDs are not useful"
+#  12. "OpenPGP Key IDs are not useful"
 #      <https://debian-administration.org/users/dkg/weblog/105>
 
 m4_divert(«-1»)
