@@ -29,8 +29,6 @@ m4_ifelse(m4_sysval, «0», «m4_dnl
 	# http://www.git-tower.com/blog/make-git-rebase-safe-on-osx
 	trustctime = false
 »)m4_dnl
-[gpg]
-	program = gpg2
 [sendemail]
 	suppresscc = self
 
