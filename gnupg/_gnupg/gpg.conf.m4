@@ -44,19 +44,19 @@ with-fingerprint
 # References:
 #
 #   1. "Ranked Order of Security for Encryption Algorithm Preferences:
-#      For GPG" <http://superuser.com/a/968649/6528>
+#      For GPG" <https://superuser.com/a/968649/6528>
 #   2. "GnuPG Frequently Asked Questions"
 #      <https://www.gnupg.org/faq/gnupg-faq.html>
 #   3. "Crypto Guru Bruce Schneier Answers"
 #      <https://slashdot.org/story/99/10/29/0832246>
 #   4. "BREACH - a new attack against HTTP. What can be done?"
-#      <http://security.stackexchange.com/a/39953/1596>
+#      <https://security.stackexchange.com/a/39953/1596>
 #   5. "Is it safe for GPG to compress all messages prior to encryption
 #      by default?" <http://security.stackexchange.com/a/43425/1596>
 #   6. "Whats the best custom compression method to use when I have SSL?"
-#      <http://security.stackexchange.com/a/39914/1596>
+#      <https://security.stackexchange.com/a/39914/1596>
 #   7. "gpg --perfect-code"
-#      <http://security.stackexchange.com/a/30457/1596>
+#      <https://security.stackexchange.com/a/30457/1596>
 #   8. "Issue 1800: Allow s2k options for gpg --export-secret-key"
 #      <https://bugs.gnupg.org/gnupg/issue1800>
 #   9. "OpenPGP Best Practices"
