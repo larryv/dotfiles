@@ -10,14 +10,13 @@ __header__
 #     encrypting large files due to small block size [2].
 #   - Blowfish has issues with weak keys, apparently [1].
 #   - IDEA is last because I just don't like the sound of it [3].
-#   - Try to avoid compression, which leaks information about data
-#     contents [4][5][6].
+#   - Compression leaks information about message contents [4][5][6].
 personal-cipher-preferences AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH 3DES IDEA
 personal-digest-preferences SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1
-personal-compress-preferences Uncompressed BZIP2 ZLIB ZIP
+personal-compress-preferences Uncompressed
 
 # Preferences for my own keys.
-default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH 3DES IDEA SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1 Uncompressed BZIP2 ZLIB ZIP
+default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH 3DES IDEA SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1 Uncompressed
 
 # Beef up passphrase mangling for symmetric encryption. Beyond
 # unnecessary for me [7], but I'm paranoid and this makes me feel
@@ -30,10 +29,6 @@ s2k-count 65011712
 no-comments
 no-emit-version
 throw-keyids
-
-# If we're going to compress, don't hold back.
-bzip2-compress-level 9
-compress-level 9
 
 # Ignore recipients' keyserver preferences [11].
 keyserver-options no-honor-keyserver-url
