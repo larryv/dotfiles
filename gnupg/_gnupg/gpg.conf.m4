@@ -9,14 +9,15 @@ __header__
 #   - Blowfish-128, CAST5, IDEA, and 3DES-168 are not suitable for
 #     encrypting large files due to small block size [2].
 #   - Blowfish has issues with weak keys, apparently [1].
-#   - IDEA is last because I just don't like the sound of it [3].
+#   - IDEA is penultimate because I don't like it for some reason [3].
+#     I might remove it entirely at some point.
 #   - Compression leaks information about message contents [4][5][6].
-personal-cipher-preferences AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH 3DES IDEA
+personal-cipher-preferences AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH IDEA 3DES
 personal-digest-preferences SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1
 personal-compress-preferences Uncompressed
 
 # Preferences for my own keys.
-default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH 3DES IDEA SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1 Uncompressed
+default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH IDEA 3DES SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1 Uncompressed
 
 # Beef up passphrase mangling for symmetric encryption. Beyond
 # unnecessary for me [7], but I'm paranoid and this makes me feel
