@@ -30,9 +30,7 @@ install: $(addsuffix -install,$(VPATH))
 uninstall: $(addsuffix -uninstall,$(VPATH))
 
 define load_module
-$(1)_dotfiles := $$(shell find $(1) -type f ! \( -name module.mk -o \
-                                                 -name '*.sw?' -o \
-                                                 -name '*~' \))
+$(1)_dotfiles := $$(shell find $(1) -type f -name '*.m4')
 $(1)_dotfiles := $$(subst /_,/.,$$($(1)_dotfiles))
 $(1)_dotfiles := $$(patsubst $(1)%.m4,$$(prefix)%,$$($(1)_dotfiles))
 
