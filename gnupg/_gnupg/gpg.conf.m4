@@ -19,6 +19,11 @@ personal-compress-preferences Uncompressed
 # Preferences for my own keys.
 default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH IDEA 3DES SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1 Uncompressed
 
+# Not particularly useful for the public web of trust because everyone
+# has their own definition of "trust", but I still want to provide
+# a rough idea of how thoroughly I've vetted a key.
+ask-cert-level
+
 # Beef up passphrase mangling for symmetric encryption. Beyond
 # unnecessary for me [7], but I'm paranoid and this makes me feel
 # better. (In GnuPG 2.1.12, gpg-agent doesn't respect gpg's --s2k-*
