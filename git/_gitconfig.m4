@@ -1,17 +1,18 @@
 __header__
 
 [alias]
-	a = add
 	ae = add --edit
 	ap = add --patch
 	au = add --update
 	c = commit
 	ca = commit --amend
+	cara = commit --amend --reset-author
 	d = diff
 	dc = diff --cached
 	rb = rebase
 	rba = rebase --abort
 	rbc = rebase --continue
+	rbi = rebase --interactive
 	s = status
 	sb = show-branch
 [color]
