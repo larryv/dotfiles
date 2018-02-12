@@ -17,7 +17,7 @@ personal-digest-preferences SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1
 personal-compress-preferences Uncompressed
 
 # Preferences for my own keys.
-default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BLOWFISH IDEA 3DES SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1 Uncompressed
+default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 3DES SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1 Uncompressed
 
 # Not particularly useful for the public web of trust because everyone
 # has their own definition of "trust", but I still want to provide
