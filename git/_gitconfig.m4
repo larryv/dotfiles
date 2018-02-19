@@ -23,7 +23,11 @@ __header__
 	verbose = true
 [core]
 	autocrlf = input
-	excludesFile = "printenv(«raw_prefix»,«/["\\]/»,«"\\\\&"»)/.gitexclude"
+dnl TODO: Find a more robust comparison.
+syscmd(«test "$HOME" != "${raw_prefix}"»)dnl
+ifelse(sysval, «0», «dnl
+	excludesFile = "printenv(«raw_prefix»,«/["\\]/»,«"\\\\&"»)/.config/git/ignore"
+»)dnl
 syscmd(«test -f /System/Library/LaunchDaemons/com.apple.revisiond.plist»)dnl
 ifelse(sysval, «0», «dnl
 	# Avoid problems with OS X revisiond.
