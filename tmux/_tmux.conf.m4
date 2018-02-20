@@ -23,8 +23,7 @@ if-shell 'command -v reattach-to-user-namespace >/dev/null' \
             'exec reattach-to-user-namespace -l "$SHELL"'"
 
 # Source Colemak keybindings if present.
-if-shell "[ -r '__prefix__/.tmux.conf.colemakerel' ]" \
-    "source-file '__prefix__/.tmux.conf.colemakerel'"
+source-file -q '__prefix__/.tmux.conf.colemakerel'
 
 divert(«-1»)
 vim: set filetype=tmux:
