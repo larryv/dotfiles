@@ -12,5 +12,4 @@ __header__
 export JAVA_HOME
 JAVA_HOME=$(/usr/libexec/java_home -F 2>/dev/null) || unset JAVA_HOME
 
-m4_divert(«-1»)
-vim: set filetype=zsh:
+# vim: set filetype=zsh:
