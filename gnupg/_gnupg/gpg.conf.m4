@@ -65,5 +65,5 @@ with-fingerprint
 #  12. "OpenPGP Key IDs are not useful"
 #      <https://debian-administration.org/users/dkg/weblog/105>
 
-m4_divert(«-1»)
+divert(«-1»)
 vim: set filetype=gpg:

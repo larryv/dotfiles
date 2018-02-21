@@ -23,17 +23,17 @@ __header__
 [core]
 	autocrlf = input
 	excludesFile = __prefix__/.gitexclude
-m4_syscmd(«test -f /System/Library/LaunchDaemons/com.apple.revisiond.plist»)m4_dnl
-m4_ifelse(m4_sysval, «0», «m4_dnl
+syscmd(«test -f /System/Library/LaunchDaemons/com.apple.revisiond.plist»)dnl
+ifelse(sysval, «0», «dnl
 	# Avoid problems with OS X revisiond.
 	# http://www.git-tower.com/blog/make-git-rebase-safe-on-osx
 	trustctime = false
-»)m4_dnl
+»)dnl
 [sendemail]
 	suppresscc = self
 
 [include]
 	path = .gitconfig.local
 
-m4_divert(«-1»)
+divert(«-1»)
 vim: set filetype=gitconfig:

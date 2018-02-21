@@ -13,5 +13,5 @@ do
     . $script
 done
 
-m4_divert(«-1»)
+divert(«-1»)
 vim: set filetype=zsh:

@@ -26,5 +26,5 @@ if-shell 'command -v reattach-to-user-namespace >/dev/null' \
 if-shell "[ -r '__prefix__/.tmux.conf.colemakerel' ]" \
     "source-file '__prefix__/.tmux.conf.colemakerel'"
 
-m4_divert(«-1»)
+divert(«-1»)
 vim: set filetype=tmux:
