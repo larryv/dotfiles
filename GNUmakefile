@@ -7,9 +7,6 @@
 SHELL := /bin/sh
 M4 := m4
 
-# The GnuPG dotfiles require restrictive permissions.
-UMASK := 077
-
 # Template parameters.
 prefix := $(wildcard ~)
 macros := prefix
@@ -26,7 +23,7 @@ installpath = $(foreach f,$(subst /_,/.,$(1)),$(patsubst $(firstword $(subst /, 
 # it in a variable to preserve the trailing newline, or else the
 # repetition erroneously produces one very long command.
 define installcmd
-umask $(UMASK) && cp $(1) '$(prefix)/$(call installpath,$(1))'
+cp $(1) '$(prefix)/$(call installpath,$(1))'
 
 endef
 
@@ -57,7 +54,7 @@ _$(1)-clean:
 	$$(RM) $$($(1)_files)
 # TODO: Remove unnecessary directories from installdirs.
 _$(1)-installdirs:
-	$$(if $$($(1)_dirs),cd -- '$$(prefix)' && umask $(UMASK) && mkdir -p $$($(1)_dirs))
+	$$(if $$($(1)_dirs),cd -- '$$(prefix)' && mkdir -p $$($(1)_dirs))
 _$(1)-install: $(1) $(1)-installdirs
 	$$(foreach f,$$($(1)_files),$$(call installcmd,$$(f)))
 _$(1)-uninstall:
