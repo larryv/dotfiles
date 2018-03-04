@@ -5,6 +5,7 @@
 
 # External programs.
 SHELL := /bin/sh
+M4 := m4
 
 # The GnuPG dotfiles require restrictive permissions.
 UMASK := 077
@@ -51,4 +52,4 @@ src = $(patsubst .%,_%,$(subst /.,/_,$*)).m4
 $(prefix)/% : $$(src) common.m4
 	umask $(UMASK) && \
     mkdir -p -- "$$(dirname '$@')" && \
-    '$(or $(M4),m4)' -P $(defines) common.m4 '$<' >'$@'
+    $(M4) -P $(defines) common.m4 '$<' >'$@'
