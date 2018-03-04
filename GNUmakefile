@@ -6,10 +6,6 @@
 # External programs.
 SHELL := /bin/sh
 
-ifeq ($(or $(VERBOSE),0),0)
-    quiet := @
-endif
-
 # The GnuPG dotfiles require restrictive permissions.
 UMASK := 077
 
@@ -53,7 +49,6 @@ defines := $(foreach macro,$(macros),-D __$(macro)__='$($(macro))')
 
 src = $(patsubst .%,_%,$(subst /.,/_,$*)).m4
 $(prefix)/% : $$(src) common.m4
-	$(quiet)umask $(UMASK) && \
+	umask $(UMASK) && \
     mkdir -p -- "$$(dirname '$@')" && \
     '$(or $(M4),m4)' -P $(defines) common.m4 '$<' >'$@'
-	@printf '$(if $(quiet),Wrote %s)\n' '$@' >&2
