@@ -1,4 +1,5 @@
 # Flotsam and jetsam.
+.DELETE_ON_ERROR:
 .NOTPARALLEL:           # mkdir -p may cause race conditions.
 .SECONDEXPANSION:
 .SUFFIXES:
