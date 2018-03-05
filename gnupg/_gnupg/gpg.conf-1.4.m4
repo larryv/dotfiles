@@ -1,16 +1,20 @@
 __header__
 
-# This configuration assumes GnuPG 2.1.16 (for the default keyserver).
-# Keep roughly synced with gpg.conf-1.4 and gpg.conf-2.0.
+# This configuration requires GnuPG 1.4.10. Keep roughly synced with
+# gpg.conf and gpg.conf-2.0.
 #
 # Any and all rationales are naïve. I have no idea what I'm doing.
+
+# Replace the outdated 1.4.10 default (SHA256 → SHA1 → SHA384 → SHA512
+# → SHA224) with the 2.2.4 default.
+personal-digest-preferences SHA256 SHA384 SHA512 SHA224 SHA1
 
 # The 2.2.4 defaults with some modifications.
 #   - Add Camellia and Twofish, GnuPG's other 128-bit block ciphers.
 #   - Add RIPEMD-160 to discourage use of SHA-1, which is broken as far
 #     as signatures are concerned [1].
 #   - Disallow compression, which leaks information about message
-#     contents [2][3][4].
+#     contents [1][2][3].
 personal-compress-preferences Uncompressed
 default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELLIA128 3DES SHA512 SHA384 SHA256 SHA224 RIPEMD160 SHA1 Uncompressed
 
@@ -19,10 +23,18 @@ default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELL
 # a rough idea of how thoroughly I've vetted a key.
 ask-cert-level
 
-# Try to hinder traffic analysis by removing recipients' key IDs [5][6].
+# Omit some plaintext metadata [4][5] from encrypted output.
+# (`no-emit-version` has been the default since 1.4.21.)
+no-emit-version
 throw-keyids
 
-# Show fingerprints because key IDs are garbage [7][8].
+# Use a TLS-enabled keyserver pool (requires 1.4.10) and ignore
+# recipients' keyserver preferences [6].
+keyserver hkps://hkps.pool.sks-keyservers.net
+dnl TODO: Determine whether gnupg_dir should be escaped, and how to do that.
+keyserver-options ca-cert-file=printenv(«gnupg_dir»)/sks-keyservers.netCA.pem no-honor-keyserver-url
+
+# Show fingerprints because key IDs are garbage [6][7].
 with-fingerprint
 
 
@@ -45,5 +57,4 @@ with-fingerprint
 #   8. "OpenPGP Key IDs are not useful"
 #      <https://debian-administration.org/users/dkg/weblog/105>
 
-divert(«-1»)
-vim: set filetype=gpg:
+# vim: set filetype=gpg:
