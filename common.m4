@@ -2,8 +2,8 @@ m4_divert(`-1')
 m4_changequote(`«', `»')
 m4_changecom
 
-The common dotfile header. Each line is prefixed with "# " by default;
-the caller may change this by specifying an argument.
+Print the common header. Each line is prefixed with "# " by default; the
+caller may change this by specifying an argument.
 
 m4_define(«__header__», «m4_dnl
 m4_ifelse(«$#», «0», «# », «$1»)m4_dnl

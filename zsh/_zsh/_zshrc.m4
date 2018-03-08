@@ -4,7 +4,7 @@ __header__
 # escapes and set colors with raw SGR parameters throughout.
 
 # Left: Hostname, history number, and privileges/shell-nesting
-#   indicator, colored green/red if last command succeeded/failed.
+#   indicator, colored green/red if the last command succeeded/failed.
 # Right: Current working directory, truncated to half screen width.
 setopt PROMPT_SUBST
 PS1='[%m] %B%h '\
@@ -25,8 +25,7 @@ autoload -Uz vcs_info && vcs_info 2>/dev/null && {
     zstyle ':vcs_info:*' actionformats '(%s:%b|%a)'
     zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
-    # Colorize based on repository status: Green/yellow/red for
-    # no/staged/unstaged changes, respectively.
+    # Color green/yellow/red if there are no/staged/unstaged changes.
     zstyle ':vcs_info:git:*' check-for-changes true
     zstyle ':vcs_info:git:*' unstagedstr $'%{\e[31m%}'
     zstyle ':vcs_info:git:*' stagedstr $'%{\e[33m%}'
@@ -73,13 +72,13 @@ setopt INC_APPEND_HISTORY_TIME 2>/dev/null
 # TODO: Only alias Hex Fiend if it exists.
 if [[ $OSTYPE == darwin* ]]
 then
-    #hf (); emulate zsh -c "open -a 'Hex Fiend' $*"
+    # hf (); emulate zsh -c "open -a 'Hex Fiend' $*"
     alias hf="open -a 'Hex Fiend'"
 fi
-#ls (); emulate zsh -c 'command ls -AFh '"$argv[*]"
+# ls (); emulate zsh -c 'command ls -AFh '"$argv[*]"
 alias ls='ls -AFh'
 
-# Print timing stats for commands that run over 10 seconds.
+# Print timing stats for commands that use over 10 seconds of CPU time.
 REPORTTIME=10
 
 # The zsh documentation discourages setting environment variables from

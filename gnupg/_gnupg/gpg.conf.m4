@@ -34,7 +34,7 @@ throw-keyids
 # Ignore recipients' keyserver preferences [11].
 keyserver-options no-honor-keyserver-url
 
-# Show fingerprints where possible because key IDs are garbage [12].
+# Show fingerprints because key IDs are garbage [11][12].
 with-fingerprint
 
 
