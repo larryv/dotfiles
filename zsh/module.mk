@@ -1,2 +1,1 @@
-zsh_dir := $(prefix)/.zsh
-macros += zsh_dir
+export quoted_zsh_dir := $(quoted_prefix)/.zsh

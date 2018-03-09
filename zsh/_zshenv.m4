@@ -1,6 +1,6 @@
 __header__
 
-ZDOTDIR='__zsh_dir__'
+ZDOTDIR='printenv(«quoted_zsh_dir»)'
 
 # I can't think of a good reason to allow duplicates in these arrays.
 typeset -aU fpath path

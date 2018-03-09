@@ -22,7 +22,7 @@ __header__
 	verbose = true
 [core]
 	autocrlf = input
-	excludesFile = __prefix__/.gitexclude
+	excludesFile = "printenv(«raw_prefix»,«/["\\]/»,«"\\\\&"»)/.gitexclude"
 syscmd(«test -f /System/Library/LaunchDaemons/com.apple.revisiond.plist»)dnl
 ifelse(sysval, «0», «dnl
 	# Avoid problems with OS X revisiond.

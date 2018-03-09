@@ -1,2 +1,2 @@
 MACPORTS := /opt/local
-macros += MACPORTS
+export quoted_MACPORTS := $(call shellquote,$(value MACPORTS))
