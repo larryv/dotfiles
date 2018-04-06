@@ -25,6 +25,9 @@ throw-keyids
 # Show fingerprints because key IDs are garbage [7][8].
 with-fingerprint
 
+# Ensure new key is used. Remove after revoking old key.
+default-key 0x3FD9032247DE2D201E7528C49AC940DFFD017443
+
 
 # References:
 #
