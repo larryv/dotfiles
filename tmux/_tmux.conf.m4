@@ -24,7 +24,7 @@ if-shell 'command -v reattach-to-user-namespace >/dev/null' \
 
 # Source Colemak keybindings if present.
 dnl Determine whether this needs to be quoted and how to do so.
-source-file -q 'printenv(«raw_prefix»)/.tmux.conf.colemakerel'
+source-file -q 'printenv(«raw_prefix»)/.tmux.conf.colemakrc'
 
 divert(«-1»)
 vim: set filetype=tmux:
