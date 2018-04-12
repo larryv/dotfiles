@@ -7,6 +7,7 @@ __header__
 	c = commit
 	ca = commit --amend
 	cara = commit --amend --reset-author
+	cp = cherry-pick
 	d = diff
 	dc = diff --cached
 	rb = rebase
