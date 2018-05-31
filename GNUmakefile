@@ -10,7 +10,7 @@ M4 := m4
 
 # The repository's child directories are "modules", containing "slices"
 # of the final directory tree. These are "layered" during installation.
-MODULES := git gnupg java lynx macports mercurial tmux zsh
+MODULES := git gnupg java less lynx macports mercurial readline tmux vim zsh
 
 # Given two lists, expands to one newline-terminated cp(1) invocation
 # for each corresponding pair of elements. Used to generate the
