@@ -50,15 +50,19 @@ endef
 #   - "make uninstall": uninstall all dotfiles
 
 define load_module
-# Find M4 templates automatically. Modules can add other files explicitly.
-$(1)_files := $$(basename $$(shell find $(1) -type f -name '*.m4'))
+include $(1)/module.mk
+
+# Modules can declare two lists of files to install:
+#   - *_files: should never be deleted
+#   - *_clean_files: should be deleted by "make clean"
+$(1)_src_files := $$(sort $$($(1)_files) $$($(1)_clean_files))
 
 # Determine which directories to try creating.
-$(1)_dirs = $$(filter-out ./,$$(sort $$(dir $$(call installpath,$$($(1)_files)))))
+$(1)_dirs := $$(filter-out ./,$$(sort $$(dir $$(call installpath,$$($(1)_src_files)))))
 
 # Modules can augment these dummy targets.
 .PHONY: $(1) $$(addprefix $(1)-,clean installdirs install uninstall)
-$(1): $$$$($(1)_files)
+$(1): $$$$($(1)_src_files)
 $(1)-clean: _$(1)-clean
 $(1)-installdirs: _$(1)-installdirs
 $(1)-install: _$(1)-install
@@ -67,20 +71,17 @@ $(1)-uninstall: _$(1)-uninstall
 # Helper targets that do the real work.
 .PHONY: $$(addprefix _$(1)-,clean installdirs install uninstall)
 _$(1)-clean:
-	$$(RM) $$($(1)_files)
+	$$(if $$($(1)_clean_files),$$(RM) $$($(1)_clean_files))
 # TODO: Remove unnecessary directories from installdirs.
 _$(1)-installdirs:
 	$$(if $$($(1)_dirs),cd -- '$$(quoted_prefix)' && mkdir -p $$($(1)_dirs))
 _$(1)-install: $(1) $(1)-installdirs
-	$$(foreach f,$$($(1)_files),$$(call installcmd,$$(f)))
+	$$(foreach f,$$($(1)_src_files),$$(call installcmd,$$(f)))
 _$(1)-uninstall:
-	cd -- '$$(quoted_prefix)' && $$(RM) $$(call installpath,$$($(1)_files))
+	cd -- '$$(quoted_prefix)' && $$(RM) $$(call installpath,$$($(1)_src_files))
 endef
 
 $(foreach module,$(MODULES),$(eval $(call load_module,$(module))))
-
-# Let modules alter the install process.
-sinclude $(addsuffix /module.mk,$(MODULES))
 
 .PHONY: all clean installdirs install uninstall
 .DEFAULT_GOAL := all
