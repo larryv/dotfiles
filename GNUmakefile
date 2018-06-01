@@ -52,10 +52,13 @@ endef
 define load_module
 include $(1)/module.mk
 
-# Modules can declare two lists of files to install:
+# Modules can declare three lists of files to install:
 #   - *_files: should never be deleted
-#   - *_clean_files: should be deleted by "make clean"
-$(1)_src_files := $$(sort $$($(1)_files) $$($(1)_clean_files))
+#   - *_clean_files: should be deleted by "make clean" and "make maintainer-clean"
+#   - *_maintclean_files: should be deleted by "make maintainer-clean"
+$(1)_src_files := $$(sort $$($(1)_files) \
+                          $$($(1)_clean_files) \
+                          $$($(1)_maintclean_files))
 
 # Determine which directories to try creating.
 $(1)_dirs := $$(filter-out ./,$$(sort $$(dir $$(call installpath,$$($(1)_src_files)))))
@@ -64,6 +67,7 @@ $(1)_dirs := $$(filter-out ./,$$(sort $$(dir $$(call installpath,$$($(1)_src_fil
 .PHONY: $(1) $$(addprefix $(1)-,clean installdirs install uninstall)
 $(1): $$$$($(1)_src_files)
 $(1)-clean: _$(1)-clean
+$(1)-maintainer-clean: _$(1)-maintainer-clean
 $(1)-installdirs: _$(1)-installdirs
 $(1)-install: _$(1)-install
 $(1)-uninstall: _$(1)-uninstall
@@ -72,6 +76,8 @@ $(1)-uninstall: _$(1)-uninstall
 .PHONY: $$(addprefix _$(1)-,clean installdirs install uninstall)
 _$(1)-clean:
 	$$(if $$($(1)_clean_files),$$(RM) $$($(1)_clean_files))
+_$(1)-maintainer-clean: $(1)-clean
+	$$(if $$($(1)_maintclean_files),$$(RM) $$($(1)_maintclean_files))
 # TODO: Remove unnecessary directories from installdirs.
 _$(1)-installdirs:
 	$$(if $$($(1)_dirs),cd -- '$$(quoted_prefix)' && mkdir -p $$($(1)_dirs))
@@ -87,6 +93,7 @@ $(foreach module,$(MODULES),$(eval $(call load_module,$(module))))
 .DEFAULT_GOAL := all
 all: $(MODULES)
 clean: $(addsuffix -clean,$(MODULES))
+maintainer-clean: $(addsuffix -maintainer-clean,$(MODULES))
 installdirs: $(addsuffix -installdirs,$(MODULES))
 install: $(addsuffix -install,$(MODULES))
 uninstall: $(addsuffix -uninstall,$(MODULES))
