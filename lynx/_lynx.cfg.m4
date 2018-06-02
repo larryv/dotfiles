@@ -1,5 +1,3 @@
-__header__
-
 syscmd(«test -d ~/Downloads»)dnl
 ifelse(sysval, «0», «SAVE_SPACE:~/Downloads
 

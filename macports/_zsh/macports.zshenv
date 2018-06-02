@@ -1,5 +1,3 @@
-__header__
-
 macports_path=(/opt/local/bin /opt/local/sbin)
 
 # On OS X Yosemite and earlier, the system-installed /etc/zshenv

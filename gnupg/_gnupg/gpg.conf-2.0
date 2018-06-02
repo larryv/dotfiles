@@ -1,12 +1,10 @@
-__header__
-
-# This configuration requires GnuPG 1.4.10. Keep roughly synced with
-# gpg.conf and gpg.conf-2.0.
+# This configuration requires GnuPG 2.0.12. Keep roughly synced with
+# gpg.conf and gpg.conf-1.4.
 #
 # Any and all rationales are naïve. I have no idea what I'm doing.
 
-# Replace the outdated 1.4.10 default (SHA256 → SHA1 → SHA384 → SHA512
-# → SHA224) with the 2.2.4 default.
+# Replace the outdated 2.0.12 default (SHA1 → SHA256 → RIPEMD160) with
+# the 2.2.4 default.
 personal-digest-preferences SHA256 SHA384 SHA512 SHA224 SHA1
 
 # The 2.2.4 defaults with some modifications.
@@ -24,11 +22,11 @@ default-preference-list AES256 CAMELLIA256 TWOFISH AES192 CAMELLIA192 AES CAMELL
 ask-cert-level
 
 # Omit some plaintext metadata [4][5] from encrypted output.
-# (`no-emit-version` has been the default since 1.4.21.)
+# (`no-emit-version` is the default in 2.0.31.)
 no-emit-version
 throw-keyids
 
-# Use a TLS-enabled keyserver pool (requires 1.4.10) and ignore
+# Use a TLS-enabled keyserver pool (requires 2.0.12) and ignore
 # recipients' keyserver preferences [6].
 # TODO: Make sure ca-cert-file defaults to ~/.gnupg.
 keyserver hkps://hkps.pool.sks-keyservers.net

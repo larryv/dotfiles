@@ -1,5 +1,3 @@
-__header__
-
 [alias]
 	ae = add --edit
 	ap = add --patch

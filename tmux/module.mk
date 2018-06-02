@@ -1,1 +1,1 @@
-tmux_clean_files := tmux/_tmux.conf
+tmux_files := tmux/_tmux.conf

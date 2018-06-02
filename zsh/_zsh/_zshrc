@@ -1,5 +1,3 @@
-__header__
-
 # For compatibility with zsh 4.3.6 and older, avoid the %F and %f prompt
 # escapes and set colors with raw SGR parameters throughout.
 
@@ -97,5 +95,4 @@ do
     . $script
 done
 
-divert(«-1»)
-vim: set filetype=zsh:
+# vim: set filetype=zsh:

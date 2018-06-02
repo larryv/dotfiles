@@ -1,1 +1,1 @@
-mercurial_clean_files := mercurial/_hgrc
+mercurial_files := mercurial/_hgrc
