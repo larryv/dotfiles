@@ -21,6 +21,14 @@ $(if $(1),cp $(firstword $(1)) $(firstword $(2))
 $(call $(0),$(wordlist 2,$(3),$(1)),$(wordlist 2,$(3),$(2)),$(3)))
 endef
 
+# Given a list of paths, return the ones that are not prefixes of any
+# other path. The output is intended for use with "mkdir -p", which
+# implicitly creates the parent directories of its arguments.
+collapsedirs = $(strip $(call _collapsedirs,$(sort $(1)),$(words $(1))))
+define _collapsedirs
+$(if $(1),\
+    $(if $(filter $(firstword $(1))%,$(wordlist 2,$(2),$(1))),,$(firstword $(1)))\
+    $(call $(0),$(wordlist 2,$(2),$(1)),$(2)))
 endef
 
 # Generate per-module targets and prerequisites. For example:
@@ -47,7 +55,7 @@ $(1)_src_files := $$(sort $$($(1)_files) \
 $(1)_dst_files := $$(patsubst $(1)/%,~/%,$$(subst /_,/.,$$($(1)_src_files)))
 
 # Determine which directories to try creating.
-$(1)_dirs := $$(filter-out ~/,$$(sort $$(dir $$($(1)_dst_files))))
+$(1)_dirs := $$(filter-out ~/,$$(call collapsedirs,$$(dir $$($(1)_dst_files))))
 
 # Modules can augment these dummy targets.
 .PHONY: $(1) $$(addprefix $(1)-,clean installdirs install uninstall)
