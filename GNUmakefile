@@ -12,15 +12,14 @@ M4 := m4
 # of the final directory tree. These are "layered" during installation.
 MODULES := git gnupg java lynx macports mercurial tmux zsh
 
-# Transform repository pathnames into installation pathnames by replacing
-# leading underscores with dots and removing the prefixed module name.
-installpath = $(foreach f,$(subst /_,/.,$(1)),$(patsubst $(firstword $(subst /, ,$(f)))/%,%,$(f)))
-
-# The _*-install targets repeat this command once for each file. Store
-# it in a variable to preserve the trailing newline, or else the
-# repetition erroneously produces one very long command.
-define installcmd
-cp $(1) ~/$(call installpath,$(1))
+# Given two lists, expands to one newline-terminated cp(1) invocation
+# for each corresponding pair of elements. Used to generate the
+# _*-install commands.
+installcmds = $(call _installcmds,$(1),$(2),$(words $(1)))
+define _installcmds
+$(if $(1),cp $(firstword $(1)) $(firstword $(2))
+$(call $(0),$(wordlist 2,$(3),$(1)),$(wordlist 2,$(3),$(2)),$(3)))
+endef
 
 endef
 
@@ -43,8 +42,12 @@ $(1)_src_files := $$(sort $$($(1)_files) \
                           $$($(1)_clean_files) \
                           $$($(1)_maintclean_files))
 
+# Transform repository pathnames into installation pathnames by replacing
+# leading underscores with dots and removing the prefixed module name.
+$(1)_dst_files := $$(patsubst $(1)/%,~/%,$$(subst /_,/.,$$($(1)_src_files)))
+
 # Determine which directories to try creating.
-$(1)_dirs := $$(filter-out ./,$$(sort $$(dir $$(call installpath,$$($(1)_src_files)))))
+$(1)_dirs := $$(filter-out ~/,$$(sort $$(dir $$($(1)_dst_files))))
 
 # Modules can augment these dummy targets.
 .PHONY: $(1) $$(addprefix $(1)-,clean installdirs install uninstall)
@@ -63,11 +66,11 @@ _$(1)-maintainer-clean: $(1)-clean
 	$$(if $$($(1)_maintclean_files),$$(RM) $$($(1)_maintclean_files))
 # TODO: Remove unnecessary directories from installdirs.
 _$(1)-installdirs:
-	$$(if $$($(1)_dirs),cd && mkdir -p $$($(1)_dirs))
+	$$(if $$($(1)_dirs),mkdir -p $$($(1)_dirs))
 _$(1)-install: $(1) $(1)-installdirs
-	$$(foreach f,$$($(1)_src_files),$$(call installcmd,$$(f)))
+	$$(call installcmds,$$($(1)_src_files),$$($(1)_dst_files))
 _$(1)-uninstall:
-	cd && $$(RM) $$(call installpath,$$($(1)_src_files))
+	$$(RM) $$($(1)_dst_files)
 endef
 
 $(foreach module,$(MODULES),$(eval $(call load_module,$(module))))

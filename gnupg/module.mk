@@ -10,4 +10,4 @@ gnupg_files := gnupg/_gnupg/sks-keyservers.netCA.pem
 gnupg-installdirs:
 	chmod 700 ~/.gnupg
 gnupg-install:
-	cd && chmod 600 $(call installpath,$(filter gnupg/_gnupg/%,$(gnupg_src_files)))
+	chmod 600 $(filter ~/.gnupg/%,$(gnupg_dst_files))
