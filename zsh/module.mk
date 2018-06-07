@@ -1,5 +1,3 @@
-export quoted_zsh_dir := $(quoted_prefix)/.zsh
-
 zsh_clean_files := zsh/_zsh/_zlogin \
                    zsh/_zsh/_zprofile \
                    zsh/_zsh/_zshrc \

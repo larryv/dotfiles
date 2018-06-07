@@ -30,9 +30,9 @@ throw-keyids
 
 # Use a TLS-enabled keyserver pool (requires 2.0.12) and ignore
 # recipients' keyserver preferences [6].
+# TODO: Make sure ca-cert-file defaults to ~/.gnupg.
 keyserver hkps://hkps.pool.sks-keyservers.net
-dnl TODO: Determine whether gnupg_dir should be escaped, and how to do that.
-keyserver-options ca-cert-file=printenv(«gnupg_dir»)/sks-keyservers.netCA.pem no-honor-keyserver-url
+keyserver-options ca-cert-file=sks-keyservers.netCA.pem no-honor-keyserver-url
 
 # Show fingerprints because key IDs are garbage [6][7].
 with-fingerprint

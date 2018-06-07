@@ -4,26 +4,9 @@
 .SECONDEXPANSION:
 .SUFFIXES:
 
-# Root of the destination tree.
-prefix := $(wildcard ~)
-
 # External programs.
 SHELL := /bin/sh
 M4 := m4
-
-# Quote strings for injection between POSIX shell single quotes
-# (http://www.etalabs.net/sh_tricks.html, § "Shell-quoting arbitrary
-# strings"). Variables should be passed using the "value" function to
-# prevent '$' characters from being evaluated.
-shellquote = $(subst ','\'',$(1))
-
-# M4 templates can use the printenv macro in common.m4 to output the
-# values of exported Make variables. (About "raw_prefix": If "prefix" is
-# set via the command line, GNU Make 3.81 seems to expand it before
-# exporting it, mangling paths that contain '$'. Using a separate
-# variable works around this.)
-export raw_prefix := $(value prefix)
-export quoted_prefix := $(call shellquote,$(value prefix))
 
 # The repository's child directories are "modules", containing "slices"
 # of the final directory tree. These are "layered" during installation.
@@ -37,7 +20,7 @@ installpath = $(foreach f,$(subst /_,/.,$(1)),$(patsubst $(firstword $(subst /, 
 # it in a variable to preserve the trailing newline, or else the
 # repetition erroneously produces one very long command.
 define installcmd
-cp $(1) '$(quoted_prefix)/$(call installpath,$(1))'
+cp $(1) ~/$(call installpath,$(1))
 
 endef
 
@@ -80,11 +63,11 @@ _$(1)-maintainer-clean: $(1)-clean
 	$$(if $$($(1)_maintclean_files),$$(RM) $$($(1)_maintclean_files))
 # TODO: Remove unnecessary directories from installdirs.
 _$(1)-installdirs:
-	$$(if $$($(1)_dirs),cd -- '$$(quoted_prefix)' && mkdir -p $$($(1)_dirs))
+	$$(if $$($(1)_dirs),cd && mkdir -p $$($(1)_dirs))
 _$(1)-install: $(1) $(1)-installdirs
 	$$(foreach f,$$($(1)_src_files),$$(call installcmd,$$(f)))
 _$(1)-uninstall:
-	cd -- '$$(quoted_prefix)' && $$(RM) $$(call installpath,$$($(1)_src_files))
+	cd && $$(RM) $$(call installpath,$$($(1)_src_files))
 endef
 
 $(foreach module,$(MODULES),$(eval $(call load_module,$(module))))
