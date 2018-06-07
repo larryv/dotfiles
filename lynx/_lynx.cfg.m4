@@ -10,5 +10,4 @@ INCLUDE:.lynx.cfg.colemakrc for KEYMAP
 # Host-specific settings.
 INCLUDE:.lynx.cfg.local
 
-divert(«-1»)
-vim: set filetype=lynx:
+# vim: set filetype=lynx:

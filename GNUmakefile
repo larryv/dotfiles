@@ -52,9 +52,11 @@ endef
 define load_module
 # Find M4 templates automatically. Modules can add other files explicitly.
 $(1)_files := $$(basename $$(shell find $(1) -type f -name '*.m4'))
+
+# Determine which directories to try creating.
 $(1)_dirs = $$(filter-out ./,$$(sort $$(dir $$(call installpath,$$($(1)_files)))))
 
-# Modules can "overload" these targets because they lack recipes.
+# Modules can augment these dummy targets.
 .PHONY: $(1) $$(addprefix $(1)-,clean installdirs install uninstall)
 $(1): $$$$($(1)_files)
 $(1)-clean: _$(1)-clean
