@@ -1,16 +1,35 @@
-# For compatibility with zsh 4.3.6 and older, avoid the %F and %f prompt
-# escapes and set colors with raw SGR parameters throughout.
+# The %F prompt escape was introduced in zsh 4.3.7. Use the numbered
+# form (e.g., %1F) so zsh uses termcap instead of ANSI sequences:
+#   - https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c
+#   - http://mywiki.wooledge.org/BashFAQ/037
+#   - http://wiki.bash-hackers.org/scripting/terminalcodes
+function {
+    typeset -a vers=(${(s:.:)ZSH_VERSION})
+    if (( vers[1] > 4
+            || vers[1] == 4 && vers[2] > 3
+            || vers[1] == 4 && vers[2] == 3 && vers[3] >= 7 ))
+    then
+        zsh_has_prompt_F=yes
+    fi
+}
 
 # TODO: If compatible with 4.3.6, move everything into a prompt theme.
 
 # Required for vcs_info and some other fancypants junk.
 setopt PROMPT_SUBST
 
-# Left prompt: Hostname, history number, and privileges/shell-nesting
-# indicator (colored green/red if the last command succeeded/failed).
-PS1='[%m] %B%h '\
-$'%(?.%{\e[32m%}.%{\e[31m%})${(r:$((SHLVL * 2))::%#:)}%{\e[0m%}'\
-'%b '
+# Left prompt: Hostname, history number, indication of last exit status,
+# privileges/shell-nesting indicator.
+PS1='[%m] %B%h%b '
+if [[ -n ${zsh_has_prompt_F} ]]
+then
+    # Color the privileges/shell-nesting indicator green if the last
+    # exit status was 0, red otherwise.
+    PS1+='%(?.%2F.%1F)%B${(r:$((SHLVL * 2))::%#:)}%b%f '
+else
+    # Display the last exit status directly.
+    PS1+='(%?) %B${(r:$((SHLVL * 2))::%#:)}%b '
+fi
 
 # Right prompt: Current working directory (truncated to half screen
 # width) and version control info.
@@ -26,13 +45,20 @@ autoload -Uz vcs_info && vcs_info 2>/dev/null && {
     zstyle ':vcs_info:*' actionformats '(%s:%b|%a)'
     zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
-    # Color green/yellow/red if there are no/staged/unstaged changes.
     zstyle ':vcs_info:git:*' check-for-changes true
-    zstyle ':vcs_info:git:*' unstagedstr $'%{\e[31m%}'
-    zstyle ':vcs_info:git:*' stagedstr $'%{\e[33m%}'
-    zstyle ':vcs_info:git:*' formats $'%{\e[32m%}%u%c(%s:%b)%{\e[0m%}'
-    zstyle ':vcs_info:git:*' actionformats \
-            $'%{\e[32m%}%u%c(%s:%b|%a)%{\e[0m%}'
+    if [[ -n ${zsh_has_prompt_F} ]]
+    then
+        # Color green/yellow/red if there are no/staged/unstaged changes.
+        zstyle ':vcs_info:git:*' unstagedstr '%1F'
+        zstyle ':vcs_info:git:*' stagedstr '%3F'
+        zstyle ':vcs_info:git:*' formats '%2F%u%c(%s:%b)%f'
+        zstyle ':vcs_info:git:*' actionformats '%2F%u%c(%s:%b|%a)%f'
+    else
+        zstyle ':vcs_info:git:*' unstagedstr ':U'
+        zstyle ':vcs_info:git:*' stagedstr ':S'
+        zstyle ':vcs_info:git:*' formats '(%s:%b%u%c)'
+        zstyle ':vcs_info:git:*' actionformats '(%s:%b%u%c|%a)'
+    fi
 }
 
 # Send current working directory to the terminal emulator.
@@ -45,8 +71,12 @@ autoload -Uz update_terminal_pwd && update_terminal_pwd 2>/dev/null && {
 autoload -Uz run-help zargs zrecompile
 autoload -Uz compinit && compinit && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
-    zstyle ':completion:*:warnings' format \
-            $'%B%{\e[31m%}No matches for %d%{\e[0m%}%b'
+    if [[ -n ${zsh_has_prompt_F} ]]
+    then
+        zstyle ':completion:*:warnings' format '%1F%BNo matches for %d%b%f'
+    else
+        zstyle ':completion:*:warnings' format '%BNo matches for %d%b'
+    fi
 }
 
 # Enable fancy globbing; stop at slashes when moving wordwise.
@@ -130,5 +160,8 @@ for script in $ZDOTDIR/*.zshrc(N)
 do
     . $script
 done
+
+# Cleanup
+unset zsh_has_prompt_F
 
 # vim: set filetype=zsh:
