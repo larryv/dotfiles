@@ -1,20 +1,23 @@
 # For compatibility with zsh 4.3.6 and older, avoid the %F and %f prompt
 # escapes and set colors with raw SGR parameters throughout.
 
-# Left: Hostname, history number, and privileges/shell-nesting
-#   indicator, colored green/red if the last command succeeded/failed.
-# Right: Current working directory, truncated to half screen width.
+# TODO: If compatible with 4.3.6, move everything into a prompt theme.
+
+# Required for vcs_info and some other fancypants junk.
 setopt PROMPT_SUBST
+
+# Left prompt: Hostname, history number, and privileges/shell-nesting
+# indicator (colored green/red if the last command succeeded/failed).
 PS1='[%m] %B%h '\
 $'%(?.%{\e[32m%}.%{\e[31m%})${(r:$((SHLVL * 2))::%#:)}%{\e[0m%}'\
 '%b '
-RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 
-# Add version control info to the right-hand prompt.
+# Right prompt: Current working directory (truncated to half screen
+# width) and version control info.
+RPS1='%B%$((COLUMNS / 2))<..<%~%b'
 autoload -Uz vcs_info && vcs_info 2>/dev/null && {
     typeset -a precmd_functions
     precmd_functions+=vcs_info
-
     RPS1+='${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}'
 
     zstyle ':vcs_info:*' enable git hg svn
@@ -30,9 +33,6 @@ autoload -Uz vcs_info && vcs_info 2>/dev/null && {
     zstyle ':vcs_info:git:*' formats $'%{\e[32m%}%u%c(%s:%b)%{\e[0m%}'
     zstyle ':vcs_info:git:*' actionformats \
             $'%{\e[32m%}%u%c(%s:%b|%a)%{\e[0m%}'
-
-    zstyle ':vcs_info:*' disable-patterns \
-            "~/Projects/(ast|gcc)(|/*)"
 }
 
 # Send current working directory to the terminal emulator.
