@@ -92,13 +92,8 @@ setopt EXTENDED_HISTORY
 # requires setting APPEND_HISTORY explicitly.
 setopt INC_APPEND_HISTORY_TIME 2>/dev/null
 
-# Aliases.
-#
-# TODO: Make the function versions handle argument quoting properly.
-# This currently fails pretty badly. Just try running "ls" on
-# a directory with a quoted space in its name.
-# ls (); emulate zsh -c 'command ls -AFh '"$argv[*]"
-alias ls='ls -AFh'
+# Interactive functions.
+function ls { command ls -AFh "$@" }
 
 # Print timing stats for commands that use over 10 seconds of CPU time.
 REPORTTIME=10
