@@ -1,11 +1,9 @@
 [[ -o LOGIN ]] || return 0
 
 # Use quasiqwertyrc keybindings if available.
-function {
-    if [[ -f $1 ]]
-    then
-        export INPUTRC=$1
-    fi
-} ~/.quasiqwertyrc/${kbd_layout}/inputrc
+if [[ -f ~/.quasiqwertyrc/inputrc ]]
+then
+    export INPUTRC=~/.quasiqwertyrc/inputrc
+fi
 
 # vim: set filetype=zsh:

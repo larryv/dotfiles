@@ -107,41 +107,11 @@ then
     export PAGER=less
     export VISUAL=vim
 
-    # Determine if the active keyboard layout is from QuasiQWERTY.
-    kbd_layout=$(defaults read com.apple.HIToolbox.plist \
-                    AppleCurrentKeyboardLayoutInputSourceID 2>/dev/null)
-    case ${kbd_layout} in
-        me.larryv.keylayout.*)
-            kbd_layout=${kbd_layout#*.keylayout.}
-            ;;
-        *)
-            kbd_layout=
-            ;;
-    esac
-
-    # Helper function for managing symbolic links to quasiqwertyrc.
-    function update_ln {
-        local src=$1 dst=$2
-        cd ${dst:h} && {
-            if [[ ! -e $src ]]
-            then
-                rm -f $dst
-            elif [[ ! $src -ef $dst ]]
-            then
-                ln -fs $src $dst
-            fi
-        } always {
-            cd $OLDPWD
-        }
-    }
-
     # Use quasiqwertyrc keybindings if available.
-    function {
-        if [[ -f $1 ]]
-        then
-            . $1
-        fi
-    } ~/.quasiqwertyrc/${kbd_layout}/zshrc
+    if [[ -f ~/.quasiqwertyrc/zshrc ]]
+    then
+        . ~/.quasiqwertyrc/zshrc
+    fi
 fi
 
 # Source application-specific "topic" scripts.

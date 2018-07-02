@@ -4,8 +4,4 @@ do
     . $script
 done
 
-# Clean up after quasiqwertyrc setup.
-unfunction update_ln
-unset kbd_layout
-
 # vim: set filetype=zsh:

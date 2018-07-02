@@ -3,7 +3,7 @@ ifelse(sysval, «0», «SAVE_SPACE:~/Downloads
 
 »)dnl
 # Use quasiqwertyrc keymap if present.
-INCLUDE:.lynx.cfg.quasiqwertyrc for KEYMAP
+INCLUDE:.quasiqwertyrc/lynx.cfg for KEYMAP
 
 # Host-specific settings.
 INCLUDE:.lynx.cfg.local
