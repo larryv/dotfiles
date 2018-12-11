@@ -30,7 +30,7 @@ emulate -L zsh
 # to correctly encode multibyte Unicode characters. TODO: Implement some
 # fallbacks for systems without hostname(1).
 setopt EXTENDED_GLOB NO_MULTIBYTE
-local fullpath="$(hostname -s)${PWD}"
+local fullpath="$(hostname)${PWD}"
 local encodedpath=${fullpath//(#m)[^\/]/%$(([##16] ##${MATCH}))}
 
 # This OSC sequence is from Terminal.app's General Preferences.
