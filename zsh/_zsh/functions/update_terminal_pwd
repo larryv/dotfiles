@@ -15,7 +15,7 @@
 #     typeset -a chpwd_functions
 #     chpwd_functions+=update_terminal_pwd
 #
-# Currently supports OS X's Terminal.app.
+# Currently supports Terminal.app on OS X / macOS.
 
 
 emulate -L zsh
@@ -23,14 +23,9 @@ emulate -L zsh
 # TODO: Figure out how to communicate terminal type via SSH.
 [[ ${TERM_PROGRAM} == Apple_Terminal || -n ${SSH_TTY} ]] || return
 
-# Adapted from:
-#   - OS X's /etc/bashrc
-#   - https://stackoverflow.com/a/187853/50102 (which is slightly
-#     incorrect)
-#   - https://timingapp.com/help/terminal
-
-# Percent-encode the URI components. Non-intuitively, we must *disable*
-# MULTIBYTE to correctly encode multibyte Unicode characters.
+# Percent-encode the URI components, except for slashes in the path.
+# Non-intuitively, we must *disable* MULTIBYTE to correctly encode
+# multibyte Unicode characters.
 #
 # For portability and robustness, use logname(1) instead of $LOGNAME or
 # $USER [1][2].
@@ -50,8 +45,7 @@ encpath=${PWD//(#m)[^\/]/%$(([##16] ##${MATCH}))}
 # This OSC sequence is from Terminal.app's General Preferences.
 local fmt='\e]7;%s\a'
 
-# Inside tmux, wrap the sequence to pass it through (see
-# https://mail-archive.com/tmux-users@lists.sourceforge.net/msg03485.html).
+# Inside tmux, wrap the sequence to pass it through [3].
 [[ -n $TMUX ]] && fmt='\ePtmux;\e'${fmt}'\e\'
 
 # Assemble URI and print complete sequence to the terminal emulator.
@@ -61,5 +55,13 @@ printf $fmt file://${encuser:+${encuser}@}${enchost}${encpath}
 # References
 #   1. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/logname.html
 #   2. https://unix.stackexchange.com/a/76369/2803
+#   3. https://mail-archive.com/tmux-users@lists.sourceforge.net/msg03485.html
+
+# See also
+#   - /etc/bashrc and /etc/bashrc_Apple_Terminal on OS X / macOS
+#   - https://stackoverflow.com/a/187853/50102 (which is slightly
+#     incorrect)
+#   - https://timingapp.com/help/terminal
+
 
 # vim: set filetype=zsh:

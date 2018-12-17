@@ -72,7 +72,6 @@ _$(1)-clean:
 	$$(if $$($(1)_clean_files),$$(RM) $$($(1)_clean_files))
 _$(1)-maintainer-clean: $(1)-clean
 	$$(if $$($(1)_maintclean_files),$$(RM) $$($(1)_maintclean_files))
-# TODO: Remove unnecessary directories from installdirs.
 _$(1)-installdirs:
 	$$(if $$($(1)_dirs),mkdir -p $$($(1)_dirs))
 _$(1)-install: $(1) $(1)-installdirs

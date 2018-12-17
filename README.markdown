@@ -19,21 +19,16 @@ It may or may not work with other versions.
 
 All commands must be run from the project root.
 
--   Install all files:
+-   Install/uninstall all files:
 
         $ make install
+        $ make uninstall
 
--   Install files from specific top-level modules:
+-   Install/uninstall files from specific top-level modules:
 
         $ make git-install
         $ make gnupg-install
         $ make zsh-install
-
--   Uninstall all files:
-
-        $ make uninstall
-
--   Uninstall files from specific top-level modules:
 
         $ make git-uninstall
         $ make gnupg-uninstall
