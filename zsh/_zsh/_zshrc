@@ -81,7 +81,7 @@ autoload -Uz compinit && compinit && {
 
 # Enable fancy globbing; stop at slashes when moving wordwise.
 setopt EXTENDED_GLOB
-WORDCHARS=${WORDCHARS/\//}
+WORDCHARS=${WORDCHARS//[\/.]/}
 
 # History.
 SAVEHIST=1000000
