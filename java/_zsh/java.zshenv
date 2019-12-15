@@ -9,7 +9,7 @@
 # necessary.
 #
 # The unorthodox command substitution preserves the path that java_home
-# outputs (http://www.etalabs.net/sh_tricks.html, § "Getting
+# outputs (https://www.etalabs.net/sh_tricks.html, § "Getting
 # non-clobbered output from command substitution") without losing the
 # exit status.
 JAVA_HOME_temp=$(/usr/libexec/java_home -F 2>/dev/null; echo x$?)

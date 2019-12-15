@@ -25,7 +25,7 @@
 syscmd(«test -f /System/Library/LaunchDaemons/com.apple.revisiond.plist»)dnl
 ifelse(sysval, «0», «dnl
 	# Avoid problems with OS X revisiond.
-	# http://www.git-tower.com/blog/make-git-rebase-safe-on-osx
+	# https://www.git-tower.com/blog/make-git-rebase-safe-on-osx
 	trustctime = false
 »)dnl
 [sendemail]

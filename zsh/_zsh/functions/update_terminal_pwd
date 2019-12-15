@@ -54,13 +54,11 @@ printf $fmt file://${encuser:+${encuser}@}${enchost}${encpath}
 
 # References
 #   1. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/logname.html
-#   2. https://unix.stackexchange.com/a/76369/2803
-#   3. https://mail-archive.com/tmux-users@lists.sourceforge.net/msg03485.html
+#   2. https://unix.stackexchange.com/a/76369
+#   3. https://www.mail-archive.com/tmux-users@lists.sourceforge.net/msg03485.html
 
 # See also
 #   - /etc/bashrc and /etc/bashrc_Apple_Terminal on OS X / macOS
-#   - https://stackoverflow.com/a/187853/50102 (which is slightly
-#     incorrect)
 #   - https://timingapp.com/help/terminal
 
 

@@ -1,8 +1,8 @@
 # The %F prompt escape was introduced in zsh 4.3.7. Use the numbered
 # form (e.g., %1F) so zsh uses termcap instead of ANSI sequences:
 #   - https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c
-#   - http://mywiki.wooledge.org/BashFAQ/037
-#   - http://wiki.bash-hackers.org/scripting/terminalcodes
+#   - https://mywiki.wooledge.org/BashFAQ/037
+#   - https://wiki.bash-hackers.org/scripting/terminalcodes
 function {
     typeset -a vers=(${(s:.:)ZSH_VERSION})
     if (( vers[1] > 4
