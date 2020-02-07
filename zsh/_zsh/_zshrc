@@ -8,9 +8,6 @@ is-at-least 4.3.7 && zsh_has_prompt_F=yes
 
 # TODO: If compatible with 4.3.6, move everything into a prompt theme.
 
-# Required for vcs_info and some other fancypants junk.
-setopt PROMPT_SUBST
-
 # Left prompt: Hostname, history number, indication of last exit status,
 # privileges/shell-nesting indicator.
 PS1='[%m] %B%h%b '
@@ -18,19 +15,25 @@ if [[ -n ${zsh_has_prompt_F} ]]
 then
     # Color the privileges/shell-nesting indicator green if the last
     # exit status was 0, red otherwise.
-    PS1+='%(?.%2F.%1F)%B${(r:$((SHLVL * 2))::%#:)}%b%f '
+    PS1+='%(?.%2F.%1F)%B'${(r:$((SHLVL * 2))::%#:)}'%b%f '
 else
     # Display the last exit status directly.
-    PS1+='(%?) %B${(r:$((SHLVL * 2))::%#:)}%b '
+    PS1+='(%?) %B'${(r:$((SHLVL * 2))::%#:)}'%b '
 fi
+
+typeset -a precmd_functions
 
 # Right prompt: Current working directory (truncated to half screen
 # width) and version control info.
-RPS1='%B%$((COLUMNS / 2))<..<%~%b'
+function _precmd_rps_cwd {
+    RPS1='%B%'$((COLUMNS / 2))'<..<%~%b'
+}
+precmd_functions+=_precmd_rps_cwd
 autoload -Uz +X vcs_info 2>/dev/null && {
-    typeset -a precmd_functions
-    precmd_functions+=vcs_info
-    RPS1+='${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}'
+    function _precmd_rps_vcs {
+        vcs_info && RPS1+=${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}
+    }
+    precmd_functions+=_precmd_rps_vcs
 
     zstyle ':vcs_info:*' enable git hg svn
 
