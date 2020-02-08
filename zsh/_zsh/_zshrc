@@ -3,15 +3,8 @@
 #   - https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c
 #   - https://mywiki.wooledge.org/BashFAQ/037
 #   - https://wiki.bash-hackers.org/scripting/terminalcodes
-function {
-    typeset -a vers=(${(s:.:)ZSH_VERSION})
-    if (( vers[1] > 4
-            || vers[1] == 4 && vers[2] > 3
-            || vers[1] == 4 && vers[2] == 3 && vers[3] >= 7 ))
-    then
-        zsh_has_prompt_F=yes
-    fi
-}
+autoload -Uz is-at-least
+is-at-least 4.3.7 && zsh_has_prompt_F=yes
 
 # TODO: If compatible with 4.3.6, move everything into a prompt theme.
 
