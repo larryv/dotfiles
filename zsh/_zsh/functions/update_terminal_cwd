@@ -20,42 +20,40 @@
 
 emulate -L zsh
 
+[[ -z ${INSIDE_EMACS} ]] || return
+
 # TODO: Figure out how to communicate terminal type via SSH.
 [[ ${TERM_PROGRAM} == Apple_Terminal || -n ${SSH_TTY} ]] || return
 
+# Provide alternatives if HOST, LOGNAME, or PWD (which are set by zsh)
+# are null or unset for some reason.
+
+[[ -n $HOST ]] || local HOST=$(hostname)
+
+# I don't know whether LOGNAME/logname(1) or USERNAME/id(1) is more
+# appropriate for this function.
+[[ -n $LOGNAME ]] || local LOGNAME=$(logname)
+
+# Quoting prevents splitting on any whitespace that pwd(1) outputs,
+# including the final newline.
+[[ -n $PWD ]] || local PWD=${"$(pwd; echo x)"%??}
+
 # Percent-encode the URI components, except for slashes in the path.
-# Non-intuitively, we must *disable* MULTIBYTE to correctly encode
-# multibyte Unicode characters.
-#
-# For portability and robustness, use logname(1) instead of $LOGNAME or
-# $USER [1][2].
-#
-# TODO: Implement some fallbacks for systems without hostname(1).
 setopt EXTENDED_GLOB NO_MULTIBYTE
-local encuser enchost encpath
-{
-    enchost=${"$(hostname)"//(#m)?/%$(([##16] ##${MATCH}))}
-    if [[ -n $enchost ]]; then
-        encuser=${"$(logname)"//(#m)?/%$(([##16] ##${MATCH}))}
-    fi
-} 2>/dev/null
-encpath=${PWD//(#m)[^\/]/%$(([##16] ##${MATCH}))}
-[[ -n $encpath ]] || return
+local enchost=${HOST//(#m)?/%$(([##16] #MATCH))}
+local encuser=${LOGNAME//(#m)?/%$(([##16] #MATCH))}
+local encpath=${PWD//(#m)[^\/]/%$(([##16] #MATCH))}
 
 # This OSC sequence is from Terminal.app's General Preferences.
 local fmt='\e]7;%s\a'
 
-# Inside tmux, wrap the sequence to pass it through [3].
+# Inside tmux, wrap the sequence to pass it through
+# (https://www.mail-archive.com/tmux-users@lists.sourceforge.net/msg03485.html).
 [[ -n $TMUX ]] && fmt='\ePtmux;\e'${fmt}'\e\'
 
 # Assemble URI and print complete sequence to the terminal emulator.
-printf $fmt file://${encuser:+${encuser}@}${enchost}${encpath}
+printf $fmt file://${enchost:+${encuser:+${encuser}@}${enchost}}${encpath}
 
-
-# References
-#   1. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/logname.html
-#   2. https://unix.stackexchange.com/a/76369
-#   3. https://www.mail-archive.com/tmux-users@lists.sourceforge.net/msg03485.html
 
 # See also
 #   - /etc/bashrc and /etc/bashrc_Apple_Terminal on OS X / macOS
