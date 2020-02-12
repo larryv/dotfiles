@@ -1,7 +1,6 @@
 # Flotsam and jetsam.
 .DELETE_ON_ERROR:
 .NOTPARALLEL:           # mkdir -p may cause race conditions.
-.SECONDEXPANSION:
 .SUFFIXES:
 
 # External programs.
@@ -39,9 +38,9 @@ endef
 #   - "make install": install all dotfiles
 #   - "make uninstall": uninstall all dotfiles
 
-define load_module
-include $(1)/module.mk
+include $(addsuffix /module.mk,$(MODULES))
 
+define load_module
 # Modules can declare three lists of files to install:
 #   - *_files: should never be deleted
 #   - *_clean_files: should be deleted by "make clean" and "make maintainer-clean"
@@ -59,7 +58,7 @@ $(1)_dirs := $$(filter-out ~/,$$(call collapsedirs,$$(dir $$($(1)_dst_files))))
 
 # Modules can augment these dummy targets.
 .PHONY: $(1) $$(addprefix $(1)-,clean installdirs install uninstall)
-$(1): $$$$($(1)_src_files)
+$(1): $$($(1)_src_files)
 $(1)-clean: _$(1)-clean
 $(1)-maintainer-clean: _$(1)-maintainer-clean
 $(1)-installdirs: _$(1)-installdirs
@@ -91,5 +90,5 @@ installdirs: $(addsuffix -installdirs,$(MODULES))
 install: $(addsuffix -install,$(MODULES))
 uninstall: $(addsuffix -uninstall,$(MODULES))
 
-% :: common.m4 $$@.m4
+% : common.m4 %.m4
 	$(M4) $^ >$@
