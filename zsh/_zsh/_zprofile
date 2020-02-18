@@ -1,6 +1,5 @@
 # Source application-specific "topic" scripts.
-for script in $ZDOTDIR/*.zprofile(N)
-do
+for script in $ZDOTDIR/*.zprofile(N); do
     . $script
 done
 

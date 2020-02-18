@@ -6,8 +6,7 @@ typeset -U FPATH fpath PATH path
 fpath=($ZDOTDIR/functions(N) $fpath)
 
 # Source application-specific "topic" scripts.
-for script in $ZDOTDIR/*.zshenv(N)
-do
+for script in $ZDOTDIR/*.zshenv(N); do
     . $script
 done
 

@@ -11,8 +11,7 @@ is-at-least 4.3.7 && zsh_has_prompt_F=yes
 # Left prompt: Hostname, history number, indication of last exit status,
 # privileges/shell-nesting indicator.
 PS1='[%m] %B%h%b '
-if [[ -n ${zsh_has_prompt_F} ]]
-then
+if [[ -n $zsh_has_prompt_F ]]; then
     # Color the privileges/shell-nesting indicator green if the last
     # exit status was 0, red otherwise.
     PS1+='%(?.%2F.%1F)%B'${(r:$((SHLVL * 2))::%#:)}'%b%f '
@@ -42,8 +41,7 @@ autoload -Uz +X vcs_info 2>/dev/null && {
     zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
     zstyle ':vcs_info:git:*' check-for-changes true
-    if [[ -n ${zsh_has_prompt_F} ]]
-    then
+    if [[ -n $zsh_has_prompt_F ]]; then
         # Color green/yellow/red if there are no/staged/unstaged changes.
         zstyle ':vcs_info:git:*' unstagedstr '%1F'
         zstyle ':vcs_info:git:*' stagedstr '%3F'
@@ -67,8 +65,7 @@ autoload -Uz +X update_terminal_cwd 2>/dev/null && {
 autoload -Uz run-help zargs zrecompile
 autoload -Uz compinit && compinit && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
-    if [[ -n ${zsh_has_prompt_F} ]]
-    then
+    if [[ -n $zsh_has_prompt_F ]]; then
         zstyle ':completion:*:warnings' format '%1F%BNo matches for %d%b%f'
     else
         zstyle ':completion:*:warnings' format '%BNo matches for %d%b'
@@ -94,8 +91,7 @@ function ls { command ls -AFh "$@" }
 # Print timing stats for commands that use over 10 seconds of CPU time.
 REPORTTIME=10
 
-if [[ -o LOGIN ]]
-then
+if [[ -o LOGIN ]]; then
     # The zsh documentation discourages setting environment variables from
     # .zprofile or .zlogin (http://zsh.sourceforge.net/Intro/intro_3.html),
     # so do it here.
@@ -105,8 +101,7 @@ then
 fi
 
 # Source application-specific "topic" scripts.
-for script in $ZDOTDIR/*.zshrc(N)
-do
+for script in $ZDOTDIR/*.zshrc(N); do
     . $script
 done
 

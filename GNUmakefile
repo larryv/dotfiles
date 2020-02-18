@@ -1,9 +1,7 @@
-# Flotsam and jetsam.
+# Front matter.
 .DELETE_ON_ERROR:
 .NOTPARALLEL:           # mkdir -p may cause race conditions.
 .SUFFIXES:
-
-# External programs.
 SHELL := /bin/sh
 M4 := m4
 
@@ -30,17 +28,14 @@ $(if $(1),\
     $(call $(0),$(wordlist 2,$(2),$(1)),$(2)))
 endef
 
-# Generate per-module targets and prerequisites. For example:
+# Read module configurations and create per-module rules. For example:
 #   - "make git": create Git-related dotfiles
 #   - "make git-install": install Git-related dotfiles
 #   - "make git-uninstall": uninstall Git-related dotfiles
-#   - "make" / "make all": create all dotfiles
-#   - "make install": install all dotfiles
-#   - "make uninstall": uninstall all dotfiles
 
 include $(addsuffix /module.mk,$(MODULES))
 
-define load_module
+define create_module_rules
 # Modules can declare three lists of files to install:
 #   - *_files: should never be deleted
 #   - *_clean_files: should be deleted by "make clean" and "make maintainer-clean"
@@ -79,8 +74,12 @@ _$(1)-uninstall:
 	$$(RM) $$($(1)_dst_files)
 endef
 
-$(foreach module,$(MODULES),$(eval $(call load_module,$(module))))
+$(foreach module,$(MODULES),$(eval $(call create_module_rules,$(module))))
 
+# Create rules that apply to all modules. For example:
+#   - "make" / "make all": create all dotfiles
+#   - "make install": install all dotfiles
+#   - "make uninstall": uninstall all dotfiles
 .PHONY: all clean installdirs install uninstall
 .DEFAULT_GOAL := all
 all: $(MODULES)
@@ -90,5 +89,6 @@ installdirs: $(addsuffix -installdirs,$(MODULES))
 install: $(addsuffix -install,$(MODULES))
 uninstall: $(addsuffix -uninstall,$(MODULES))
 
+# Process M4 templates.
 % : common.m4 %.m4
 	$(M4) $^ >$@

@@ -1,10 +1,10 @@
-# OS X garbage.
+# OS X
 .DS_Store
 
-# Text editing garbage.
-*~
+# Text editors
 *.sw?
 *.tmproj
+*~
 Session.vim
-tags
 TAGS
+tags
