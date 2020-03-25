@@ -91,17 +91,8 @@ function ls { command ls -AFh "$@" }
 # Print timing stats for commands that use over 10 seconds of CPU time.
 REPORTTIME=10
 
-if [[ -o LOGIN ]]; then
-    # The zsh documentation discourages setting environment variables from
-    # .zprofile or .zlogin (http://zsh.sourceforge.net/Intro/intro_3.html),
-    # so do it here.
-    export GREP_OPTIONS=--color=auto
-    export PAGER=less
-    export VISUAL=vim
-fi
-
 # Source application-specific "topic" scripts.
-for script in $ZDOTDIR/*.zshrc(N); do
+for script in $ZDOTDIR/zshrc.d/*.zsh(N); do
     . $script
 done
 

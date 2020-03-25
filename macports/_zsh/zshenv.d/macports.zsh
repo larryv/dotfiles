@@ -12,10 +12,4 @@ command -p grep -qs /usr/libexec/path_helper /etc/zshenv && {
     path=(${(M)macports_path:#${(~j:|:)path}} $path)
 }
 
-# macports.zprofile handles this in login shells.
-if [[ ! -o LOGIN ]]
-then
-    unset macports_path
-fi
-
-# vim: set filetype=zsh:
+unset macports_path

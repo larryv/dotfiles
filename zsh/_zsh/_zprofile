@@ -1,5 +1,11 @@
+# zsh 4.3.10: emulate sh -c '. ~/.profile'
+function {
+    emulate -L sh
+    . ~/.profile
+}
+
 # Source application-specific "topic" scripts.
-for script in $ZDOTDIR/*.zprofile(N); do
+for script in $ZDOTDIR/zprofile.d/*.zsh(N); do
     . $script
 done
 

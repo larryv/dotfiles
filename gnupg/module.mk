@@ -1,6 +1,6 @@
 gnupg_files := gnupg/_gnupg/dirmngr.conf \
                gnupg/_gnupg/gpg.conf \
-               gnupg/_zsh/gnupg.zshenv
+               gnupg/_profile.d/gnupg.sh
 
 # GnuPG requires restrictive permissions for its configuration.
 gnupg-installdirs:

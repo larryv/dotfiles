@@ -1,2 +1,2 @@
-macports_files := macports/_zsh/macports.zprofile \
-                  macports/_zsh/macports.zshenv
+macports_files := macports/_profile.d/macports.sh \
+                  macports/_zsh/zshenv.d/macports.zsh
