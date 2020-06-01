@@ -1,3 +1,6 @@
+# Use the "emacs" ZLE keymap even if EDITOR is "vi" or "vim".
+bindkey -e
+
 # The %F prompt escape was introduced in zsh 4.3.7. Use the numbered
 # form (e.g., %1F) so zsh uses termcap instead of ANSI sequences:
 #   - https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c
