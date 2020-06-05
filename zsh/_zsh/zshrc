@@ -63,10 +63,8 @@ autoload -Uz +X vcs_info 2>/dev/null && {
 }
 
 # Send current working directory to the terminal emulator.
-autoload -Uz +X update_terminal_cwd 2>/dev/null && {
-    typeset -a precmd_functions
-    precmd_functions+=update_terminal_cwd
-}
+autoload -Uz +X update_terminal_cwd 2>/dev/null \
+    && precmd_functions+=update_terminal_cwd
 
 # Enable completion and other things.
 autoload -Uz run-help zargs zrecompile
