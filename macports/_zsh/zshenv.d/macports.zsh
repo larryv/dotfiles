@@ -1,15 +1,13 @@
-macports_path=(/opt/local/bin /opt/local/sbin)
+# On OS X 10.10 Yosemite and earlier, /etc/zshenv unconditionally redefines
+# the command path using path_helper(8), even if zsh is run as a non-login
+# shell (e.g., invoked from the command line to run a script). This puts the
+# directories from /etc/paths back in front. In non-login shells, reclaim that
+# position for MacPorts directories. (Login shells handle this via .zprofile.)
 
-# On OS X Yosemite and earlier, the system-installed /etc/zshenv
-# unconditionally sets the command path using path_helper(8), which
-# mangles a pre-existing path (e.g., if zsh is run from the command line
-# as a non-login shell) by pushing the system's path entries to the
-# front. Repair the damage by moving MacPorts' entries back to their
-# rightful place.
-
-command -p grep -qs /usr/libexec/path_helper /etc/zshenv && {
-    # zsh 5.0.0: path=(${macports_path:*path} $path)
-    path=(${(M)macports_path:#${(~j:|:)path}} $path)
-}
-
-unset macports_path
+if [[ ! -o LOGIN ]]; then
+    # zsh 4.3.10: emulate sh -c '. ~/.profile.d/macports.sh'
+    function {
+        emulate -L sh
+        . ~/.profile.d/macports.sh
+    }
+fi
