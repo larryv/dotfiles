@@ -70,7 +70,7 @@ autoload -Uz +X update_terminal_cwd 2>/dev/null && {
 
 # Enable completion and other things.
 autoload -Uz run-help zargs zrecompile
-autoload -Uz compinit && compinit && {
+autoload -Uz compinit && compinit -d $ZDOTDIR/zcompdump && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
     if [[ -n $zsh_has_prompt_F ]]; then
         zstyle ':completion:*:warnings' format '%1F%BNo matches for %d%b%f'
