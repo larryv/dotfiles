@@ -1,19 +1,3 @@
-[alias]
-	ae = add --edit
-	ap = add --patch
-	au = add --update
-	c = commit
-	ca = commit --amend
-	cara = commit --amend --reset-author
-	cp = cherry-pick
-	d = diff
-	dc = diff --cached
-	rb = rebase
-	rba = rebase --abort
-	rbc = rebase --continue
-	rbi = rebase --interactive
-	s = status
-	sb = show-branch
 [color]
 	branch = auto
 	diff = auto
