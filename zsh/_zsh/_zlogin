@@ -1,6 +1,9 @@
 # Source application-specific "topic" scripts.
-for script in $ZDOTDIR/zlogin.d/*.zsh(N); do
-    . $script
-done
+function {
+    local script
+    for script in $ZDOTDIR/zlogin.d/*.zsh(N); do
+        . $script
+    done
+}
 
 # vim: set filetype=zsh:
