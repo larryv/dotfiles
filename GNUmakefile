@@ -9,13 +9,13 @@ M4 := m4
 # of the final directory tree. These are "layered" during installation.
 MODULES := git gnupg java lynx macports mercurial sh tmux zsh
 
-# Given two lists, expands to one newline-terminated cp(1) invocation
-# for each corresponding pair of elements. Used to generate the
-# _*-install commands.
-installcmds = $(call _installcmds,$(1),$(2),$(words $(1)))
-define _installcmds
-$(if $(1),cp $(firstword $(1)) $(firstword $(2))
-$(call $(0),$(wordlist 2,$(3),$(1)),$(wordlist 2,$(3),$(2)),$(3)))
+# Given a prefix and two lists, expands to a string consisting of each pair of
+# corresponding words on its own line, preceded by the prefix. Designed for
+# generating series of commands for rules.
+gencmds = $(call _gencmds,$(1),$(2),$(3),$(words $(2)))
+define _gencmds
+$(if $(and $(2),$(3)),$(1) $(firstword $(2)) $(firstword $(3))
+$(call $(0),$(1),$(wordlist 2,$(4),$(2)),$(wordlist 2,$(4),$(3)),$(4)))
 endef
 
 # Given a list of paths, return the ones that are not prefixes of any
@@ -69,7 +69,7 @@ _$(1)-maintainer-clean: $(1)-clean
 _$(1)-installdirs:
 	$$(if $$($(1)_dirs),mkdir -p $$($(1)_dirs))
 _$(1)-install: $(1) $(1)-installdirs
-	$$(call installcmds,$$($(1)_src_files),$$($(1)_dst_files))
+	$$(call gencmds,cp,$$($(1)_src_files),$$($(1)_dst_files))
 _$(1)-uninstall:
 	$$(RM) $$($(1)_dst_files)
 endef
