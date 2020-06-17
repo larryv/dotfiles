@@ -102,7 +102,7 @@ REPORTTIME=10
 # Source application-specific "topic" scripts.
 function {
     local script
-    for script in $ZDOTDIR/zshrc.d/*.zsh(N); do
+    for script in $ZDOTDIR/zshrc.d/*.zsh(N-.); do
         . $script
     done
 }

@@ -7,7 +7,7 @@ function {
 # Source application-specific "topic" scripts.
 function {
     local script
-    for script in $ZDOTDIR/zprofile.d/*.zsh(N); do
+    for script in $ZDOTDIR/zprofile.d/*.zsh(N-.); do
         . $script
     done
 }
