@@ -1,6 +1,4 @@
 export GREP_OPTIONS=--color=auto
-export PAGER=less
-export VISUAL=vim
 
 # Source application-specific "topic" scripts.
 for script in ~/.profile.d/*.sh; do
@@ -9,5 +7,16 @@ for script in ~/.profile.d/*.sh; do
     fi
 done
 unset script
+
+# https://unix.stackexchange.com/a/4413 - Assign absolute paths to maximize
+# compatibility. Do it here so that topic scripts can modify PATH first. Local
+# topic scripts may override these defaults as desired. Assume that the system
+# startup files did not define identically named aliases or functions.
+if [ -z "$PAGER" ]; then
+    PAGER=$(command -v less) && export PAGER || unset PAGER
+fi
+if [ -z "$VISUAL" ]; then
+    VISUAL=$(command -v vim) && export VISUAL || unset VISUAL
+fi
 
 # vim: set filetype=sh:
