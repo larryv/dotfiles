@@ -16,7 +16,7 @@ if [ -z "$PAGER" ]; then
     PAGER=$(command -v less) && export PAGER || unset PAGER
 fi
 if [ -z "$VISUAL" ]; then
-    VISUAL=$(command -v vim) && export VISUAL || unset VISUAL
+    VISUAL=$(command -v vim || command -v vi) && export VISUAL || unset VISUAL
 fi
 
 # vim: set filetype=sh:
