@@ -12,6 +12,9 @@ ifelse(sysval, «0», «dnl
 	# https://www.git-tower.com/blog/make-git-rebase-safe-on-osx
 	trustctime = false
 »)dnl
+[rebase]
+	# Requires Git 2.6.0 or later.
+	missingCommitsCheck = error
 [sendemail]
 	suppresscc = self
 
