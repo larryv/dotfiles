@@ -1,15 +1,20 @@
+# >= 4.3.7: () { emulate -L sh; . ~/.profile; }
 # >= 4.3.10: emulate sh -c '. ~/.profile'
-function {
+function source_sh_profile {
     emulate -L sh
-    . ~/.profile
+    . ~/.profile && unset -f -- "$0"
+
+    # https://www.zsh.org/mla/users/2008/msg00785.html (users/13169)
+    # < 4.3.7: Options are restored at function exit but emulation mode is
+    # not. Explicitly revert to zsh mode, or things get weird later.
+    emulate -L zsh
 }
+source_sh_profile
 
 # Source application-specific "topic" scripts.
-function {
-    local script
-    for script in $ZDOTDIR/zprofile.d/*.zsh(N-.); do
-        . $script
-    done
-}
+for script in $ZDOTDIR/zprofile.d/*.zsh(N-.); do
+    . $script
+done
+unset script
 
 # vim: set filetype=zsh:

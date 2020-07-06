@@ -1,15 +1,11 @@
 # Use the "emacs" ZLE keymap even if EDITOR is "vi" or "vim".
 bindkey -e
 
-# Begin anonymous function for containing zsh_has_prompt_F.
-function {
-
 # The %F prompt escape was introduced in zsh 4.3.7. Use the numbered
 # form (e.g., %1F) so zsh uses termcap instead of ANSI sequences:
 #   - https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c
 #   - https://mywiki.wooledge.org/BashFAQ/037
 #   - https://wiki.bash-hackers.org/scripting/terminalcodes
-local zsh_has_prompt_F
 autoload -Uz is-at-least
 is-at-least 4.3.7 && zsh_has_prompt_F=yes
 
@@ -27,6 +23,7 @@ else
     PS1+='(%?) %B'${(r:$((SHLVL * 2))::%#:)}'%b '
 fi
 
+# Leave the -g in case I ever wrap this in a function again.
 typeset -ag precmd_functions
 
 # Right prompt: Current working directory (truncated to half screen
@@ -77,9 +74,6 @@ autoload -Uz compinit && compinit -d $ZDOTDIR/zcompdump && {
     fi
 }
 
-# End anonymous function for containing zsh_has_prompt_F.
-}
-
 # Enable fancy globbing; stop at slashes when moving wordwise.
 setopt EXTENDED_GLOB
 WORDCHARS=${WORDCHARS//[\/.]/}
@@ -99,11 +93,11 @@ function ls { command ls -AFh "$@" }
 REPORTTIME=10
 
 # Source application-specific "topic" scripts.
-function {
-    local script
-    for script in $ZDOTDIR/zshrc.d/*.zsh(N-.); do
-        . $script
-    done
-}
+for script in $ZDOTDIR/zshrc.d/*.zsh(N-.); do
+    . $script
+done
+unset script
+
+unset zsh_has_prompt_F
 
 # vim: set filetype=zsh:

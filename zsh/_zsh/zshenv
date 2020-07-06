@@ -6,11 +6,9 @@ typeset -U FPATH fpath PATH path
 fpath=($ZDOTDIR/functions(N) $fpath)
 
 # Source application-specific "topic" scripts.
-function {
-    local script
-    for script in $ZDOTDIR/zshenv.d/*.zsh(N-.); do
-        . $script
-    done
-}
+for script in $ZDOTDIR/zshenv.d/*.zsh(N-.); do
+    . $script
+done
+unset script
 
 # vim: set filetype=zsh:
