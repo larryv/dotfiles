@@ -89,8 +89,7 @@ SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
 HISTFILE=$ZDOTDIR/zsh_history
 setopt EXTENDED_HISTORY
-# Requires zsh 5.0.6. Hopefully I'll never use a shell so old that it
-# requires setting APPEND_HISTORY explicitly.
+# < 5.0.6: Let shells append their history at exit instead of incrementally.
 setopt INC_APPEND_HISTORY_TIME 2>/dev/null
 
 # Interactive functions.

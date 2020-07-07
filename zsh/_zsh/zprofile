@@ -1,4 +1,4 @@
-# zsh 4.3.10: emulate sh -c '. ~/.profile'
+# >= 4.3.10: emulate sh -c '. ~/.profile'
 function {
     emulate -L sh
     . ~/.profile

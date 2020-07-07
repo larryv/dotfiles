@@ -20,6 +20,5 @@ ifelse(sysval, «0», «dnl
 
 [include]
 	path = .gitconfig.local
-
 divert(«-1»)
 vim: set filetype=gitconfig:

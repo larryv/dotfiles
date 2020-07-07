@@ -1,12 +1,12 @@
 # Move MacPorts directories to the beginning of PATH so its software takes
 # precedence over the system's. I used to add the directories to PATH in this
 # file, but any files sourced earlier could not find MacPorts-installed
-# software. Using /etc/paths.d gets the directories into PATH as soon as the
-# system startup files are sourced, but they are appended after the default
-# entries. (See the path_helper(8) man page for more information.)
+# software. Using /etc/paths.d gets the directories into PATH sooner, but they
+# are appended after the default entries. (See the path_helper(8) man page for
+# details.)
 
 # MacPorts does not provide this file; I create it myself. It usually contains
-# only "/opt/local/bin" and "/opt/local/sbin".
+# "/opt/local/bin" and "/opt/local/sbin".
 macports_paths_file=/etc/paths.d/macports
 
 [ -f "$macports_paths_file" ] || { unset macports_paths_file; return; }

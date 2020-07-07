@@ -5,7 +5,7 @@
 # position for MacPorts directories. (Login shells handle this via .zprofile.)
 
 if [[ ! -o LOGIN ]]; then
-    # zsh 4.3.10: emulate sh -c '. ~/.profile.d/macports.sh'
+    # >= 4.3.10: emulate sh -c '. ~/.profile.d/macports.sh'
     function {
         emulate -L sh
         . ~/.profile.d/macports.sh

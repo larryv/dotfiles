@@ -1,8 +1,8 @@
 # update_terminal_cwd
 # -------------------
 #
-# Identify the current working directory to the terminal emulator. To
-# use, register as a chpwd or precmd hook:
+# Identify the current working directory to the terminal emulator. To use,
+# register as a chpwd or precmd hook:
 #
 #     fpath=(/wherever/this/file/lives $fpath)
 #
@@ -12,10 +12,10 @@
 #
 #     # Without add-zsh-hook.
 #     autoload -Uz update_terminal_cwd
-#     typeset -a chpwd_functions
+#     typeset -ag chpwd_functions
 #     chpwd_functions+=update_terminal_cwd
 #
-# Currently supports Terminal.app on OS X / macOS.
+# Currently supports Apple's Terminal.app.
 
 
 emulate -L zsh
@@ -25,8 +25,8 @@ emulate -L zsh
 # TODO: Figure out how to communicate terminal type via SSH.
 [[ $TERM_PROGRAM == Apple_Terminal || -n $SSH_TTY ]] || return
 
-# Provide alternatives if HOST, LOGNAME, or PWD (which are set by zsh)
-# are null or unset for some reason.
+# Provide alternatives if HOST, LOGNAME, or PWD (which are set by zsh) are
+# null or unset for some reason.
 
 [[ -n $HOST ]] || local HOST=$(hostname)
 
@@ -34,8 +34,8 @@ emulate -L zsh
 # appropriate for this function.
 [[ -n $LOGNAME ]] || local LOGNAME=$(logname)
 
-# Quoting prevents splitting on any whitespace that pwd(1) outputs,
-# including the final newline.
+# I don't remember why I quoted just the command substitution instead of the
+# whole parameter expansion; as far as I can tell, they are equivalent here.
 [[ -n $PWD ]] || local PWD=${"$(pwd; echo x)"%??}
 
 # Percent-encode the URI components, except for slashes in the path.

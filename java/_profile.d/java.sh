@@ -1,6 +1,5 @@
-# Set JAVA_HOME if a JVM is enabled. Verified on OS X / macOS only;
-# I don't know how to do this on other systems, or whether it's even
-# necessary.
+# On Mac OS X / OS X / macOS, set JAVA_HOME if a JVM is enabled. I don't know
+# how to do this on other systems, or whether it's even necessary.
 
 # https://www.etalabs.net/sh_tricks.html, § "Getting non-clobbered output from
 # command substitution"

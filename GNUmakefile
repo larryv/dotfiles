@@ -1,13 +1,19 @@
-# Front matter.
 .DELETE_ON_ERROR:
+
+# Minimize differences between make implementations [1].
 .SUFFIXES:
+SHELL := /bin/sh
+
+# Allow overriding of utilities [2].
 INSTALL := ./install-sh
 INSTALL_DATA := $(INSTALL) -m 644
-SHELL := /bin/sh
 M4 := m4
 
-# The repository's child directories are "modules", containing "slices"
-# of the final directory tree. These are "layered" during installation.
+# Child directories listed here are considered "modules", containing "slices"
+# of the final directory tree; these are "layered" during installation. Beyond
+# rules for updating files, modules define their own convenience rules (e.g.,
+# "make sh-install") and make them prerequisites of the analogous global rules
+# (e.g., "make install").
 MODULES := git gnupg java lynx macports mercurial sh tmux zsh
 
 # Given a prefix and two lists, expands to a string consisting of each pair of
@@ -28,11 +34,6 @@ $(if $(1),\
     $(if $(filter $(firstword $(1))%,$(wordlist 2,$(2),$(1))),,$(firstword $(1)))\
     $(call $(0),$(wordlist 2,$(2),$(1)),$(2)))
 endef
-
-# Read module configurations and create per-module rules. For example:
-#   - "make git": create Git-related dotfiles
-#   - "make git-install": install Git-related dotfiles
-#   - "make git-uninstall": uninstall Git-related dotfiles
 
 include $(addsuffix /module.mk,$(MODULES))
 
@@ -77,10 +78,6 @@ endef
 
 $(foreach module,$(MODULES),$(eval $(call create_module_rules,$(module))))
 
-# Create rules that apply to all modules. For example:
-#   - "make" / "make all": create all dotfiles
-#   - "make install": install all dotfiles
-#   - "make uninstall": uninstall all dotfiles
 .PHONY: all clean installdirs install uninstall
 .DEFAULT_GOAL := all
 all: $(MODULES)
@@ -93,3 +90,9 @@ uninstall: $(addsuffix -uninstall,$(MODULES))
 # Process M4 templates.
 % : common.m4 %.m4
 	$(M4) $^ >$@
+
+
+# References:
+#
+# 1. https://www.gnu.org/software/make/manual/html_node/Makefile-Basics
+# 2. https://www.gnu.org/software/make/manual/html_node/Command-Variables
