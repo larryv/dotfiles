@@ -7,7 +7,7 @@
 if [[ ! -o LOGIN ]]; then
     # >= 4.3.7: () { emulate -L sh; . ~/.profile.d/macports.sh; }
     # >= 4.3.10: emulate sh -c '. ~/.profile.d/macports.sh'
-    function fix_macports_path {
+    fix_macports_path() {
         emulate -L sh
         . ~/.profile.d/macports.sh && unset -f -- "$0"
 

@@ -28,12 +28,12 @@ typeset -ag precmd_functions
 
 # Right prompt: Current working directory (truncated to half screen
 # width) and version control info.
-function _precmd_rps_cwd {
+_precmd_rps_cwd() {
     RPS1='%B%'$((COLUMNS / 2))'<..<%~%b'
 }
 precmd_functions+=_precmd_rps_cwd
 autoload -Uz +X vcs_info 2>/dev/null && {
-    function _precmd_rps_vcs {
+    _precmd_rps_vcs() {
         vcs_info && RPS1+=${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}
     }
     precmd_functions+=_precmd_rps_vcs
@@ -87,7 +87,7 @@ setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY_TIME 2>/dev/null
 
 # Interactive functions.
-function ls { command ls -AFh "$@" }
+ls() { command ls -AFh "$@" }
 
 # Print timing stats for commands that use over 10 seconds of CPU time.
 REPORTTIME=10

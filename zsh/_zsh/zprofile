@@ -1,6 +1,6 @@
 # >= 4.3.7: () { emulate -L sh; . ~/.profile; }
 # >= 4.3.10: emulate sh -c '. ~/.profile'
-function source_sh_profile {
+source_sh_profile() {
     emulate -L sh
     . ~/.profile && unset -f -- "$0"
 
