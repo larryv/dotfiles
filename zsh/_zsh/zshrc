@@ -17,10 +17,10 @@ PS1='[%m] %B%h%b '
 if [[ -n $zsh_has_prompt_F ]]; then
     # Color the privileges/shell-nesting indicator green if the last
     # exit status was 0, red otherwise.
-    PS1+='%(?.%2F.%1F)%B'${(r:$((SHLVL * 2))::%#:)}'%b%f '
+    PS1+="%(?.%2F.%1F)%B${(r:$((SHLVL * 2))::%#:)}%b%f "
 else
     # Display the last exit status directly.
-    PS1+='(%?) %B'${(r:$((SHLVL * 2))::%#:)}'%b '
+    PS1+="(%?) %B${(r:$((SHLVL * 2))::%#:)}%b "
 fi
 
 # Leave the -g in case I ever wrap this in a function again.
@@ -29,7 +29,7 @@ typeset -ag precmd_functions
 # Right prompt: Current working directory (truncated to half screen
 # width) and version control info.
 _precmd_rps_cwd() {
-    RPS1='%B%'$((COLUMNS / 2))'<..<%~%b'
+    RPS1="%B%$((COLUMNS / 2))<..<%~%b"
 }
 precmd_functions+=_precmd_rps_cwd
 autoload -Uz +X vcs_info 2>/dev/null && {
