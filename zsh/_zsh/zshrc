@@ -111,5 +111,3 @@ done
 unset script
 
 unset fg
-
-# vim: set filetype=zsh:
