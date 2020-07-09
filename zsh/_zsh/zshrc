@@ -1,23 +1,32 @@
 # Use the "emacs" ZLE keymap even if EDITOR is "vi" or "vim".
 bindkey -e
 
-# The %F prompt escape was introduced in zsh 4.3.7. Use the numbered
-# form (e.g., %1F) so zsh uses termcap instead of ANSI sequences:
-#   - https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c
-#   - https://mywiki.wooledge.org/BashFAQ/037
-#   - https://wiki.bash-hackers.org/scripting/terminalcodes
-autoload -Uz is-at-least
-is-at-least 4.3.7 && zsh_has_prompt_F=yes
+# >= 4.3.7: %1F, %2F, %3F, %f (numbered form uses termcap:
+# https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c)
+if (( ${$(tput colors || tput Co):-0} >= 8 )); then
+    # Prefer terminfo/termcap over raw ANSI escape sequences:
+    #   - https://mywiki.wooledge.org/BashFAQ/037
+    #   - https://wiki.bash-hackers.org/scripting/terminalcodes
+    # Avoid using Functions/Misc/colors, which hard-codes ANSI sequences and
+    # might not be installed. Define my own colors instead.
+    typeset -A fg
+    fg[red]=$(tput setaf 1 || tput AF 1) || fg[red]=$'\e[31m'
+    fg[green]=$(tput setaf 2 || tput AF 2) || fg[green]=$'\e[32m'
+    fg[yellow]=$(tput setaf 3 || tput AF 3) || fg[yellow]=$'\e[33m'
+    # `tput setaf 9` doesn't have the desired effect on xterm-256color. Note
+    # that `tput op` resets the background color as well, which is fine here.
+    fg[default]=$(tput op) || fg[default]=$'\e[39m'
+fi 2>/dev/null
 
 # TODO: If compatible with 4.3.6, move everything into a prompt theme.
 
 # Left prompt: Hostname, history number, indication of last exit status,
 # privileges/shell-nesting indicator.
 PS1='[%m] %B%h%b '
-if [[ -n $zsh_has_prompt_F ]]; then
-    # Color the privileges/shell-nesting indicator green if the last
-    # exit status was 0, red otherwise.
-    PS1+="%(?.%2F.%1F)%B${(r:$((SHLVL * 2))::%#:)}%b%f "
+if (( $+fg )); then
+    PS1+="%(?.%{$fg[green]%}.%{$fg[red]%})"
+    PS1+="%B${(r:$((SHLVL * 2))::%#:)}%b"
+    PS1+="%{$fg[default]%} "
 else
     # Display the last exit status directly.
     PS1+="(%?) %B${(r:$((SHLVL * 2))::%#:)}%b "
@@ -45,12 +54,14 @@ autoload -Uz +X vcs_info 2>/dev/null && {
     zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
     zstyle ':vcs_info:git:*' check-for-changes true
-    if [[ -n $zsh_has_prompt_F ]]; then
+    if (( $+fg )); then
         # Color green/yellow/red if there are no/staged/unstaged changes.
-        zstyle ':vcs_info:git:*' unstagedstr '%1F'
-        zstyle ':vcs_info:git:*' stagedstr '%3F'
-        zstyle ':vcs_info:git:*' formats '%2F%u%c(%s:%b)%f'
-        zstyle ':vcs_info:git:*' actionformats '%2F%u%c(%s:%b|%a)%f'
+        zstyle ':vcs_info:git:*' unstagedstr "%{$fg[red]%}"
+        zstyle ':vcs_info:git:*' stagedstr "%{$fg[yellow]%}"
+        zstyle ':vcs_info:git:*' formats \
+            "%{$fg[green]%}%u%c(%s:%b)%{$fg[default]%}"
+        zstyle ':vcs_info:git:*' actionformats \
+            "%{$fg[green]%}%u%c(%s:%b|%a)%{$fg[default]%}"
     else
         zstyle ':vcs_info:git:*' unstagedstr ':U'
         zstyle ':vcs_info:git:*' stagedstr ':S'
@@ -67,8 +78,9 @@ autoload -Uz +X update_terminal_cwd 2>/dev/null \
 autoload -Uz run-help zargs zrecompile
 autoload -Uz compinit && compinit -d $ZDOTDIR/zcompdump && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
-    if [[ -n $zsh_has_prompt_F ]]; then
-        zstyle ':completion:*:warnings' format '%1F%BNo matches for %d%b%f'
+    if (( $+fg )); then
+        zstyle ':completion:*:warnings' format \
+            "%{$fg[red]%}%BNo matches for %d%b%{$fg[default]%}"
     else
         zstyle ':completion:*:warnings' format '%BNo matches for %d%b'
     fi
@@ -98,6 +110,6 @@ for script in $ZDOTDIR/zshrc.d/*.zsh(N-.); do
 done
 unset script
 
-unset zsh_has_prompt_F
+unset fg
 
 # vim: set filetype=zsh:
