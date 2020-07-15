@@ -5,50 +5,59 @@
 # are appended after the default entries. (See the path_helper(8) man page for
 # details.)
 
+# Given a colon-delimited list and one or more literal search terms, print the
+# list with any matching elements moved to the front. The "sort" is stable.
+promote() (
+    origpath=$1
+    shift 2>/dev/null || return
+
+    # https://www.in-ulm.de/~mascheck/various/ifs/
+    # https://lists.gnu.org/archive/html/bug-bash/2009-03/msg00137.html
+    # Remove trailing colons to work around variations in IFS splitting.
+    endcolons=${origpath##*[!:]}
+    origpath=${origpath%"$endcolons"}
+
+    set -f
+    IFS=:
+    unset arg head tail
+    for x in ${origpath:-''}; do
+        for arg do
+            [ "$x" = "$arg" ] && head=${head}${head+:}${x} && break
+        done && [ -n "${arg+set}" ] || tail=${tail}${tail+:}${x}
+    done
+
+    # Handle the trailing empty elements we removed earlier.
+    if [ -n "$endcolons" ]; then
+        for arg do
+            [ -z "$arg" ] && head=${head}${head+:}${endcolons%?} && break
+        done && [ -n "${arg+set}" ] || tail=${tail}${tail+:}${endcolons%?}
+    fi
+
+    printf '%s%s%s' "$head" "${head+${tail+:}}" "$tail"
+)
+
+# A minimalist version of xargs(1) that can invoke functions and builtins. No
+# options are accepted. Arguments read from standard input are separated by
+# newlines; no other characters are considered special. The utility is invoked
+# once, with no attempt to limit the length of the constructed command line.
+xargs2() {
+    [ $# -gt 0 ] || set -- echo
+    while IFS= read -r line || [ -n "$line" ]; do
+        set -- "$@" "$line"
+    done
+    unset line
+    "$@"
+}
+
 # MacPorts does not provide this file; I create it myself. It usually contains
-# "/opt/local/bin" and "/opt/local/sbin".
-macports_paths_file=/etc/paths.d/macports
+# "/opt/local/bin" and "/opt/local/sbin". As per path_helper(8), treat all
+# newlines as delimiters and ignore blank lines.
 
-[ -f "$macports_paths_file" ] || { unset macports_paths_file; return; }
-
-macports_paths=
-
-# path_helper(8) operates linewise, ignoring blanks.
-while IFS= read -r macports_dir || [ -n "$macports_dir" ]; do
-    [ -n "$macports_dir" ] || continue
-
-    # Remove the directory from PATH to keep things clean. Fortunately,
-    # path_helper(8) ensures each entry is unique, so search only once.
-    case $PATH in
-        "$macports_dir")
-            PATH=
-            ;;
-        "$macports_dir":*)
-            PATH=${PATH#"$macports_dir":}
-            ;;
-        *:"$macports_dir":*)
-            PATH=${PATH%%:"$macports_dir":*}:${PATH#*:"$macports_dir":}
-            ;;
-        *:"$macports_dir")
-            PATH=${PATH%:"$macports_dir"}
-            ;;
-        *)
-            # The absence of the directory from PATH suggests a deeper problem
-            # that should be investigated. Do not work around it by adding the
-            # directory, but inform the user.
-            printf 'Directory in %s missing from PATH: %s\n' \
-                "$macports_paths_file" "$macports_dir" >&2
-            continue
-            ;;
-    esac
-
-    macports_paths=$macports_paths$macports_dir:
-done <"$macports_paths_file"
-
-if [ -n "$PATH" ]; then
-    PATH=$macports_paths$PATH
-else
-    PATH=${macports_paths%:}
+mp_paths=/etc/paths.d/macports
+if [ -n "${PATH+set}" ] && [ -f "$mp_paths" ]; then
+    PATH=$(sed '/./!d' "$mp_paths" | xargs2 promote "$PATH"; echo x)
+    PATH=${PATH%?}
 fi
 
-unset macports_paths_file macports_paths macports_dir
+unset -f promote xargs2
+unset mp_paths
