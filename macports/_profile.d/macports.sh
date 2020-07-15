@@ -1,9 +1,9 @@
-# Move MacPorts directories to the beginning of PATH so its software takes
-# precedence over the system's. I used to add the directories to PATH in this
-# file, but any files sourced earlier could not find MacPorts-installed
-# software. Using /etc/paths.d gets the directories into PATH sooner, but they
-# are appended after the default entries. (See the path_helper(8) man page for
-# details.)
+# Move MacPorts directories to the beginning of PATH and MANPATH so its
+# software and man pages take precedence over the system's. I used to add the
+# directories to PATH in this file, but any files sourced earlier could not
+# find MacPorts-installed software. Using /etc/paths.d and /etc/manpaths.d
+# gets the directories into the paths sooner, but they are appended after the
+# default entries. (See the path_helper(8) man page for details.)
 
 # Given a colon-delimited list and one or more literal search terms, print the
 # list with any matching elements moved to the front. The "sort" is stable.
@@ -49,9 +49,9 @@ xargs2() {
     "$@"
 }
 
-# MacPorts does not provide this file; I create it myself. It usually contains
-# "/opt/local/bin" and "/opt/local/sbin". As per path_helper(8), treat all
-# newlines as delimiters and ignore blank lines.
+# MacPorts does not provide these files; I create them myself. They usually
+# contain "/opt/local/bin", "/opt/local/sbin", and "/opt/local/share/man". As
+# per path_helper(8), treat all newlines as delimiters and ignore blank lines.
 
 mp_paths=/etc/paths.d/macports
 if [ -n "${PATH+set}" ] && [ -f "$mp_paths" ]; then
@@ -59,5 +59,12 @@ if [ -n "${PATH+set}" ] && [ -f "$mp_paths" ]; then
     PATH=${PATH%?}
 fi
 
+# MANPATH is only set on older versions of Mac OS X.
+mp_manpaths=/etc/manpaths.d/macports
+if [ -n "${MANPATH+set}" ] && [ -f "$mp_manpaths" ]; then
+    MANPATH=$(sed '/./!d' "$mp_manpaths" | xargs2 promote "$MANPATH"; echo x)
+    MANPATH=${MANPATH%?}
+fi
+
 unset -f promote xargs2
-unset mp_paths
+unset mp_paths mp_manpaths
