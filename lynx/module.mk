@@ -10,7 +10,7 @@ lynx-installdirs: FORCE
 	$(INSTALL) -d ~/.profile.d/
 
 install: lynx-install
-lynx-install: FORCE lynx lynx-installdirs
+lynx-install: FORCE lynx lynx-installdirs sh-install
 	$(INSTALL_DATA) lynx/_lynx.cfg ~/.lynx.cfg
 	$(INSTALL_DATA) lynx/_profile.d/lynx.sh ~/.profile.d/
 

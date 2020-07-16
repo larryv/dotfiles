@@ -8,7 +8,7 @@ macports-installdirs: FORCE
 	$(INSTALL) -d ~/.profile.d/ ~/.zsh/zshenv.d/
 
 install: macports-install
-macports-install: FORCE macports macports-installdirs
+macports-install: FORCE macports macports-installdirs sh-install zsh-install
 	$(INSTALL_DATA) macports/_profile.d/macports.sh ~/.profile.d/
 	if grep -s /usr/libexec/path_helper /etc/zshenv; then \
     $(INSTALL_DATA) \
