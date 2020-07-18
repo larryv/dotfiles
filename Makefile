@@ -10,7 +10,7 @@ INSTALL_DATA = $(INSTALL) -C -m 644
 M4 = m4
 
 # Imitate .PHONY portably [5]. List "all" first to make it the default target.
-all clean installdirs install uninstall: FORCE
+all clean maintainer-clean installdirs install uninstall: FORCE
 FORCE:
 
 # Child directories listed here are considered "modules", containing "slices"
