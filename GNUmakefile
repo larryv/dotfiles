@@ -2,6 +2,7 @@
 
 # Minimize differences between make implementations [1].
 .SUFFIXES:
+.SUFFIXES: .m4
 SHELL := /bin/sh
 
 # Allow overriding of utilities [2].
@@ -88,8 +89,8 @@ install: $(addsuffix -install,$(MODULES))
 uninstall: $(addsuffix -uninstall,$(MODULES))
 
 # Process M4 templates.
-% : %.m4
-	$(M4) $^ >$@
+.m4:
+	$(M4) $< >$@
 
 
 # References:
