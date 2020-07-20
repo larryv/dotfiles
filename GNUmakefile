@@ -88,7 +88,7 @@ install: $(addsuffix -install,$(MODULES))
 uninstall: $(addsuffix -uninstall,$(MODULES))
 
 # Process M4 templates.
-% : common.m4 %.m4
+% : %.m4
 	$(M4) $^ >$@
 
 
