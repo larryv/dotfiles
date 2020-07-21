@@ -1,7 +1,8 @@
 # Front matter.
 .DELETE_ON_ERROR:
-.NOTPARALLEL:           # mkdir -p may cause race conditions.
 .SUFFIXES:
+INSTALL := ./install-sh
+INSTALL_DATA := $(INSTALL) -m 644
 SHELL := /bin/sh
 M4 := m4
 
@@ -67,9 +68,9 @@ _$(1)-clean:
 _$(1)-maintainer-clean: $(1)-clean
 	$$(if $$($(1)_maintclean_files),$$(RM) $$($(1)_maintclean_files))
 _$(1)-installdirs:
-	$$(if $$($(1)_dirs),mkdir -p $$($(1)_dirs))
+	$$(if $$($(1)_dirs),$$(INSTALL) -d $$($(1)_dirs))
 _$(1)-install: $(1) $(1)-installdirs
-	$$(call gencmds,cp,$$($(1)_src_files),$$($(1)_dst_files))
+	$$(call gencmds,$$(INSTALL_DATA),$$($(1)_src_files),$$($(1)_dst_files))
 _$(1)-uninstall:
 	$$(RM) $$($(1)_dst_files)
 endef
