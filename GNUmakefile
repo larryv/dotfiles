@@ -10,7 +10,8 @@ INSTALL := ./install-sh
 INSTALL_DATA := $(INSTALL) -m 644
 M4 := m4
 
-# Imitate .PHONY portably [3].
+# Imitate .PHONY portably [3]. List "all" first to make it the default target.
+all clean installdirs install uninstall: FORCE
 FORCE:
 
 # Child directories listed here are considered "modules", containing "slices"
@@ -82,8 +83,6 @@ endef
 
 $(foreach module,$(MODULES),$(eval $(call create_module_rules,$(module))))
 
-all clean installdirs install uninstall: FORCE
-.DEFAULT_GOAL := all
 all: $(MODULES)
 clean: $(addsuffix -clean,$(MODULES))
 maintainer-clean: $(addsuffix -maintainer-clean,$(MODULES))
