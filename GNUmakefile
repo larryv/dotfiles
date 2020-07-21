@@ -40,7 +40,15 @@ $(if $(1),\
     $(call $(0),$(wordlist 2,$(2),$(1)),$(2)))
 endef
 
-include $(addsuffix /module.mk,$(MODULES))
+include git/module.mk
+include gnupg/module.mk
+include java/module.mk
+include lynx/module.mk
+include macports/module.mk
+include mercurial/module.mk
+include sh/module.mk
+include tmux/module.mk
+include zsh/module.mk
 
 define create_module_rules
 # Modules can declare three lists of files to install:
