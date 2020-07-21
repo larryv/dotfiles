@@ -10,6 +10,9 @@ INSTALL := ./install-sh
 INSTALL_DATA := $(INSTALL) -m 644
 M4 := m4
 
+# Imitate .PHONY portably [3].
+FORCE:
+
 # Child directories listed here are considered "modules", containing "slices"
 # of the final directory tree; these are "layered" during installation. Beyond
 # rules for updating files, modules define their own convenience rules (e.g.,
@@ -55,7 +58,7 @@ $(1)_dst_files := $$(patsubst $(1)/%,~/%,$$(subst /_,/.,$$($(1)_src_files)))
 $(1)_dirs := $$(filter-out ~/,$$(call collapsedirs,$$(dir $$($(1)_dst_files))))
 
 # Modules can augment these dummy targets.
-.PHONY: $(1) $$(addprefix $(1)-,clean installdirs install uninstall)
+$(1) $$(addprefix $(1)-,clean installdirs install uninstall): FORCE
 $(1): $$($(1)_src_files)
 $(1)-clean: _$(1)-clean
 $(1)-maintainer-clean: _$(1)-maintainer-clean
@@ -64,7 +67,7 @@ $(1)-install: _$(1)-install
 $(1)-uninstall: _$(1)-uninstall
 
 # Helper targets that do the real work.
-.PHONY: $$(addprefix _$(1)-,clean installdirs install uninstall)
+$$(addprefix _$(1)-,clean installdirs install uninstall): FORCE
 _$(1)-clean:
 	$$(if $$($(1)_clean_files),$$(RM) $$($(1)_clean_files))
 _$(1)-maintainer-clean: $(1)-clean
@@ -79,7 +82,7 @@ endef
 
 $(foreach module,$(MODULES),$(eval $(call create_module_rules,$(module))))
 
-.PHONY: all clean installdirs install uninstall
+all clean installdirs install uninstall: FORCE
 .DEFAULT_GOAL := all
 all: $(MODULES)
 clean: $(addsuffix -clean,$(MODULES))
@@ -97,3 +100,4 @@ uninstall: $(addsuffix -uninstall,$(MODULES))
 #
 # 1. https://www.gnu.org/software/make/manual/html_node/Makefile-Basics
 # 2. https://www.gnu.org/software/make/manual/html_node/Command-Variables
+# 3. https://www.gnu.org/software/make/manual/html_node/Force-Targets
