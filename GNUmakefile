@@ -3,12 +3,12 @@
 # Minimize differences between make implementations [1].
 .SUFFIXES:
 .SUFFIXES: .m4
-SHELL := /bin/sh
+SHELL = /bin/sh
 
 # Allow overriding of utilities [2].
-INSTALL := ./install-sh
-INSTALL_DATA := $(INSTALL) -m 644
-M4 := m4
+INSTALL = ./install-sh
+INSTALL_DATA = $(INSTALL) -m 644
+M4 = m4
 
 # Imitate .PHONY portably [3]. List "all" first to make it the default target.
 all clean installdirs install uninstall: FORCE
