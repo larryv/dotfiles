@@ -13,4 +13,4 @@ zsh_link_tgts := ~/.zsh/.zlogin ~/.zsh/.zprofile ~/.zshenv ~/.zsh/.zshrc
 zsh-install:
 	$(call gencmds,ln -fs,$(zsh_link_srcs),$(zsh_link_tgts))
 zsh-uninstall:
-	$(RM) $(zsh_link_tgts)
+	rm -f $(zsh_link_tgts)

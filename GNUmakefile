@@ -78,15 +78,15 @@ $(1)-uninstall: _$(1)-uninstall
 # Helper targets that do the real work.
 $$(addprefix _$(1)-,clean installdirs install uninstall): FORCE
 _$(1)-clean:
-	$$(if $$($(1)_clean_files),$$(RM) $$($(1)_clean_files))
+	$$(if $$($(1)_clean_files),rm -f $$($(1)_clean_files))
 _$(1)-maintainer-clean: $(1)-clean
-	$$(if $$($(1)_maintclean_files),$$(RM) $$($(1)_maintclean_files))
+	$$(if $$($(1)_maintclean_files),rm -f $$($(1)_maintclean_files))
 _$(1)-installdirs:
 	$$(if $$($(1)_dirs),$$(INSTALL) -d $$($(1)_dirs))
 _$(1)-install: $(1) $(1)-installdirs
 	$$(call gencmds,$$(INSTALL_DATA),$$($(1)_src_files),$$($(1)_dst_files))
 _$(1)-uninstall:
-	$$(RM) $$($(1)_dst_files)
+	rm -f $$($(1)_dst_files)
 endef
 
 $(foreach module,$(MODULES),$(eval $(call create_module_rules,$(module))))
