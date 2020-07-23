@@ -1,5 +1,3 @@
-.DELETE_ON_ERROR:
-
 # Minimize differences between make implementations [1].
 .SUFFIXES:
 .SUFFIXES: .m4
@@ -31,7 +29,8 @@ include zsh/module.mk
 
 # Process M4 templates.
 .m4:
-	$(M4) $< >$@
+	$(M4) $< >$@ \
+    || { rc=$$?; rm -f $@ && exit $$rc; }
 
 
 # References:
