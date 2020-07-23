@@ -1,14 +1,15 @@
-# Minimize differences between make implementations [1].
+# Minimize differences between make implementations [1][2][3].
+.POSIX:
 .SUFFIXES:
 .SUFFIXES: .m4
 SHELL = /bin/sh
 
-# Allow overriding of utilities [2].
+# Allow overriding of utilities [4].
 INSTALL = ./install-sh
 INSTALL_DATA = $(INSTALL) -m 644
 M4 = m4
 
-# Imitate .PHONY portably [3]. List "all" first to make it the default target.
+# Imitate .PHONY portably [5]. List "all" first to make it the default target.
 all clean installdirs install uninstall: FORCE
 FORCE:
 
@@ -35,6 +36,8 @@ include zsh/module.mk
 
 # References:
 #
-# 1. https://www.gnu.org/software/make/manual/html_node/Makefile-Basics
-# 2. https://www.gnu.org/software/make/manual/html_node/Command-Variables
-# 3. https://www.gnu.org/software/make/manual/html_node/Force-Targets
+# 1. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
+# 2. https://www.gnu.org/software/make/manual/html_node/Special-Targets
+# 3. https://www.gnu.org/software/make/manual/html_node/Makefile-Basics
+# 4. https://www.gnu.org/software/make/manual/html_node/Command-Variables
+# 5. https://www.gnu.org/software/make/manual/html_node/Force-Targets
