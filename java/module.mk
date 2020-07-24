@@ -2,8 +2,7 @@ all: java
 java: FORCE java/_profile.d/java.sh
 
 installdirs: java-installdirs
-java-installdirs: FORCE
-	$(INSTALL) -d ~/.profile.d/
+java-installdirs: FORCE sh-installdirs
 
 install: java-install
 java-install: FORCE java java-installdirs sh-install

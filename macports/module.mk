@@ -4,8 +4,7 @@ macports: FORCE \
     macports/_zsh/zshenv.d/macports.zsh
 
 installdirs: macports-installdirs
-macports-installdirs: FORCE
-	$(INSTALL) -d ~/.profile.d/ ~/.zsh/zshenv.d/
+macports-installdirs: FORCE sh-installdirs zsh-installdirs
 
 install: macports-install
 macports-install: FORCE macports macports-installdirs sh-install zsh-install

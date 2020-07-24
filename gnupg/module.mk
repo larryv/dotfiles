@@ -10,8 +10,8 @@ gnupg: FORCE \
 # directories.
 
 installdirs: gnupg-installdirs
-gnupg-installdirs: FORCE
-	$(INSTALL) -d ~/.gnupg/ ~/.profile.d/
+gnupg-installdirs: FORCE sh-installdirs
+	$(INSTALL) -d ~/.gnupg/
 	chmod 700 ~/.gnupg/
 
 install: gnupg-install

@@ -6,8 +6,7 @@ lynx-clean: FORCE
 	rm -f lynx/_lynx.cfg
 
 installdirs: lynx-installdirs
-lynx-installdirs: FORCE
-	$(INSTALL) -d ~/.profile.d/
+lynx-installdirs: FORCE sh-installdirs
 
 install: lynx-install
 lynx-install: FORCE lynx lynx-installdirs sh-install

@@ -8,7 +8,8 @@ zsh: FORCE \
 
 installdirs: zsh-installdirs
 zsh-installdirs: FORCE
-	$(INSTALL) -d ~/.zsh/functions/
+	$(INSTALL) -d ~/.zsh/functions/ ~/.zsh/zlogin.d/ ~/.zsh/zprofile.d/ \
+    ~/.zsh/zshenv.d/ ~/.zsh/zshrc.d/
 
 # ~/.zsh/zprofile sources ~/.profile.
 install: zsh-install
