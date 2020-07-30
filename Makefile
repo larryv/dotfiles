@@ -25,6 +25,7 @@ include lynx/module.mk
 include macports/module.mk
 include mercurial/module.mk
 include sh/module.mk
+include terminfo/module.mk
 include tmux/module.mk
 include zsh/module.mk
 
