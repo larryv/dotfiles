@@ -16,7 +16,7 @@ gnupg-installdirs: FORCE sh-installdirs
 
 install: gnupg-install
 gnupg-install: FORCE gnupg gnupg-installdirs sh-install
-	$(INSTALL) -m 600 \
+	$(INSTALL) -C -m 600 \
     gnupg/_gnupg/dirmngr.conf gnupg/_gnupg/gpg.conf ~/.gnupg/
 	$(INSTALL_DATA) gnupg/_profile.d/gnupg.sh ~/.profile.d/
 
