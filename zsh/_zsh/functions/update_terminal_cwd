@@ -44,15 +44,16 @@ local enchost=${HOST//(#m)?/%$(([##16] #MATCH))}
 local encuser=${LOGNAME//(#m)?/%$(([##16] #MATCH))}
 local encpath=${PWD//(#m)[^\/]/%$(([##16] #MATCH))}
 
-# This OSC sequence is from Terminal.app's General Preferences.
-local fmt='\e]7;%s\a'
+# Assemble the OSC sequence from Terminal.app's General Preferences.
+local uri=file://${enchost:+${encuser:+$encuser@}$enchost}$encpath
+local seq=$'\e]7;'${uri}$'\a'
 
-# Inside tmux, wrap the sequence to pass it through
-# (https://www.mail-archive.com/tmux-users@lists.sourceforge.net/msg03485.html).
-[[ -n $TMUX ]] && fmt='\ePtmux;\e'${fmt}'\e\'
+# Modify the sequence so tmux passes it through
+# (https://github.com/tmux/tmux/wiki/FAQ#what-is-the-passthrough-escape-sequence-and-how-do-i-use-it).
+[[ -n $TMUX ]] && seq=$'\ePtmux;'${seq//$'\e'/$'\e\e'}$'\e\\'
 
-# Assemble URI and print complete sequence to the terminal emulator.
-printf $fmt file://${enchost:+${encuser:+$encuser@}$enchost}$encpath
+# Print final sequence to the terminal emulator.
+print -nr -- $seq
 
 
 # See also
