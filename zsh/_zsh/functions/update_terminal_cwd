@@ -36,7 +36,7 @@ emulate -L zsh
 
 # I don't remember why I quoted just the command substitution instead of the
 # whole parameter expansion; as far as I can tell, they are equivalent here.
-[[ -n $PWD ]] || local PWD=${"$(pwd; echo x)"%??}
+[[ -n $PWD ]] || local PWD=${"$(pwd && echo x)"%??}
 
 # Percent-encode the URI components, except for slashes in the path.
 setopt EXTENDED_GLOB NO_MULTIBYTE
@@ -45,7 +45,7 @@ local encuser=${LOGNAME//(#m)?/%$(([##16] #MATCH))}
 local encpath=${PWD//(#m)[^\/]/%$(([##16] #MATCH))}
 
 # Assemble the OSC sequence from Terminal.app's General Preferences.
-local uri=file://${enchost:+${encuser:+$encuser@}$enchost}$encpath
+local uri=${encpath:+file://${enchost:+${encuser:+$encuser@}$enchost}$encpath}
 local seq=$'\e]7;'${uri}$'\a'
 
 # Modify the sequence so tmux passes it through
