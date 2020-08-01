@@ -22,8 +22,9 @@ emulate -L zsh
 
 [[ -z $INSIDE_EMACS ]] || return
 
-# TODO: Figure out how to communicate terminal type via SSH.
-[[ $TERM_PROGRAM == Apple_Terminal || -n $SSH_TTY ]] || return
+# TODO: Accommodate other terminal emulators.
+[[ $TERM_PROGRAM == Apple_Terminal
+    || $TERM == (nsterm-*|nsterm|Apple_Terminal) ]] || return
 
 # Provide alternatives if HOST, LOGNAME, or PWD (which are set by zsh) are
 # null or unset for some reason.
