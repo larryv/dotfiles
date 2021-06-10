@@ -18,8 +18,6 @@ ifelse(sysval, `0', `dnl
 [rebase]
 	# Requires Git 2.6.0 or later.
 	missingCommitsCheck = error
-[sendemail]
-	suppresscc = self
 
 [include]
 	path = .gitconfig.local
