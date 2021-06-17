@@ -37,15 +37,18 @@ typeset -ag precmd_functions
 
 # Right prompt: Current working directory (truncated to half screen
 # width) and version control info.
-_precmd_rps_cwd() {
+precmd_rps_cwd() {
     RPS1="%B%$((COLUMNS / 2))<..<%~%b"
 }
-precmd_functions+=_precmd_rps_cwd
+precmd_functions+=(precmd_rps_cwd)
 autoload -Uz +X vcs_info 2>/dev/null && {
-    _precmd_rps_vcs() {
+    precmd_rps_vcs() {
+        # https://www.zsh.org/mla/workers/2021/msg00811.html
+        # TODO Rework RPS1 to use %v and psvar?
+        local vcs_info_msg_0_
         vcs_info && RPS1+=${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}
     }
-    precmd_functions+=_precmd_rps_vcs
+    precmd_functions+=(precmd_rps_vcs)
 
     zstyle ':vcs_info:*' enable git hg svn
 
@@ -71,8 +74,9 @@ autoload -Uz +X vcs_info 2>/dev/null && {
 }
 
 # Send current working directory to the terminal emulator.
-autoload -Uz +X update_terminal_cwd 2>/dev/null \
-    && precmd_functions+=update_terminal_cwd
+autoload -Uz +X update_terminal_cwd 2>/dev/null && {
+    precmd_functions+=(update_terminal_cwd)
+}
 
 # Enable completion and other things.
 autoload -Uz run-help zargs zrecompile
