@@ -1,6 +1,12 @@
 # Source application-specific "topic" scripts.
-for script in $ZDOTDIR/zlogin.d/*.zsh(N-.); do
-    . $script
+save_vars LC_COLLATE
+LC_COLLATE=C
+for script in dummy $ZDOTDIR/zlogin.d/*.zsh(N-.); do
+    if [[ $script = dummy ]]; then
+        restore_vars LC_COLLATE
+    else
+        . $script
+    fi
 done
 unset script
 
