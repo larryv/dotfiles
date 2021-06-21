@@ -14,7 +14,7 @@ source_sh_profile
 # Source application-specific "topic" scripts.
 save_vars LC_COLLATE
 LC_COLLATE=C
-for script in dummy $ZDOTDIR/zprofile.d/*.zsh(N-.); do
+for script in dummy $ZDOTDIR/zprofile.d/*.zsh(N-^/); do
     if [[ $script = dummy ]]; then
         restore_vars LC_COLLATE
     else

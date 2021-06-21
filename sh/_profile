@@ -16,7 +16,7 @@ for script in dummy ~/.profile.d/*.sh; do
         ~/.profile.d/functions.sh)
             ;;
         *)
-            if [ -f "$script" ]; then
+            if [ -r "$script" ] && [ ! -d "$script" ]; then
                 . "$script"
             fi
             ;;
