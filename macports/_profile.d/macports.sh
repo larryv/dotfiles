@@ -12,7 +12,10 @@
 mp_paths=/etc/paths.d/macports
 if [ -n "${PATH+set}" ] && [ -f "$mp_paths" ]; then
     _path=$(sed '/./!d' "$mp_paths" | xargs2 promote "$PATH"; echo x)
+    save_vars LC_CTYPE
+    LC_CTYPE=C
     PATH=${_path%?}
+    restore_vars LC_CTYPE
     unset _path
 fi
 
@@ -20,7 +23,10 @@ fi
 mp_manpaths=/etc/manpaths.d/macports
 if [ -n "${MANPATH+set}" ] && [ -f "$mp_manpaths" ]; then
     _manpath=$(sed '/./!d' "$mp_manpaths" | xargs2 promote "$MANPATH"; echo x)
+    save_vars LC_CTYPE
+    LC_CTYPE=C
     MANPATH=${_manpath%?}
+    restore_vars LC_CTYPE
     unset _manpath
 fi
 

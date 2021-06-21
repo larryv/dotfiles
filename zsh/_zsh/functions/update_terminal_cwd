@@ -26,6 +26,9 @@ emulate -L zsh
 [[ $TERM_PROGRAM == Apple_Terminal
     || $TERM == (nsterm-*|nsterm|Apple_Terminal) ]] || return
 
+# Process pathnames in a locale-agnostic manner.
+setopt NO_MULTIBYTE
+
 # Provide alternatives if HOST, LOGNAME, or PWD (which are set by zsh) are
 # null or unset for some reason.
 
@@ -40,7 +43,7 @@ emulate -L zsh
 [[ -n $PWD ]] || local PWD=${"$(pwd && echo x)"%??}
 
 # Percent-encode the URI components, except for slashes in the path.
-setopt EXTENDED_GLOB NO_MULTIBYTE
+setopt EXTENDED_GLOB
 local enchost=${HOST//(#m)?/%$(([##16] #MATCH))}
 local encuser=${LOGNAME//(#m)?/%$(([##16] #MATCH))}
 local encpath=${PWD//(#m)[^\/]/%$(([##16] #MATCH))}
