@@ -1,10 +1,21 @@
+# The zsh startup files have already done this.
+if [ -z "$ZSH_VERSION" ]; then
+    . ~/.profile.d/functions.sh
+fi
+
 export GREP_OPTIONS=--color=auto
 
 # Source application-specific "topic" scripts.
 for script in ~/.profile.d/*.sh; do
-    if [ -f "$script" ]; then
-        . "$script"
-    fi
+    case $script in
+        ~/.profile.d/functions.sh)
+            ;;
+        *)
+            if [ -f "$script" ]; then
+                . "$script"
+            fi
+            ;;
+    esac
 done
 unset script
 
@@ -19,6 +30,11 @@ if [ -z "$PAGER" ]; then
 fi
 if [ -z "$VISUAL" ]; then
     VISUAL=$(command -v vim || command -v vi) && export VISUAL || unset VISUAL
+fi
+
+# The zsh startup files will do this later.
+if [ -z "$ZSH_VERSION" ]; then
+    unset_sh_helper_functions
 fi
 
 # vim: set filetype=sh:

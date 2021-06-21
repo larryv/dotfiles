@@ -1,3 +1,5 @@
+. ~/.profile.d/functions.sh
+
 ZDOTDIR=~/.zsh
 
 # I can't think of a good reason to allow duplicates in these.
@@ -10,3 +12,8 @@ for script in $ZDOTDIR/zshenv.d/*.zsh(N-.); do
     . $script
 done
 unset script
+
+# Login and interactive shells will do this later.
+if [[ ! -o LOGIN && ! -o INTERACTIVE ]]; then
+    unset_sh_helper_functions
+fi
