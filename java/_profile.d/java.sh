@@ -4,7 +4,8 @@
 if [ -z "$JAVA_HOME" ]; then
     # https://www.etalabs.net/sh_tricks.html, § "Getting non-clobbered output
     # from command substitution"
-    JAVA_HOME=$(/usr/libexec/java_home --failfast 2>/dev/null && echo x) \
-        && export JAVA_HOME="${JAVA_HOME%??}" \
-        || unset JAVA_HOME
+    if jh=$(/usr/libexec/java_home --failfast 2>/dev/null && echo x); then
+        export JAVA_HOME="${jh%??}"
+    fi
+    unset jh
 fi

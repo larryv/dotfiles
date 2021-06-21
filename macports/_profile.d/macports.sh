@@ -11,15 +11,17 @@
 
 mp_paths=/etc/paths.d/macports
 if [ -n "${PATH+set}" ] && [ -f "$mp_paths" ]; then
-    PATH=$(sed '/./!d' "$mp_paths" | xargs2 promote "$PATH"; echo x)
-    PATH=${PATH%?}
+    _path=$(sed '/./!d' "$mp_paths" | xargs2 promote "$PATH"; echo x)
+    PATH=${_path%?}
+    unset _path
 fi
 
 # MANPATH is only set on older versions of Mac OS X.
 mp_manpaths=/etc/manpaths.d/macports
 if [ -n "${MANPATH+set}" ] && [ -f "$mp_manpaths" ]; then
-    MANPATH=$(sed '/./!d' "$mp_manpaths" | xargs2 promote "$MANPATH"; echo x)
-    MANPATH=${MANPATH%?}
+    _manpath=$(sed '/./!d' "$mp_manpaths" | xargs2 promote "$MANPATH"; echo x)
+    MANPATH=${_manpath%?}
+    unset _manpath
 fi
 
 unset mp_paths mp_manpaths
