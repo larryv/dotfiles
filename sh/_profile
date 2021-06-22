@@ -5,7 +5,7 @@ fi
 
 export GREP_OPTIONS=--color=auto
 
-# Source application-specific "topic" scripts.
+# Source topic scripts.
 save_vars LC_COLLATE
 LC_COLLATE=C
 for script in dummy ~/.profile.d/*.sh; do

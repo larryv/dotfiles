@@ -11,7 +11,7 @@ source_sh_profile() {
 }
 source_sh_profile
 
-# Source application-specific "topic" scripts.
+# Source topic scripts.
 save_vars LC_COLLATE
 LC_COLLATE=C
 for script in dummy $ZDOTDIR/zprofile.d/*.zsh(N-^/); do

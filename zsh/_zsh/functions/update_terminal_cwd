@@ -29,17 +29,11 @@ emulate -L zsh
 # Process pathnames in a locale-agnostic manner.
 setopt NO_MULTIBYTE
 
-# Provide alternatives if HOST, LOGNAME, or PWD (which are set by zsh) are
-# null or unset for some reason.
-
+# Provide alternatives if HOST, LOGNAME, or PWD (which are set by zsh)
+# are missing for some reason. (I don't know whether LOGNAME/logname(1)
+# or USERNAME/id(1) is more appropriate for this.)
 [[ -n $HOST ]] || local HOST=$(hostname)
-
-# I don't know whether LOGNAME/logname(1) or USERNAME/id(1) is more
-# appropriate for this function.
 [[ -n $LOGNAME ]] || local LOGNAME=$(logname)
-
-# I don't remember why I quoted just the command substitution instead of the
-# whole parameter expansion; as far as I can tell, they are equivalent here.
 [[ -n $PWD ]] || local PWD=${"$(pwd && echo x)"%??}
 
 # Percent-encode the URI components, except for slashes in the path.

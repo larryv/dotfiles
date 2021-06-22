@@ -4,8 +4,8 @@ These are my Unix dotfiles. You almost certainly don't want to use them --
 that would be a bit like brushing with my toothbrush -- but you might find
 a useful setting or two if you take a look.
 
-In theory they're portable, but in practice they're only field-tested on macOS
-and whichever Linux I happen to be using for VPSes at the moment.
+In theory they're portable, but in practice they're only field-tested on
+macOS.
 
 ## Installation ##
 
@@ -17,7 +17,7 @@ It may or may not work with other versions.
   [Make]: https://www.gnu.org/software/make
   [M4]: https://www.gnu.org/software/m4
 
-All commands must be run from the project root.
+Commands must be run from the project root.
 
 -   Install/uninstall all files:
 
@@ -34,8 +34,7 @@ All commands must be run from the project root.
         $ make gnupg-uninstall
         $ make zsh-uninstall
 
-The entire project assumes a destination of `$HOME` because that's the only
-one that makes sense. To use a different directory (for testing, presumably),
-override `$HOME`.
+The project assumes a destination of `$HOME`. To use a different
+directory (for testing, presumably), override `$HOME`.
 
     $ HOME=/tmp/test make install

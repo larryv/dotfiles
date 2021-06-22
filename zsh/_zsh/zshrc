@@ -1,12 +1,9 @@
 # Use the "emacs" ZLE keymap even if EDITOR is "vi" or "vim".
 bindkey -e
 
-# >= 4.3.7: %1F, %2F, %3F, %f (numbered form uses termcap:
-# https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c)
+# >= 4.3.7: %1F, %2F, %3F, %f (numbered form uses termcap [1])
 if (( ${$(tput colors || tput Co):-0} >= 8 )); then
-    # Prefer terminfo/termcap over raw ANSI escape sequences:
-    #   - https://mywiki.wooledge.org/BashFAQ/037
-    #   - https://wiki.bash-hackers.org/scripting/terminalcodes
+    # Prefer terminfo/termcap over raw ANSI escape sequences [2][3].
     # Avoid using Functions/Misc/colors, which hard-codes ANSI sequences and
     # might not be installed. Define my own colors instead.
     typeset -A fg
@@ -43,8 +40,7 @@ precmd_rps_cwd() {
 precmd_functions+=(precmd_rps_cwd)
 autoload -Uz +X vcs_info 2>/dev/null && {
     precmd_rps_vcs() {
-        # https://www.zsh.org/mla/workers/2021/msg00811.html
-        # TODO Rework RPS1 to use %v and psvar?
+        # TODO Rework RPS1 to use %v and psvar [4]?
         local vcs_info_msg_0_
         vcs_info && RPS1+=${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}
     }
@@ -108,7 +104,7 @@ ls() { command ls -AFh "$@" }
 # Print timing stats for commands that use over 10 seconds of CPU time.
 REPORTTIME=10
 
-# Source application-specific "topic" scripts.
+# Source topic scripts.
 save_vars LC_COLLATE
 LC_COLLATE=C
 for script in dummy $ZDOTDIR/zshrc.d/*.zsh(N-^/); do
@@ -126,3 +122,11 @@ if [[ ! -o LOGIN ]]; then
 fi
 
 unset fg
+
+
+# References
+#
+#  1. https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c
+#  2. https://mywiki.wooledge.org/BashFAQ/037
+#  3. https://wiki.bash-hackers.org/scripting/terminalcodes
+#  4. https://www.zsh.org/mla/workers/2021/msg00811.html

@@ -7,15 +7,14 @@ is_name() (
     esac
 )
 
-# Given a colon-delimited list and one or more literal search terms, print the
-# list with any matching elements moved to the front. The "sort" is stable.
+# Given a colon-delimited list and one or more literal search terms,
+# prints the list with any matching elements moved to the front. The
+# "sort" is stable.
 promote() (
     origpath=$1
     shift 2>/dev/null || return
 
-    # https://www.in-ulm.de/~mascheck/various/ifs/
-    # https://lists.gnu.org/archive/html/bug-bash/2009-03/msg00137.html
-    # Remove trailing colons to work around variations in IFS splitting.
+    # Remove trailing colons to work around IFS variations [2][3].
     endcolons=${origpath##*[!:]}
     origpath=${origpath%"$endcolons"}
 
@@ -95,3 +94,5 @@ unset_sh_helper_functions() {
 # References
 #
 #  1. https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235
+#  2. https://www.in-ulm.de/~mascheck/various/ifs/
+#  3. https://lists.gnu.org/archive/html/bug-bash/2009-03/msg00137.html

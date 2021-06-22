@@ -35,7 +35,7 @@ include zsh/module.mk
     || { rc=$$?; rm -f $@ && exit $$rc; }
 
 
-# References:
+# References
 #
 # 1. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
 # 2. https://www.gnu.org/software/make/manual/html_node/Special-Targets

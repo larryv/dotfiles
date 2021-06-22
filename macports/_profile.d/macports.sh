@@ -5,9 +5,10 @@
 # gets the directories into the paths sooner, but they are appended after the
 # default entries. (See the path_helper(8) man page for details.)
 
-# MacPorts does not provide these files; I create them myself. They usually
-# contain "/opt/local/bin", "/opt/local/sbin", and "/opt/local/share/man". As
-# per path_helper(8), treat all newlines as delimiters and ignore blank lines.
+# MacPorts does not put files in /etc/{paths,manpaths}.d; I create them
+# myself. They usually contain "/opt/local/bin", "/opt/local/sbin", and
+# "/opt/local/share/man". As per path_helper(8), treat all newlines as
+# delimiters and ignore blank lines.
 
 mp_paths=/etc/paths.d/macports
 if [ -n "${PATH+set}" ] && [ -f "$mp_paths" ]; then

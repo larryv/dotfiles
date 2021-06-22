@@ -7,7 +7,7 @@ typeset -U FPATH fpath PATH path
 
 fpath=($ZDOTDIR/functions(N) $fpath)
 
-# Source application-specific "topic" scripts.
+# Source topic scripts.
 save_vars LC_COLLATE
 LC_COLLATE=C
 for script in dummy $ZDOTDIR/zshenv.d/*.zsh(N-^/); do

@@ -1,5 +1,4 @@
-# On Mac OS X / OS X / macOS, set JAVA_HOME if a JVM is enabled. I don't know
-# how to do this on other systems, or whether it's even necessary.
+# On Mac, set JAVA_HOME to the active JVM, if there is one.
 
 if [ -z "$JAVA_HOME" ]; then
     # https://www.etalabs.net/sh_tricks.html, § "Getting non-clobbered output
