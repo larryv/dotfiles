@@ -8,40 +8,17 @@ for script in ~/.profile.d/*.sh; do
 done
 unset script
 
-# https://unix.stackexchange.com/a/4413 - Assign absolute paths to maximize
-# compatibility. Do it here so that topic scripts can modify PATH first. Local
-# topic scripts may override these defaults as desired.
-
-# https://mywiki.wooledge.org/BashFAQ/081
-pathfinder() (
-    # https://www.in-ulm.de/~mascheck/various/ifs/
-    # https://lists.gnu.org/archive/html/bug-bash/2009-03/msg00137.html
-    # Add an extra trailing colon to work around inconsistent IFS splitting.
-    case $PATH in
-        *:) PATH=$PATH: ;;
-    esac
-
-    set -f
-    IFS=:
-    for arg do
-        for dir in $PATH; do
-            fullpath=${dir:-.}/$arg
-            if [ -f "$fullpath" ] && [ -x "$fullpath" ]; then
-                printf %s "$fullpath"
-                return
-            fi
-        done
-    done
-    return 1
-)
+# https://unix.stackexchange.com/a/4413 - Assign absolute paths to
+# maximize compatibility. Do it here so that topic scripts can modify
+# PATH first. Local topic scripts may override these defaults as
+# desired. Assume that the system startup files did not define
+# identically named aliases or functions, which would be obnoxious.
 
 if [ -z "$PAGER" ]; then
-    PAGER=$(pathfinder less) && export PAGER || unset PAGER
+    PAGER=$(command -v less) && export PAGER || unset PAGER
 fi
 if [ -z "$VISUAL" ]; then
-    VISUAL=$(pathfinder vim vi) && export VISUAL || unset VISUAL
+    VISUAL=$(command -v vim || command -v vi) && export VISUAL || unset VISUAL
 fi
-
-unset -f pathfinder
 
 # vim: set filetype=sh:
