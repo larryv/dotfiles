@@ -20,6 +20,7 @@ FORCE:
 # (e.g., "make install").
 include git/module.mk
 include gnupg/module.mk
+include grep/module.mk
 include java/module.mk
 include lynx/module.mk
 include macports/module.mk

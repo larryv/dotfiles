@@ -3,8 +3,6 @@ if [ -z "$ZSH_VERSION" ]; then
     . ~/.profile.d/functions.sh
 fi
 
-export GREP_OPTIONS=--color=auto
-
 # Source topic scripts.
 save_vars LC_COLLATE
 LC_COLLATE=C
