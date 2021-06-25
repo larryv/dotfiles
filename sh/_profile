@@ -29,10 +29,17 @@ unset script
 # identically named aliases or functions, which would be obnoxious.
 
 if [ -z "$PAGER" ]; then
-    PAGER=$(command -v less) && export PAGER || unset PAGER
+    if pager=$(command -v less); then
+        export PAGER="$pager"
+    fi
+    unset pager
 fi
+
 if [ -z "$VISUAL" ]; then
-    VISUAL=$(command -v vim || command -v vi) && export VISUAL || unset VISUAL
+    if visual=$(command -v vim || command -v vi); then
+        export VISUAL="$visual"
+    fi
+    unset visual
 fi
 
 # The zsh startup files will do this later.

@@ -11,8 +11,9 @@ is_name() (
 # prints the list with any matching elements moved to the front. The
 # "sort" is stable.
 promote() (
+    [ "$#" -ge 1 ] || return
     origpath=$1
-    shift 2>/dev/null || return
+    shift
 
     # Remove trailing colons to work around IFS variations [2][3].
     endcolons=${origpath##*[!:]}
