@@ -1,3 +1,20 @@
+# macports/_zsh/zshenv.d/macports.zsh
+# -----------------------------------
+#
+# Written in 2014-2016, 2018, 2020 by Lawrence Velázquez <vq@larryv.me>.
+#
+# To the extent possible under law, the author(s) have dedicated all
+# copyright and related and neighboring rights to this software to the
+# public domain worldwide. This software is distributed without any
+# warranty.
+#
+# You should have received a copy of the CC0 Public Domain Dedication
+# along with this software. If not, see
+# <http://creativecommons.org/publicdomain/zero/1.0/>.
+#
+# SPDX-License-Identifier: CC0-1.0
+
+
 # On OS X 10.10 Yosemite and earlier, /etc/zshenv unconditionally redefines
 # the command path using path_helper(8), even if zsh is run as a non-login
 # shell (e.g., invoked from the command line to run a script). This puts the
