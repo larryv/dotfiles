@@ -28,7 +28,10 @@ is_name() (
 # prints the list with any matching elements moved to the front. The
 # "sort" is stable.
 promote() (
-    [ "$#" -ge 1 ] || return
+    if [ "$#" -lt 2 ]; then
+        printf '%s' "$1"
+        return
+    fi
     origpath=$1
     shift
 
@@ -38,18 +41,18 @@ promote() (
 
     set -f
     IFS=:
-    unset arg head tail
+    unset head tail
     for x in ${origpath:-''}; do
         for arg do
             [ "$x" = "$arg" ] && head=${head}${head+:}${x} && break
-        done && [ -n "${arg+set}" ] || tail=${tail}${tail+:}${x}
+        done || tail=${tail}${tail+:}${x}
     done
 
     # Handle the trailing empty elements we removed earlier.
     if [ -n "$endcolons" ]; then
         for arg do
             [ -z "$arg" ] && head=${head}${head+:}${endcolons%?} && break
-        done && [ -n "${arg+set}" ] || tail=${tail}${tail+:}${endcolons%?}
+        done || tail=${tail}${tail+:}${endcolons%?}
     fi
 
     printf '%s%s%s' "$head" "${head+${tail+:}}" "$tail"
