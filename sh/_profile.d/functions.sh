@@ -41,21 +41,21 @@ promote() (
 
     set -f
     IFS=:
-    unset head tail
+    unset matched unmatched
     for x in ${origpath:-''}; do
         for arg do
-            [ "$x" = "$arg" ] && head=${head}${head+:}${x} && break
-        done || tail=${tail}${tail+:}${x}
+            [ "$x" = "$arg" ] && matched=${matched}${matched+:}${x} && break
+        done || unmatched=${unmatched}${unmatched+:}${x}
     done
 
     # Handle the trailing empty elements we removed earlier.
     if [ -n "$endcolons" ]; then
         for arg do
-            [ -z "$arg" ] && head=${head}${head+:}${endcolons%?} && break
-        done || tail=${tail}${tail+:}${endcolons%?}
+            [ -z "$arg" ] && matched=${matched}${matched+:}${endcolons%?} && break
+        done || unmatched=${unmatched}${unmatched+:}${endcolons%?}
     fi
 
-    printf '%s%s%s' "$head" "${head+${tail+:}}" "$tail"
+    printf '%s%s%s' "$matched" "${matched+${unmatched+:}}" "$unmatched"
 )
 
 # Given the names of one or more shell variables, restores their state
