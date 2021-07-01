@@ -21,12 +21,12 @@ if [ -z "$ZSH_VERSION" ]; then
 fi
 
 # Source topic scripts.
-save_vars LC_COLLATE
-LC_COLLATE=C
+save_vars LC_ALL LC_COLLATE
+LC_ALL= LC_COLLATE=C
 for script in dummy ~/.profile.d/*.sh; do
     case $script in
         dummy)
-            restore_vars LC_COLLATE
+            restore_vars LC_ALL LC_COLLATE
             ;;
         ~/.profile.d/functions.sh)
             ;;

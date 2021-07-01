@@ -26,11 +26,11 @@ typeset -U FPATH fpath PATH path
 fpath=($ZDOTDIR/functions(N) $fpath)
 
 # Source topic scripts.
-save_vars LC_COLLATE
-LC_COLLATE=C
+save_vars LC_ALL LC_COLLATE
+LC_ALL= LC_COLLATE=C
 for script in dummy $ZDOTDIR/zshenv.d/*.zsh(N-^/); do
     if [[ $script = dummy ]]; then
-        restore_vars LC_COLLATE
+        restore_vars LC_ALL LC_COLLATE
     else
         . $script
     fi
