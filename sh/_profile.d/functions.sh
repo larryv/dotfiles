@@ -27,36 +27,29 @@ is_name() (
 # Given a colon-delimited list and one or more literal search terms,
 # prints the list with any matching elements moved to the front. The
 # "sort" is stable.
-promote() (
+promote() {
     if [ "$#" -lt 2 ]; then
         printf '%s' "$1"
         return
     fi
-    origpath=$1
+
+    # Turn the colon-delimited list into a colon-terminated one, making
+    # it unnecessary to treat the final element as a special case.
+    xs=$1:
     shift
 
-    # Remove trailing colons to work around IFS variations [2][3].
-    endcolons=${origpath##*[!:]}
-    origpath=${origpath%"$endcolons"}
-
-    set -f
-    IFS=:
     unset matched unmatched
-    for x in ${origpath:-''}; do
+    while [ -n "$xs" ]; do
+        x=${xs%%:*}
+        xs=${xs#*:}
         for arg do
             [ "$x" = "$arg" ] && matched=${matched}${matched+:}${x} && break
         done || unmatched=${unmatched}${unmatched+:}${x}
     done
 
-    # Handle the trailing empty elements we removed earlier.
-    if [ -n "$endcolons" ]; then
-        for arg do
-            [ -z "$arg" ] && matched=${matched}${matched+:}${endcolons%?} && break
-        done || unmatched=${unmatched}${unmatched+:}${endcolons%?}
-    fi
-
     printf '%s%s%s' "$matched" "${matched+${unmatched+:}}" "$unmatched"
-)
+    unset arg matched unmatched x xs
+}
 
 # Given the names of one or more shell variables, restores their state
 # as saved by a preceding call to save_vars. The caller should reserve
@@ -115,5 +108,3 @@ unset_sh_helper_functions() {
 # References
 #
 #  1. https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235
-#  2. https://www.in-ulm.de/~mascheck/various/ifs/
-#  3. https://lists.gnu.org/archive/html/bug-bash/2009-03/msg00137.html
