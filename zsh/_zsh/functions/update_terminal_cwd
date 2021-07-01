@@ -40,8 +40,8 @@ emulate -L zsh
 [[ $TERM_PROGRAM == Apple_Terminal
     || $TERM == (nsterm-*|nsterm|Apple_Terminal) ]] || return
 
-# Process pathnames in a locale-agnostic manner.
-setopt NO_MULTIBYTE
+# Process pathnames bytewise and use POSIX character classes.
+local LC_ALL= LC_CTYPE=C
 
 # Provide alternatives if HOST, LOGNAME, or PWD (which are set by zsh)
 # are missing for some reason. (I don't know whether LOGNAME/logname(1)
@@ -50,11 +50,13 @@ setopt NO_MULTIBYTE
 [[ -n $LOGNAME ]] || local LOGNAME=$(logname)
 [[ -n $PWD ]] || local PWD=${"$(pwd && echo x)"%??}
 
-# Percent-encode the URI components, except for slashes in the path.
+# Percent-encode URI components, skipping delimiters ('/' in the path)
+# and RFC 3986 unreserved characters
+# (https://www.rfc-editor.org/rfc/rfc3986.html#section-2.3).
 setopt EXTENDED_GLOB
-local enchost=${HOST//(#m)?/%$(([##16] #MATCH))}
-local encuser=${LOGNAME//(#m)?/%$(([##16] #MATCH))}
-local encpath=${PWD//(#m)[^\/]/%$(([##16] #MATCH))}
+local enchost=${HOST//(#m)[^-._~[:alnum:]]/%$(([##16] #MATCH))}
+local encuser=${LOGNAME//(#m)[^-._~[:alnum:]]/%$(([##16] #MATCH))}
+local encpath=${PWD//(#m)[^-._~[:alnum:]\/]/%$(([##16] #MATCH))}
 
 # Assemble the OSC sequence from Terminal.app's General Preferences.
 local uri=${encpath:+file://${enchost:+${encuser:+$encuser@}$enchost}$encpath}
