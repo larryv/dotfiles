@@ -58,16 +58,19 @@ local enchost=${HOST//(#m)[^-._~[:alnum:]]/%$(([##16] #MATCH))}
 local encuser=${LOGNAME//(#m)[^-._~[:alnum:]]/%$(([##16] #MATCH))}
 local encpath=${PWD//(#m)[^-._~[:alnum:]\/]/%$(([##16] #MATCH))}
 
-# Assemble the OSC sequence from Terminal.app's General Preferences.
+# Assemble the OSC sequences from Terminal.app's General Preferences.
+# Clear the current working document in case another program set it.
 local uri=${encpath:+file://${enchost:+${encuser:+$encuser@}$enchost}$encpath}
-local seq=$'\e]7;'${uri}$'\a'
+local dirseq=$'\e]7;'${uri}$'\a'
+local docseq=$'\e]6;\a'
+local seqs=${dirseq}${docseq}
 
-# Modify the sequence so tmux passes it through
+# Modify the sequences so tmux passes them through
 # (https://github.com/tmux/tmux/wiki/FAQ#what-is-the-passthrough-escape-sequence-and-how-do-i-use-it).
-[[ -n $TMUX ]] && seq=$'\ePtmux;'${seq//$'\e'/$'\e\e'}$'\e\\'
+[[ -n $TMUX ]] && seqs=$'\ePtmux;'${seqs//$'\e'/$'\e\e'}$'\e\\'
 
-# Print final sequence to the terminal emulator.
-print -nr -- $seq
+# Print final sequences to the terminal emulator.
+print -nr -- $seqs
 
 
 # See also
