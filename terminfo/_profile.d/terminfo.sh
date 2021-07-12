@@ -1,7 +1,7 @@
 # terminfo/_profile.d/terminfo.sh
 # -------------------------------
 #
-# Written in 2020 by Lawrence Velázquez <vq@larryv.me>.
+# Written in 2020-2021 by Lawrence Velázquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -28,6 +28,21 @@ if [ -z "${STY}${TMUX}" ]; then
             && case $TERM_PROGRAM_VERSION in
                    '' | *[!.0123456789]* | .* | *..* | *.) false ;;
                esac
+
+        # Temporarily do nothing. When this startup file sets TERM to
+        # "nsterm-build400" and my update_terminal_cwd zsh function is
+        # active, Apple Terminal appears to restore old values of the
+        # current working directory/document when certain programs are
+        # run. This can be seen by starting a new terminal, running and
+        # quitting less(1), using cd(1) to switch to another directory,
+        # and running less(1) again. At this point Terminal's current
+        # working directory is not the new directory but the one in
+        # which less(1) was run initially. This also occurs with vim(1),
+        # nano(1), and no doubt other software, but it does NOT occur
+        # when using less(1) via `git diff`. I have no idea what is
+        # going on or how to even begin investigating.
+
+        false
     then
         # https://invisible-island.net/ncurses/terminfo.src.html#toc-_Terminal_app
         #
