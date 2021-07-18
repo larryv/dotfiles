@@ -1,7 +1,7 @@
 # zsh/module.mk
 # -------------
 #
-# Written in 2016, 2018, 2020 by Lawrence Velázquez <vq@larryv.me>.
+# Written in 2016, 2018, 2020-2021 by Lawrence Velázquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -35,10 +35,10 @@ zsh-install: FORCE sh-install zsh zsh-installdirs
     zsh/_zsh/functions/update_terminal_cwd ~/.zsh/functions/
 	$(INSTALL_DATA) \
     zsh/_zsh/zlogin zsh/_zsh/zprofile zsh/_zsh/zshenv zsh/_zsh/zshrc ~/.zsh/
-	ln -fs zlogin ~/.zsh/.zlogin
-	ln -fs zprofile ~/.zsh/.zprofile
 	ln -fs .zsh/zshenv ~/.zshenv
+	ln -fs zprofile ~/.zsh/.zprofile
 	ln -fs zshrc ~/.zsh/.zshrc
+	ln -fs zlogin ~/.zsh/.zlogin
 
 uninstall: zsh-uninstall
 zsh-uninstall: FORCE
