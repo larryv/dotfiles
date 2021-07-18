@@ -36,6 +36,7 @@ zsh-install: FORCE sh-install zsh zsh-installdirs
 	$(INSTALL_DATA) \
     zsh/_zsh/zlogin zsh/_zsh/zprofile zsh/_zsh/zshenv zsh/_zsh/zshrc ~/.zsh/
 	ln -fs .zsh/zshenv ~/.zshenv
+	ln -fs zshenv ~/.zsh/.zshenv
 	ln -fs zprofile ~/.zsh/.zprofile
 	ln -fs zshrc ~/.zsh/.zshrc
 	ln -fs zlogin ~/.zsh/.zlogin
