@@ -45,23 +45,22 @@ emulate -L zsh
 # Process pathnames bytewise and use POSIX character classes.
 local LC_ALL= LC_CTYPE=C
 
-# Provide alternatives if HOST [1], LOGNAME, or PWD (which are set by zsh)
-# are null for some reason.  (I don't know whether LOGNAME/logname(1) or
-# USERNAME/id(1) is more appropriate for this.)
-[[ -n $HOST ]] || local HOST=$(hostname)
-[[ -n $LOGNAME ]] || local LOGNAME=$(logname)
+# Provide alternatives if HOST [1] or PWD (which are set by zsh) are
+# null for some reason.  It's fine if HOST ends up null after all
+# because RFC 8089 considers "file-auth"-less URIs [2] to be local [3].
+[[ -n $HOST ]] || local HOST=$(hostname 2>/dev/null)
 [[ -n $PWD ]] || local PWD=${"$(pwd && echo x)"%??}
 
 # Percent-encode URI components as per RFC 3986, except for permitted
-# characters [4][5].
+# characters [4][5].  Do encode ';' in the path, otherwise Terminal
+# truncates it there.
 setopt EXTENDED_GLOB
-local enchost=${HOST//(#m)[!-[:alnum:]._~]/%$(([##16] #MATCH))}
-local encuser=${LOGNAME//(#m)[!-[:alnum:]._~]/%$(([##16] #MATCH))}
-local encpath=${PWD//(#m)[!-\/[:alnum:]._~]/%$(([##16] #MATCH))}
+local enchost=${HOST//(#m)[!-[:alnum:]._~!$&\'()*+,;=]/%$(([##16] #MATCH))}
+local encpath=${PWD//(#m)[!-\/[:alnum:]._~!$&\'()*+,=:@]/%$(([##16] #MATCH))}
 
 # Assemble the OSC sequences specified in Terminal's Preferences.  Clear
 # the current working document in case another program set it.
-local uri=${encpath:+file://${enchost:+${encuser:+$encuser@}$enchost}$encpath}
+local uri=${encpath:+file://${enchost}${encpath}}
 local dirseq=$'\e]7;'${uri}$'\a'
 local docseq=$'\e]6;\a'
 local seqs=${dirseq}${docseq}
@@ -76,6 +75,8 @@ print -nr -- $seqs
 # References
 #
 #  1. /etc/bashrc and /etc/bashrc_Apple_Terminal on Mac
+#  2. https://www.rfc-editor.org/rfc/rfc8089.html#section-2
+#  3. https://www.rfc-editor.org/rfc/rfc8089.html#section-3
 #  4. https://www.rfc-editor.org/rfc/rfc3986.html#section-3.2.2
 #  5. https://www.rfc-editor.org/rfc/rfc3986.html#section-3.3
 #  6. https://github.com/tmux/tmux/wiki/FAQ#what-is-the-passthrough-escape-sequence-and-how-do-i-use-it
