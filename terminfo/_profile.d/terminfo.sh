@@ -5,11 +5,11 @@
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
-# public domain worldwide. This software is distributed without any
+# public domain worldwide.  This software is distributed without any
 # warranty.
 #
 # You should have received a copy of the CC0 Public Domain Dedication
-# along with this software. If not, see
+# along with this software.  If not, see
 # <http://creativecommons.org/publicdomain/zero/1.0/>.
 #
 # SPDX-License-Identifier: CC0-1.0
@@ -29,18 +29,18 @@ if [ -z "${STY}${TMUX}" ]; then
                    '' | *[!.0123456789]* | .* | *..* | *.) false ;;
                esac
 
-        # Temporarily do nothing. When this startup file sets TERM to
+        # Temporarily do nothing.  When this startup file sets TERM to
         # "nsterm-build400" and my update_terminal_cwd zsh function is
         # active, Apple Terminal appears to restore old values of the
         # current working directory/document when certain programs are
-        # run. This can be seen by starting a new terminal, running and
+        # run.  This can be seen by starting a new terminal, running and
         # quitting less(1), using cd(1) to switch to another directory,
-        # and running less(1) again. At this point Terminal's current
+        # and running less(1) again.  At this point Terminal's current
         # working directory is not the new directory but the one in
-        # which less(1) was run initially. This also occurs with vim(1),
-        # nano(1), and no doubt other software, but it does NOT occur
-        # when using less(1) via `git diff`. I have no idea what is
-        # going on or how to even begin investigating.
+        # which less(1) was run initially.  This also occurs with
+        # vim(1), nano(1), and no doubt other software, but it does NOT
+        # occur when using less(1) via `git diff`.  I have no idea what
+        # is going on or how to even begin investigating.
 
         false
     then
@@ -49,7 +49,7 @@ if [ -z "${STY}${TMUX}" ]; then
         # Unconditionally override the "Declare terminal as" preference
         # because (according to a comment in the terminfo source) it
         # affects TERM but not the actual emulation, which is itself not
-        # accurately described by any of the preference's choices. The
+        # accurately described by any of the preference's choices.  The
         # required build numbers are taken from the source.
 
         IFS=. read -r major minor rest <<EOF
@@ -84,7 +84,7 @@ EOF
         [ "$term" != "$TERM" ] \
             && if [ -n "$ZSH_VERSION" ]; then
                     # On assignment to TERM, zsh automatically tries to
-                    # reinitialize the terminal. As far as I can tell,
+                    # reinitialize the terminal.  As far as I can tell,
                     # the only way to discern failure is to check for an
                     # error message, as neither the exit status nor the
                     # assignment itself is affected.

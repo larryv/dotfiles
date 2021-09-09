@@ -6,36 +6,36 @@
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
-# public domain worldwide. This software is distributed without any
+# public domain worldwide.  This software is distributed without any
 # warranty.
 #
 # You should have received a copy of the CC0 Public Domain Dedication
-# along with this software. If not, see
+# along with this software.  If not, see
 # <http://creativecommons.org/publicdomain/zero/1.0/>.
 #
 # SPDX-License-Identifier: CC0-1.0
 
 
-# Minimize differences between make implementations [1][2][3].
+# Minimize differences between make implementations [1][2][3].
 .POSIX:
 .SUFFIXES:
 .SUFFIXES: .m4
 SHELL = /bin/sh
 
-# Allow overriding of utilities [4].
+# Allow overriding of utilities [4].
 INSTALL = ./install-sh
 INSTALL_DATA = $(INSTALL) -C -m 644
 M4 = m4
 
-# Imitate .PHONY portably [5]. List "all" first to make it the default target.
+# Imitate .PHONY portably [5].  List "all" first to make it the default.
 all clean maintainer-clean installdirs install uninstall: FORCE
 FORCE:
 
-# Child directories listed here are considered "modules", containing "slices"
-# of the final directory tree; these are "layered" during installation. Beyond
-# rules for updating files, modules define their own convenience rules (e.g.,
-# "make sh-install") and make them prerequisites of the analogous global rules
-# (e.g., "make install").
+# These subdirectories and their submakefiles constitute "modules",
+# describing slices of the final directory tree; these are combined
+# during installation.  Beyond rules for updating files, modules define
+# their own convenience rules (e.g., `make sh-install`) and make them
+# prerequisites of the global rules (e.g., `make install`).
 include git/module.mk
 include gnupg/module.mk
 include grep/module.mk

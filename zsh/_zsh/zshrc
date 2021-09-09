@@ -5,11 +5,11 @@
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
-# public domain worldwide. This software is distributed without any
+# public domain worldwide.  This software is distributed without any
 # warranty.
 #
 # You should have received a copy of the CC0 Public Domain Dedication
-# along with this software. If not, see
+# along with this software.  If not, see
 # <http://creativecommons.org/publicdomain/zero/1.0/>.
 #
 # SPDX-License-Identifier: CC0-1.0
@@ -21,14 +21,15 @@ bindkey -e
 # >= 4.3.7: %1F, %2F, %3F, %f (numbered form uses termcap [1])
 if (( ${$(tput colors || tput Co):-0} >= 8 )); then
     # Prefer terminfo/termcap over raw ANSI escape sequences [2][3].
-    # Avoid using Functions/Misc/colors, which hard-codes ANSI sequences and
-    # might not be installed. Define my own colors instead.
+    # Avoid using Functions/Misc/colors, which hard-codes ANSI sequences
+    # and might not be installed.  Define my own colors instead.
     typeset -A fg
     fg[red]=$(tput setaf 1 || tput AF 1) || fg[red]=$'\e[31m'
     fg[green]=$(tput setaf 2 || tput AF 2) || fg[green]=$'\e[32m'
     fg[yellow]=$(tput setaf 3 || tput AF 3) || fg[yellow]=$'\e[33m'
-    # `tput setaf 9` doesn't have the desired effect on xterm-256color. Note
-    # that `tput op` resets the background color as well, which is fine here.
+    # `tput setaf 9` doesn't have the desired effect on xterm-256color.
+    # Note that `tput op` resets the background color as well, which is
+    # fine here.
     fg[default]=$(tput op) || fg[default]=$'\e[39m'
 fi 2>/dev/null
 
@@ -103,7 +104,8 @@ autoload -Uz compinit && compinit -d $ZDOTDIR/zcompdump && {
     fi
 }
 
-# Enable fancy globbing; stop at slashes when moving wordwise.
+# Enable fancy globbing; stop at slashes and periods when moving
+# wordwise.
 setopt EXTENDED_GLOB
 WORDCHARS=${WORDCHARS//[\/.]/}
 
@@ -112,7 +114,7 @@ SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
 HISTFILE=$ZDOTDIR/zsh_history
 setopt EXTENDED_HISTORY
-# < 5.0.6: Let shells append their history at exit instead of incrementally.
+# < 5.0.6: Just append history at exit, it's fine.
 setopt INC_APPEND_HISTORY_TIME 2>/dev/null
 
 # Interactive functions.

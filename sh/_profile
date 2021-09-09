@@ -5,11 +5,11 @@
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
-# public domain worldwide. This software is distributed without any
+# public domain worldwide.  This software is distributed without any
 # warranty.
 #
 # You should have received a copy of the CC0 Public Domain Dedication
-# along with this software. If not, see
+# along with this software.  If not, see
 # <http://creativecommons.org/publicdomain/zero/1.0/>.
 #
 # SPDX-License-Identifier: CC0-1.0
@@ -40,9 +40,9 @@ done
 unset script
 
 # https://unix.stackexchange.com/a/4413 - Assign absolute paths to
-# maximize compatibility. Do it here so that topic scripts can modify
-# PATH first. Local topic scripts may override these defaults as
-# desired. Assume that the system startup files did not define
+# maximize compatibility.  Do it here so that topic scripts can modify
+# PATH first.  Local topic scripts may override these defaults as
+# desired.  Assume that the system startup files did not define
 # identically named aliases or functions, which would be obnoxious.
 
 if [ -z "$PAGER" ]; then

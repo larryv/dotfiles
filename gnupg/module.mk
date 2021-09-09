@@ -1,15 +1,15 @@
 # gnupg/module.mk
 # ---------------
 #
-# Written in 2016, 2018, 2020 by Lawrence Velázquez <vq@larryv.me>.
+# Written in 2016, 2018, 2020-2021 by Lawrence Velázquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
-# public domain worldwide. This software is distributed without any
+# public domain worldwide.  This software is distributed without any
 # warranty.
 #
 # You should have received a copy of the CC0 Public Domain Dedication
-# along with this software. If not, see
+# along with this software.  If not, see
 # <http://creativecommons.org/publicdomain/zero/1.0/>.
 #
 # SPDX-License-Identifier: CC0-1.0
@@ -21,10 +21,10 @@ gnupg: FORCE \
     gnupg/_gnupg/gpg.conf \
     gnupg/_profile.d/gnupg.sh
 
-# Set restrictive permissions on the configuration as GnuPG requires. Use
-# chmod(1) on directories instead of `$(INSTALL) -d -m` because my bundled
-# install-sh (version 2018-03-11.20) doesn't update permissions on preexisting
-# directories.
+# Set restrictive permissions on the configuration as GnuPG requires.
+# Use chmod(1) on directories instead of `$(INSTALL) -d -m` because my
+# bundled install-sh (version 2018-03-11.20) doesn't update permissions
+# on preexisting directories.
 
 installdirs: gnupg-installdirs
 gnupg-installdirs: FORCE sh-installdirs

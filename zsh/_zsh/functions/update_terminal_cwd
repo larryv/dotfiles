@@ -5,18 +5,18 @@
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
-# public domain worldwide. This software is distributed without any
+# public domain worldwide.  This software is distributed without any
 # warranty.
 #
 # You should have received a copy of the CC0 Public Domain Dedication
-# along with this software. If not, see
+# along with this software.  If not, see
 # <http://creativecommons.org/publicdomain/zero/1.0/>.
 #
 # SPDX-License-Identifier: CC0-1.0
 
 
-# Identify the current working directory to the terminal emulator. To use,
-# register as a chpwd or precmd hook:
+# Identify the current working directory to the terminal.  Use by
+# registering as a chpwd or precmd hook:
 #
 #     fpath=(/wherever/this/file/lives $fpath)
 #
@@ -27,9 +27,9 @@
 #     # Without add-zsh-hook.
 #     autoload -Uz update_terminal_cwd
 #     typeset -ag chpwd_functions
-#     chpwd_functions+=update_terminal_cwd
+#     chpwd_functions+=(update_terminal_cwd)
 #
-# Currently supports Apple's Terminal.app.
+# Currently supports Apple Terminal.
 
 
 emulate -L zsh
@@ -37,45 +37,48 @@ emulate -L zsh
 [[ -z $INSIDE_EMACS ]] || return
 
 # TODO: Accommodate other terminal emulators.
+# TODO: Identify terminals in tmux sessions, where TERM_PROGRAM and TERM
+# are changed.
 [[ $TERM_PROGRAM == Apple_Terminal
     || $TERM == (nsterm-*|nsterm|Apple_Terminal) ]] || return
 
 # Process pathnames bytewise and use POSIX character classes.
 local LC_ALL= LC_CTYPE=C
 
-# Provide alternatives if HOST, LOGNAME, or PWD (which are set by zsh)
-# are missing for some reason. (I don't know whether LOGNAME/logname(1)
-# or USERNAME/id(1) is more appropriate for this.)
+# Provide alternatives if HOST [1], LOGNAME, or PWD (which are set by zsh)
+# are null for some reason.  (I don't know whether LOGNAME/logname(1) or
+# USERNAME/id(1) is more appropriate for this.)
 [[ -n $HOST ]] || local HOST=$(hostname)
 [[ -n $LOGNAME ]] || local LOGNAME=$(logname)
 [[ -n $PWD ]] || local PWD=${"$(pwd && echo x)"%??}
 
-# Percent-encode URI components, skipping delimiters ('/' in the path)
-# and RFC 3986 unreserved characters
-# (https://www.rfc-editor.org/rfc/rfc3986.html#section-2.3).
+# Percent-encode URI components as per RFC 3986, except for permitted
+# characters [4][5].
 setopt EXTENDED_GLOB
 local enchost=${HOST//(#m)[^-._~[:alnum:]]/%$(([##16] #MATCH))}
 local encuser=${LOGNAME//(#m)[^-._~[:alnum:]]/%$(([##16] #MATCH))}
 local encpath=${PWD//(#m)[^-._~[:alnum:]\/]/%$(([##16] #MATCH))}
 
-# Assemble the OSC sequences from Terminal.app's General Preferences.
-# Clear the current working document in case another program set it.
+# Assemble the OSC sequences specified in Terminal's Preferences.  Clear
+# the current working document in case another program set it.
 local uri=${encpath:+file://${enchost:+${encuser:+$encuser@}$enchost}$encpath}
 local dirseq=$'\e]7;'${uri}$'\a'
 local docseq=$'\e]6;\a'
 local seqs=${dirseq}${docseq}
 
-# Modify the sequences so tmux passes them through
-# (https://github.com/tmux/tmux/wiki/FAQ#what-is-the-passthrough-escape-sequence-and-how-do-i-use-it).
+# Modify the sequences so tmux passes them through [6].
 [[ -n $TMUX ]] && seqs=$'\ePtmux;'${seqs//$'\e'/$'\e\e'}$'\e\\'
 
 # Print final sequences to the terminal emulator.
 print -nr -- $seqs
 
 
-# See also
-#   - /etc/bashrc and /etc/bashrc_Apple_Terminal on OS X / macOS
-#   - https://timingapp.com/help/terminal
+# References
+#
+#  1. /etc/bashrc and /etc/bashrc_Apple_Terminal on Mac
+#  4. https://www.rfc-editor.org/rfc/rfc3986.html#section-3.2.2
+#  5. https://www.rfc-editor.org/rfc/rfc3986.html#section-3.3
+#  6. https://github.com/tmux/tmux/wiki/FAQ#what-is-the-passthrough-escape-sequence-and-how-do-i-use-it
 
 
 # vim: set filetype=zsh:

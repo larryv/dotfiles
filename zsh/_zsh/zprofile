@@ -6,11 +6,11 @@
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
-# public domain worldwide. This software is distributed without any
+# public domain worldwide.  This software is distributed without any
 # warranty.
 #
 # You should have received a copy of the CC0 Public Domain Dedication
-# along with this software. If not, see
+# along with this software.  If not, see
 # <http://creativecommons.org/publicdomain/zero/1.0/>.
 #
 # SPDX-License-Identifier: CC0-1.0
@@ -23,8 +23,8 @@ source_sh_profile() {
     . ~/.profile && unset -f -- "$0"
 
     # https://www.zsh.org/mla/users/2008/msg00785.html (users/13169)
-    # < 4.3.7: Options are restored at function exit but emulation mode is
-    # not. Explicitly revert to zsh mode, or things get weird later.
+    # < 4.3.7: Options are restored at function exit but emulation mode
+    # is not.  Explicitly revert to zsh mode, or things get weird later.
     emulate -L zsh
 }
 source_sh_profile
@@ -40,3 +40,5 @@ for script in dummy $ZDOTDIR/zprofile.d/*.zsh(N-^/); do
     fi
 done
 unset script
+
+# vim: set filetype=zsh:
