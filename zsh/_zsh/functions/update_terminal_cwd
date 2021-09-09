@@ -55,9 +55,9 @@ local LC_ALL= LC_CTYPE=C
 # Percent-encode URI components as per RFC 3986, except for permitted
 # characters [4][5].
 setopt EXTENDED_GLOB
-local enchost=${HOST//(#m)[^-._~[:alnum:]]/%$(([##16] #MATCH))}
-local encuser=${LOGNAME//(#m)[^-._~[:alnum:]]/%$(([##16] #MATCH))}
-local encpath=${PWD//(#m)[^-._~[:alnum:]\/]/%$(([##16] #MATCH))}
+local enchost=${HOST//(#m)[!-[:alnum:]._~]/%$(([##16] #MATCH))}
+local encuser=${LOGNAME//(#m)[!-[:alnum:]._~]/%$(([##16] #MATCH))}
+local encpath=${PWD//(#m)[!-\/[:alnum:]._~]/%$(([##16] #MATCH))}
 
 # Assemble the OSC sequences specified in Terminal's Preferences.  Clear
 # the current working document in case another program set it.
