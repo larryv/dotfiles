@@ -1,7 +1,7 @@
 # zsh/_zsh/zshrc
 # --------------
 #
-# Written in 2012-2016, 2018-2021 by Lawrence Velázquez <vq@larryv.me>.
+# Written in 2012-2016, 2018-2022 by Lawrence Velázquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -14,9 +14,6 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
-
-# Use the "emacs" ZLE keymap even if EDITOR is "vi" or "vim".
-bindkey -e
 
 # >= 4.3.7: %1F, %2F, %3F, %f (numbered form uses termcap [1])
 if (( ${$(tput colors || tput Co):-0} >= 8 )); then
@@ -104,10 +101,8 @@ autoload -Uz compinit && compinit -d $ZDOTDIR/zcompdump && {
     fi
 }
 
-# Enable fancy globbing; stop at slashes and periods when moving
-# wordwise.
+# Enable fancy globbing.
 setopt EXTENDED_GLOB
-WORDCHARS=${WORDCHARS//[\/.]/}
 
 # History.
 SAVEHIST=1000000
