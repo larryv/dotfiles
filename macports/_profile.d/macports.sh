@@ -30,11 +30,11 @@ promote_mp_paths() {
 
     # Like path_helper(8), treat newlines as delimiters and ignore blank
     # lines.  The files are usually very short, so using sed(1) for this
-    # isn't worth it.
+    # isn't worth it.  Use REPLY as the variable because promote() is
+    # going to overwrite it anyway, so I don't have to unset it here.
     while IFS= read -r REPLY || [ -n "$REPLY" ]; do
         [ -z "$REPLY" ] || set -- "$@" "$REPLY"
     done <"$1" || return
-    unset REPLY
 
     shift
     promote "$@"
@@ -44,23 +44,16 @@ promote_mp_paths() {
 # myself.  They usually contain "/opt/local/bin", "/opt/local/sbin", and
 # "/opt/local/share/man".
 
-if [ -n "${PATH+set}" ]; then
-    _path=$(promote_mp_paths /etc/paths.d/macports "$PATH"; echo x)
-    save_vars LC_ALL LC_CTYPE
-    LC_ALL= LC_CTYPE=C
-    PATH=${_path%?}
-    restore_vars LC_ALL LC_CTYPE
-    unset _path
+if [ -n "${PATH+set}" ] && promote_mp_paths /etc/paths.d/macports "$PATH"
+then
+    PATH=$REPLY
 fi
 
 # MANPATH is only set on older versions of Mac OS X.
-if [ -n "${MANPATH+set}" ]; then
-    _manpath=$(promote_mp_paths /etc/manpaths.d/macports "$MANPATH"; echo x)
-    save_vars LC_ALL LC_CTYPE
-    LC_ALL= LC_CTYPE=C
-    MANPATH=${_manpath%?}
-    restore_vars LC_ALL LC_CTYPE
-    unset _manpath
+if [ -n "${MANPATH+set}" ] && promote_mp_paths /etc/manpaths.d/macports "$MANPATH"
+then
+    MANPATH=$REPLY
 fi
 
+unset REPLY
 unset -f promote_mp_paths

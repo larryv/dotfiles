@@ -1,7 +1,7 @@
 # sh/_profile.d/functions.sh
 # --------------------------
 #
-# Written in 2021 by Lawrence Velázquez <vq@larryv.me>.
+# Written in 2021-2022 by Lawrence Velázquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -26,13 +26,14 @@ is_name() (
 
 
 # Given a colon-delimited list and one or more literal search terms,
-# prints the list with any matching elements moved to the front.  The
-# rearrangement is stable.
+# sets REPLY to the list with any matching elements moved to the front.
+# The rearrangement is stable.
 promote() {
     if [ "$#" -lt 2 ]; then
-        printf '%s' "$1"
+        REPLY=$1
         return
     fi
+    REPLY=
 
     # Turn the colon-delimited list into a colon-terminated one, making
     # it unnecessary to treat the final element as a special case.
@@ -48,7 +49,7 @@ promote() {
         done || unmatched=${unmatched}${unmatched+:}${x}
     done
 
-    printf '%s%s%s' "$matched" "${matched+${unmatched+:}}" "$unmatched"
+    REPLY=${matched}${matched+${unmatched+:}}${unmatched}
     unset arg matched unmatched x xs
 }
 
