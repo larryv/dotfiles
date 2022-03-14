@@ -44,13 +44,13 @@ promote_mp_paths() {
 # myself.  They usually contain "/opt/local/bin", "/opt/local/sbin", and
 # "/opt/local/share/man".
 
-if [ -n "${PATH+set}" ] && promote_mp_paths /etc/paths.d/macports "$PATH"
+if [ -n "$PATH" ] && promote_mp_paths /etc/paths.d/macports "$PATH"
 then
     PATH=$REPLY
 fi
 
 # MANPATH is only set on older versions of Mac OS X.
-if [ -n "${MANPATH+set}" ] && promote_mp_paths /etc/manpaths.d/macports "$MANPATH"
+if [ -n "$MANPATH" ] && promote_mp_paths /etc/manpaths.d/macports "$MANPATH"
 then
     MANPATH=$REPLY
 fi
