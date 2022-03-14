@@ -1,7 +1,7 @@
 # macports/_profile.d/macports.sh
 # -------------------------------
 #
-# Written in 2015-2016, 2018, 2020-2021 by Lawrence Velázquez
+# Written in 2015-2016, 2018, 2020-2022 by Lawrence Velázquez
 # <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
@@ -24,14 +24,28 @@
 # are appended after the default entries.  (See the path_helper(8) man
 # page for details.)
 
+# Use a helper function for its temporary positional parameters.
+promote_mp_paths() {
+    [ -f "$1" ] || return
+
+    # Like path_helper(8), treat newlines as delimiters and ignore blank
+    # lines.  The files are usually very short, so using sed(1) for this
+    # isn't worth it.
+    while IFS= read -r REPLY || [ -n "$REPLY" ]; do
+        [ -z "$REPLY" ] || set -- "$@" "$REPLY"
+    done <"$1" || return
+    unset REPLY
+
+    shift
+    promote "$@"
+}
+
 # MacPorts does not put files in /etc/{paths,manpaths}.d; I create them
 # myself.  They usually contain "/opt/local/bin", "/opt/local/sbin", and
-# "/opt/local/share/man".  As per path_helper(8), treat all newlines as
-# delimiters and ignore blank lines.
+# "/opt/local/share/man".
 
-mp_paths=/etc/paths.d/macports
-if [ -n "${PATH+set}" ] && [ -f "$mp_paths" ]; then
-    _path=$(sed '/./!d' "$mp_paths" | xargs2 promote "$PATH"; echo x)
+if [ -n "${PATH+set}" ]; then
+    _path=$(promote_mp_paths /etc/paths.d/macports "$PATH"; echo x)
     save_vars LC_ALL LC_CTYPE
     LC_ALL= LC_CTYPE=C
     PATH=${_path%?}
@@ -40,9 +54,8 @@ if [ -n "${PATH+set}" ] && [ -f "$mp_paths" ]; then
 fi
 
 # MANPATH is only set on older versions of Mac OS X.
-mp_manpaths=/etc/manpaths.d/macports
-if [ -n "${MANPATH+set}" ] && [ -f "$mp_manpaths" ]; then
-    _manpath=$(sed '/./!d' "$mp_manpaths" | xargs2 promote "$MANPATH"; echo x)
+if [ -n "${MANPATH+set}" ]; then
+    _manpath=$(promote_mp_paths /etc/manpaths.d/macports "$MANPATH"; echo x)
     save_vars LC_ALL LC_CTYPE
     LC_ALL= LC_CTYPE=C
     MANPATH=${_manpath%?}
@@ -50,4 +63,4 @@ if [ -n "${MANPATH+set}" ] && [ -f "$mp_manpaths" ]; then
     unset _manpath
 fi
 
-unset mp_paths mp_manpaths
+unset -f promote_mp_paths
