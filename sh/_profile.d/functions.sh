@@ -91,23 +91,8 @@ save_vars() {
 }
 
 
-# A minimalist version of xargs(1) that can invoke functions and
-# builtins.  No options are accepted.  Arguments read from standard
-# input are separated by newlines; no other characters are considered
-# special.  The utility is invoked once, with no attempt to limit the
-# length of the constructed command line.
-xargs2() {
-    [ $# -gt 0 ] || set -- echo
-    while IFS= read -r line || [ -n "$line" ]; do
-        set -- "$@" "$line"
-    done
-    unset line
-    "$@"
-}
-
-
 unset_sh_helper_functions() {
-    unset -f is_name promote restore_vars save_vars xargs2
+    unset -f is_name promote restore_vars save_vars
     unset -f unset_sh_helper_functions
 }
 
