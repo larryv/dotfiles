@@ -1,7 +1,7 @@
 # lynx/_profile.d/lynx.sh
 # -----------------------
 #
-# Written in 2014-2016, 2018, 2020-2021 by Lawrence Velázquez
+# Written in 2014-2016, 2018, 2020-2022 by Lawrence Velázquez
 # <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
@@ -17,5 +17,5 @@
 
 
 if [ -z "$LYNX_CFG" ]; then
-    export LYNX_CFG=~/.lynx.cfg
+    export LYNX_CFG="$HOME/.lynx.cfg"
 fi
