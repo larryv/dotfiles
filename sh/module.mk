@@ -1,7 +1,7 @@
 # sh/module.mk
 # ------------
 #
-# Written in 2020-2021 by Lawrence Velázquez <vq@larryv.me>.
+# Written in 2020-2022 by Lawrence Velázquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -16,7 +16,7 @@
 
 
 all: sh
-sh: FORCE sh/_profile sh/_profile.d/functions.sh
+sh: FORCE sh/_profile sh/_profile.d/__functions.sh
 
 installdirs: sh-installdirs
 sh-installdirs: FORCE
@@ -25,8 +25,8 @@ sh-installdirs: FORCE
 install: sh-install
 sh-install: FORCE sh sh-installdirs
 	$(INSTALL_DATA) sh/_profile ~/.profile
-	$(INSTALL_DATA) sh/_profile.d/functions.sh ~/.profile.d/
+	$(INSTALL_DATA) sh/_profile.d/__functions.sh ~/.profile.d/_functions.sh
 
 uninstall: sh-uninstall
 sh-uninstall: FORCE
-	rm -f ~/.profile ~/.profile.d/functions.sh
+	rm -f ~/.profile ~/.profile.d/_functions.sh

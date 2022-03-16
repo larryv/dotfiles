@@ -1,5 +1,5 @@
-# sh/_profile.d/functions.sh
-# --------------------------
+# sh/_profile.d/__functions.sh
+# ----------------------------
 #
 # Written in 2021-2022 by Lawrence Velázquez <vq@larryv.me>.
 #
