@@ -15,16 +15,6 @@
 # SPDX-License-Identifier: CC0-1.0
 
 
-# Returns with an exit status of zero if the given argument is a valid
-# name (see POSIX.1-2017 XBD 3.235 [1]) and nonzero otherwise.
-is_name() (
-    LC_ALL=C
-    case $1 in
-        '' | *[![:alnum:]_]* | [[:digit:]]*) return 1 ;;
-    esac
-)
-
-
 # Given a colon-delimited list and one or more literal search terms,
 # sets REPLY to the list with any matching elements moved to the front.
 # The rearrangement is stable.
@@ -54,49 +44,7 @@ promote() {
 }
 
 
-# Given the names of one or more shell variables, restores their state
-# as saved by a preceding call to save_vars.  The caller should reserve
-# variables of the form `__VAR__orig` for the use of this function and
-# save_vars.
-restore_vars() {
-    for arg
-    do
-        is_name "$arg" || continue
-        if eval '[ -n "${__'"$arg"'__orig+set}" ]'; then
-            eval "$arg=\$__${arg}__orig"
-            unset "__${arg}__orig"
-        else
-            unset "$arg"
-        fi
-    done
-    unset arg
-}
-
-
-# Given the names of one or more shell variables, saves their values for
-# restoration by a subsequent call to restore_vars.  The caller should
-# reserve variables of the form `__VAR__orig` for the use of this
-# function and restore_vars.
-save_vars() {
-    for arg
-    do
-        is_name "$arg" || continue
-        if eval '[ -n "${'"$arg"'+set}" ]'; then
-            eval "__${arg}__orig=\$$arg"
-        else
-            unset "__${arg}__orig"
-        fi
-    done
-    unset arg
-}
-
-
 unset_sh_helper_functions() {
-    unset -f is_name promote restore_vars save_vars
+    unset -f promote
     unset -f unset_sh_helper_functions
 }
-
-
-# References
-#
-#  1. https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235
