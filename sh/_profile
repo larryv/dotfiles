@@ -18,7 +18,6 @@
 # The zsh startup files have already done this.
 if [ -z "$ZSH_VERSION" ]; then
     sourced_scripts=
-    . ~/.profile.d/_functions.sh
 fi
 
 # Source topic scripts.
@@ -51,7 +50,7 @@ fi
 
 # The zsh startup files will do this later.
 if [ -z "$ZSH_VERSION" ]; then
-    unset_sh_helper_functions
+    unset_sh_helper_functions 2>/dev/null
     unset sourced_scripts
 fi
 

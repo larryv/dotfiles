@@ -20,6 +20,9 @@ case $sourced_scripts in
     *' .profile.d/macports.sh '*) return 0 ;;
 esac
 
+# Define promote().
+. ~/.profile.d/_functions.sh
+
 # Move MacPorts directories to the beginning of PATH and MANPATH so its
 # software and man pages take precedence over the system's.  I used to
 # add the directories to PATH in this file, but any files sourced

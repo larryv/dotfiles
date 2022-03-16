@@ -16,9 +16,6 @@
 # SPDX-License-Identifier: CC0-1.0
 
 
-sourced_scripts=
-. ~/.profile.d/_functions.sh
-
 : ${ZDOTDIR:=~/.zsh}
 
 # I can't think of a good reason to allow duplicates in these.
@@ -27,6 +24,7 @@ typeset -U FPATH fpath PATH path
 fpath=($ZDOTDIR/functions(N) $fpath)
 
 # Source topic scripts.
+sourced_scripts=
 for script in $ZDOTDIR/zshenv.d/*.zsh(N-^/); do
     . $script
 done
@@ -34,6 +32,6 @@ unset script
 
 # Login and interactive shells will do this later.
 if [[ ! -o LOGIN && ! -o INTERACTIVE ]]; then
-    unset_sh_helper_functions
+    unset_sh_helper_functions 2>/dev/null
     unset sourced_scripts
 fi

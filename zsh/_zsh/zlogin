@@ -22,5 +22,5 @@ for script in $ZDOTDIR/zlogin.d/*.zsh(N-^/); do
 done
 unset script
 
-unset_sh_helper_functions
+unset_sh_helper_functions 2>/dev/null
 unset sourced_scripts
