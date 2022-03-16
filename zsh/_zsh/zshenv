@@ -16,6 +16,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 
+sourced_scripts=
 . ~/.profile.d/_functions.sh
 
 : ${ZDOTDIR:=~/.zsh}
@@ -34,4 +35,5 @@ unset script
 # Login and interactive shells will do this later.
 if [[ ! -o LOGIN && ! -o INTERACTIVE ]]; then
     unset_sh_helper_functions
+    unset sourced_scripts
 fi

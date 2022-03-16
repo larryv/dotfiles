@@ -17,6 +17,7 @@
 
 # The zsh startup files have already done this.
 if [ -z "$ZSH_VERSION" ]; then
+    sourced_scripts=
     . ~/.profile.d/_functions.sh
 fi
 
@@ -51,6 +52,7 @@ fi
 # The zsh startup files will do this later.
 if [ -z "$ZSH_VERSION" ]; then
     unset_sh_helper_functions
+    unset sourced_scripts
 fi
 
 # vim: set filetype=sh:

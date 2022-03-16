@@ -15,6 +15,10 @@
 # SPDX-License-Identifier: CC0-1.0
 
 
+case $sourced_scripts in
+    *' .profile.d/java.sh '*) return 0 ;;
+esac
+
 # On Mac, set JAVA_HOME to the active JVM, if there is one.
 
 if [ -z "$JAVA_HOME" ]; then
@@ -25,3 +29,5 @@ if [ -z "$JAVA_HOME" ]; then
     fi
     unset jh
 fi
+
+sourced_scripts="$sourced_scripts .profile.d/java.sh "

@@ -1,7 +1,7 @@
 # terminfo/_profile.d/terminfo.sh
 # -------------------------------
 #
-# Written in 2020-2021 by Lawrence Velázquez <vq@larryv.me>.
+# Written in 2020-2022 by Lawrence Velázquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -14,6 +14,10 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
+
+case $sourced_scripts in
+    *' .profile.d/terminfo.sh '*) return 0 ;;
+esac
 
 # Set a more appropriate TERM if it is not feasible to configure the
 # terminal emulator properly.
@@ -99,3 +103,5 @@ EOF
 
     unset term
 fi
+
+sourced_scripts="$sourced_scripts .profile.d/terminfo.sh "

@@ -16,6 +16,12 @@
 # SPDX-License-Identifier: CC0-1.0
 
 
+case $sourced_scripts in
+    *' .profile.d/lynx.sh '*) return 0 ;;
+esac
+
 if [ -z "$LYNX_CFG" ]; then
     export LYNX_CFG="$HOME/.lynx.cfg"
 fi
+
+sourced_scripts="$sourced_scripts .profile.d/lynx.sh "

@@ -1,7 +1,7 @@
 # macports/_zsh/zshenv.d/macports.zsh
 # -----------------------------------
 #
-# Written in 2014-2016, 2018, 2020-2021 by Lawrence Velázquez
+# Written in 2014-2016, 2018, 2020-2022 by Lawrence Velázquez
 # <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
@@ -15,6 +15,10 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
+
+case $sourced_scripts in
+    *' .zsh/zshenv.d/macports.zsh '*) return 0 ;;
+esac
 
 # On OS X 10.10 Yosemite and earlier, /etc/zshenv unconditionally
 # redefines the command path using path_helper(8), even in non-login
@@ -37,3 +41,5 @@ if [[ ! -o LOGIN ]]; then
     }
     fix_macports_path
 fi
+
+sourced_scripts="$sourced_scripts .zsh/zshenv.d/macports.zsh "

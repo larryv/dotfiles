@@ -15,6 +15,11 @@
 # SPDX-License-Identifier: CC0-1.0
 
 
+case $sourced_scripts in
+    *' .profile.d/_functions.sh '*) return 0 ;;
+esac
+
+
 # Given a colon-delimited list and one or more literal search terms,
 # sets REPLY to the list with any matching elements moved to the front.
 # The rearrangement is stable.
@@ -48,3 +53,6 @@ unset_sh_helper_functions() {
     unset -f promote
     unset -f unset_sh_helper_functions
 }
+
+
+sourced_scripts="$sourced_scripts .profile.d/_functions.sh "

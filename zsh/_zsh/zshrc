@@ -127,6 +127,7 @@ unset script
 # Login shells will do this later.
 if [[ ! -o LOGIN ]]; then
     unset_sh_helper_functions
+    unset sourced_scripts
 fi
 
 unset fg

@@ -16,6 +16,10 @@
 # SPDX-License-Identifier: CC0-1.0
 
 
+case $sourced_scripts in
+    *' .profile.d/macports.sh '*) return 0 ;;
+esac
+
 # Move MacPorts directories to the beginning of PATH and MANPATH so its
 # software and man pages take precedence over the system's.  I used to
 # add the directories to PATH in this file, but any files sourced
@@ -57,3 +61,5 @@ fi
 
 unset REPLY
 unset -f promote_mp_paths
+
+sourced_scripts="$sourced_scripts .profile.d/macports.sh "
