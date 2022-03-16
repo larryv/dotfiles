@@ -1,7 +1,7 @@
 # zsh/_zsh/zlogin
 # ---------------
 #
-# Written in 2012-2016, 2018, 2020-2021 by Lawrence Velázquez
+# Written in 2012-2016, 2018, 2020-2022 by Lawrence Velázquez
 # <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
@@ -17,14 +17,8 @@
 
 
 # Source topic scripts.
-save_vars LC_ALL LC_COLLATE
-LC_ALL= LC_COLLATE=C
-for script in dummy $ZDOTDIR/zlogin.d/*.zsh(N-^/); do
-    if [[ $script = dummy ]]; then
-        restore_vars LC_ALL LC_COLLATE
-    else
-        . $script
-    fi
+for script in $ZDOTDIR/zlogin.d/*.zsh(N-^/); do
+    . $script
 done
 unset script
 

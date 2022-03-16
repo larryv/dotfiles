@@ -21,19 +21,10 @@ if [ -z "$ZSH_VERSION" ]; then
 fi
 
 # Source topic scripts.
-save_vars LC_ALL LC_COLLATE
-LC_ALL= LC_COLLATE=C
-for script in dummy ~/.profile.d/[!_]*.sh; do
-    case $script in
-        dummy)
-            restore_vars LC_ALL LC_COLLATE
-            ;;
-        *)
-            if [ -r "$script" ] && [ ! -d "$script" ]; then
-                . "$script"
-            fi
-            ;;
-    esac
+for script in ~/.profile.d/[!_]*.sh; do
+    if [ -r "$script" ] && [ ! -d "$script" ]; then
+        . "$script"
+    fi
 done
 unset script
 
