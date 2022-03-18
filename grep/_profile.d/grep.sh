@@ -1,7 +1,7 @@
 # grep/_profile.d/grep.sh
 # -----------------------
 #
-# Written in 2021-2022 by Lawrence Velázquez <vq@larryv.me>.
+# Written in 2021-2022 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the

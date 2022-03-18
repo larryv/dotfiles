@@ -1,7 +1,7 @@
 # macports/_zsh/zshenv.d/macports.zsh
 # -----------------------------------
 #
-# Written in 2014-2016, 2018, 2020-2022 by Lawrence Velázquez
+# Written in 2014-2016, 2018, 2020-2022 by Lawrence Velazquez
 # <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all

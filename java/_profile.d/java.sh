@@ -1,7 +1,7 @@
 # java/_profile.d/java.sh
 # -----------------------
 #
-# Written in 2016, 2018-2022 by Lawrence Velázquez <vq@larryv.me>.
+# Written in 2016, 2018-2022 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -22,8 +22,8 @@ esac
 # On Mac, set JAVA_HOME to the active JVM, if there is one.
 
 if [ -z "$JAVA_HOME" ]; then
-    # https://www.etalabs.net/sh_tricks.html, § "Getting non-clobbered
-    # output from command substitution"
+    # https://www.etalabs.net/sh_tricks.html ("Getting non-clobbered
+    # output from command substitution")
     if jh=$(/usr/libexec/java_home --failfast 2>/dev/null && echo .); then
         export JAVA_HOME="${jh%??}"
     fi
