@@ -16,11 +16,12 @@
 
 
 installdirs: terminfo-installdirs
-terminfo-installdirs: FORCE sh-installdirs
+terminfo-installdirs: sh-installdirs FORCE
 
 install: terminfo-install
-terminfo-install: FORCE sh-install terminfo-installdirs \
-    terminfo/_profile.d/terminfo.sh
+terminfo-install: sh-install terminfo-installdirs \
+    terminfo/_profile.d/terminfo.sh \
+    FORCE
 	$(INSTALL_DATA) terminfo/_profile.d/terminfo.sh ~/.profile.d/
 
 uninstall: terminfo-uninstall

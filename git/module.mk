@@ -16,7 +16,7 @@
 
 
 all: git
-git: FORCE git/_config/git/ignore git/_gitconfig
+git: git/_config/git/ignore git/_gitconfig FORCE
 
 clean: git-clean
 git-clean: FORCE
@@ -27,7 +27,7 @@ git-installdirs: FORCE
 	$(INSTALL) -d ~/.config/git/
 
 install: git-install
-git-install: FORCE git git-installdirs
+git-install: git git-installdirs FORCE
 	$(INSTALL_DATA) git/_config/git/ignore ~/.config/git/
 	$(INSTALL_DATA) git/_gitconfig ~/.gitconfig
 

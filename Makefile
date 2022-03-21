@@ -50,8 +50,7 @@ include zsh/module.mk
 
 # Process M4 templates.
 .m4:
-	$(M4) $< >$@ \
-    || { rc=$$?; rm -f $@ && exit $$rc; }
+	$(M4) $< >$@ || { rc=$$?; rm -f $@ && exit "$$rc"; }
 
 
 # References

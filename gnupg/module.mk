@@ -16,10 +16,11 @@
 
 
 all: gnupg
-gnupg: FORCE \
+gnupg: \
     gnupg/_gnupg/dirmngr.conf \
     gnupg/_gnupg/gpg.conf \
-    gnupg/_profile.d/gnupg.sh
+    gnupg/_profile.d/gnupg.sh \
+    FORCE
 
 # Set restrictive permissions on the configuration as GnuPG requires.
 # Use chmod(1) on directories instead of `$(INSTALL) -d -m` because my
@@ -27,14 +28,16 @@ gnupg: FORCE \
 # on preexisting directories.
 
 installdirs: gnupg-installdirs
-gnupg-installdirs: FORCE sh-installdirs
+gnupg-installdirs: sh-installdirs FORCE
 	$(INSTALL) -d ~/.gnupg/
 	chmod 700 ~/.gnupg/
 
 install: gnupg-install
-gnupg-install: FORCE gnupg gnupg-installdirs sh-install
+gnupg-install: gnupg gnupg-installdirs sh-install FORCE
 	$(INSTALL) -C -m 600 \
-    gnupg/_gnupg/dirmngr.conf gnupg/_gnupg/gpg.conf ~/.gnupg/
+    gnupg/_gnupg/dirmngr.conf \
+    gnupg/_gnupg/gpg.conf \
+    ~/.gnupg/
 	$(INSTALL_DATA) gnupg/_profile.d/gnupg.sh ~/.profile.d/
 
 uninstall: gnupg-uninstall

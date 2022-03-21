@@ -16,13 +16,13 @@
 
 
 all: java
-java: FORCE java/_profile.d/java.sh
+java: java/_profile.d/java.sh FORCE
 
 installdirs: java-installdirs
-java-installdirs: FORCE sh-installdirs
+java-installdirs: sh-installdirs FORCE
 
 install: java-install
-java-install: FORCE java java-installdirs sh-install
+java-install: java java-installdirs sh-install FORCE
 	$(INSTALL_DATA) java/_profile.d/java.sh ~/.profile.d/
 
 uninstall: java-uninstall

@@ -16,19 +16,21 @@
 
 
 all: macports
-macports: FORCE \
+macports: \
     macports/_profile.d/macports.sh \
-    macports/_zsh/zshenv.d/macports.zsh
+    macports/_zsh/zshenv.d/macports.zsh \
+    FORCE
 
 installdirs: macports-installdirs
-macports-installdirs: FORCE sh-installdirs zsh-installdirs
+macports-installdirs: sh-installdirs zsh-installdirs FORCE
 
 install: macports-install
-macports-install: FORCE macports macports-installdirs sh-install zsh-install
+macports-install: macports macports-installdirs sh-install zsh-install FORCE
 	$(INSTALL_DATA) macports/_profile.d/macports.sh ~/.profile.d/
 	if grep -s /usr/libexec/path_helper /etc/zshenv; then \
     $(INSTALL_DATA) \
-        macports/_zsh/zshenv.d/macports.zsh ~/.zsh/zshenv.d/; \
+        macports/_zsh/zshenv.d/macports.zsh \
+        ~/.zsh/zshenv.d/; \
 fi
 
 uninstall: macports-uninstall

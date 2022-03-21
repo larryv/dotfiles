@@ -16,13 +16,13 @@
 
 
 all: grep
-grep: FORCE grep/_profile.d/grep.sh
+grep: grep/_profile.d/grep.sh FORCE
 
 installdirs: grep-installdirs
 grep-installdirs: FORCE sh-installdirs
 
 install: grep-install
-grep-install: FORCE grep grep-installdirs sh-install
+grep-install: grep grep-installdirs sh-install FORCE
 	$(INSTALL_DATA) grep/_profile.d/grep.sh ~/.profile.d/
 
 uninstall: grep-uninstall

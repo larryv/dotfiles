@@ -17,17 +17,17 @@
 
 
 all: lynx
-lynx: FORCE lynx/_lynx.cfg lynx/_profile.d/lynx.sh
+lynx: lynx/_lynx.cfg lynx/_profile.d/lynx.sh FORCE
 
 clean: lynx-clean
 lynx-clean: FORCE
 	rm -f lynx/_lynx.cfg
 
 installdirs: lynx-installdirs
-lynx-installdirs: FORCE sh-installdirs
+lynx-installdirs: sh-installdirs FORCE
 
 install: lynx-install
-lynx-install: FORCE lynx lynx-installdirs sh-install
+lynx-install: lynx lynx-installdirs sh-install FORCE
 	$(INSTALL_DATA) lynx/_lynx.cfg ~/.lynx.cfg
 	$(INSTALL_DATA) lynx/_profile.d/lynx.sh ~/.profile.d/
 

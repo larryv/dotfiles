@@ -16,14 +16,14 @@
 
 
 all: sh
-sh: FORCE sh/_profile sh/_profile.d/__functions.sh
+sh: sh/_profile sh/_profile.d/__functions.sh FORCE
 
 installdirs: sh-installdirs
 sh-installdirs: FORCE
 	$(INSTALL) -d ~/.profile.d/
 
 install: sh-install
-sh-install: FORCE sh sh-installdirs
+sh-install: sh sh-installdirs FORCE
 	$(INSTALL_DATA) sh/_profile ~/.profile
 	$(INSTALL_DATA) sh/_profile.d/__functions.sh ~/.profile.d/_functions.sh
 

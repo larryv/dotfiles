@@ -16,10 +16,10 @@
 
 
 all: mercurial
-mercurial: FORCE mercurial/_hgrc
+mercurial: mercurial/_hgrc FORCE
 
 install: mercurial-install
-mercurial-install: FORCE mercurial
+mercurial-install: mercurial FORCE
 	$(INSTALL_DATA) mercurial/_hgrc ~/.hgrc
 
 uninstall: mercurial-uninstall

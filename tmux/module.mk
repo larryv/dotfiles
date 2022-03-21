@@ -16,10 +16,10 @@
 
 
 all: tmux
-tmux: FORCE tmux/_tmux.conf
+tmux: tmux/_tmux.conf FORCE
 
 install: tmux-install
-tmux-install: FORCE tmux
+tmux-install: tmux FORCE
 	$(INSTALL_DATA) tmux/_tmux.conf ~/.tmux.conf
 
 uninstall: tmux-uninstall
