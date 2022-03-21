@@ -23,4 +23,5 @@ done
 unset script
 
 unset_sh_helper_functions 2>/dev/null
+unset -f emulated_eval 2>/dev/null
 unset sourced_scripts

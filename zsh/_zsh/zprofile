@@ -16,18 +16,8 @@
 # SPDX-License-Identifier: CC0-1.0
 
 
-# >= 4.3.7: () { emulate -L sh; . ~/.profile; }
-# >= 4.3.10: emulate sh -c '. ~/.profile'
-source_sh_profile() {
-    emulate -L sh
-    . ~/.profile && unset -f -- "$0"
-
-    # https://www.zsh.org/mla/users/2008/msg00785.html (users/13169)
-    # < 4.3.7: Options are restored at function exit but emulation mode
-    # is not.  Explicitly revert to zsh mode, or things get weird later.
-    emulate -L zsh
-}
-source_sh_profile
+autoload -Uz emulated_eval
+emulated_eval sh '. ~/.profile'
 
 # Source topic scripts.
 for script in $ZDOTDIR/zprofile.d/*.zsh(N-^/); do
