@@ -1,0 +1,273 @@
+# zsh/_zsh/functions/colorpairs.zsh
+# ---------------------------------
+#
+# Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
+#
+# To the extent possible under law, the author(s) have dedicated all
+# copyright and related and neighboring rights to this software to the
+# public domain worldwide.  This software is distributed without any
+# warranty.
+#
+# You should have received a copy of the CC0 Public Domain Dedication
+# along with this software.  If not, see
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
+#
+# SPDX-License-Identifier: CC0-1.0
+
+
+# Given lists of foreground and background colors, populate the "fgbg"
+# associative array with terminal control sequences for setting color
+# pairs.
+#
+#     colorpairs [-f <foreground colors>] [-b <background colors>]
+#
+# Each option-argument must be a comma-delimited subset of "black",
+# "blue", "cyan", "green", "magenta", "red", "white", "yellow", and
+# "default".  (Of course, these names are essentially suggestions; the
+# actual colors are up to the terminal [1][2].)  Consecutive commas are
+# merged, and leading and trailing commas are ignored.  Omitting either
+# option is equivalent to specifying it with all available colors.
+#
+# The output is stored in the "fgbg" associative array, overwriting any
+# previous value.  The keys comprise the Cartesian product of the
+# requested foreground and background colors.  Each one has the form
+# "<foreground color name>,<background color name>", and its value is
+# a control sequence that sets the terminal's colors appropriately.  The
+# sequences are usually chosen based on the TERM environment variable,
+# which should be set correctly.
+#
+# Be careful when using "default".  On some terminals, the sequence used
+# to reset colors also resets other attributes.
+#
+# I'm using color pairs to remain compatible with terminals that can't
+# set their foreground and background colors independently [1], but
+# I doubt that I will ever actually encounter such a terminal, let alone
+# implement color support for one.
+
+
+emulate -L zsh
+
+# Use -H to be consistent with Functions/Misc/colors.
+typeset -AHg fgbg
+fgbg=()
+
+local bcolor bcolors color fcolor fcolors fmt
+
+
+# Clean up, but don't unload modules that are already loaded on function
+# entry.  (I originally used local flag variables to control unloading,
+# but with zsh 4.3.4 the variables seemed to be unavailable from inside
+# the trap, whether set with TRAPEXIT or "trap ... EXIT".)
+local trapcmd='(( ? )) && unset fgbg;'
+zmodload -e zsh/terminfo || trapcmd+='zmodload -ui zsh/terminfo;'
+zmodload -e zsh/termcap || trapcmd+='zmodload -ui zsh/termcap;'
+trap $trapcmd EXIT
+
+
+# Process options.
+
+# The "local" command assigns empty values, which I don't want.
+unset fcolors bcolors
+
+local opt
+while getopts f:b: opt; do
+    # Drop empty elements intentionally, since they're useless.
+    case $opt in
+        f) fcolors=(${(Lus:,:)OPTARG}) ;;
+        b) bcolors=(${(Lus:,:)OPTARG}) ;;
+        *) ! break ;;
+    esac
+done && (( OPTIND > ARGC )) || {
+    cat >&2 <<\EOF
+usage: colorpairs [-f <fgcolors>] [-b <bgcolors>]
+
+<fgcolors> and <bgcolors> are comma-delimited subsets of "blue", "cyan",
+"green", "magenta", "red", "white", "yellow", and "default".
+
+If either option is omitted, all available colors are used.
+EOF
+    return 2
+}
+
+
+# Querying terminfo/termcap is more robust than hard-coding sequences
+# and assuming the terminal understands them [3][4], but it does incur
+# overhead.  Compromise by including sequences for terminals I use
+# regularly and falling back to terminfo/termcap for the rest.
+#
+# TODO: Determine whether $TERM_PROGRAM might be incorrect in remote
+# screen/tmux sessions.
+case ${TERM_PROGRAM:-$TERM} in
+    Apple_Terminal | nsterm-* | nsterm)
+        # Tested with:
+        #   - Terminal 2.0.2 (240.2) on Mac OS X Server 10.5.8 (9L34)
+        #   - Terminal 2.9.5 (421.2) on macOS 10.14.6 (18G9323)
+
+        # "Ps" comes from the XTerm documentation [5].
+        local -A fPs bPs
+        fPs=(black 30 red 31 green 32 yellow 33 blue 34 magenta 35 cyan 36
+             white 37 default 39)
+        bPs=(black 40 red 41 green 42 yellow 44 blue 44 magenta 45 cyan 46
+             white 47 default 49)
+
+        # Validate the colors passed via option-arguments.
+        for color in $fcolors; do
+            [[ -n $fPs[$color] ]] || ! break
+        done && for color in $bcolors; do
+            [[ -n $bPs[$color] ]] || ! break
+        done || {
+            printf 'colorpairs: unavailable color: %s\n' ${(qq)color}
+            printf 'available fg colors: %s\n' ${(j: :)${(ki)fPs}}
+            printf 'available bg colors: %s\n' ${(j: :)${(ki)bPs}}
+            return 1
+        } >&2
+
+        # Construct sequences, using all available colors by default.
+        # "Pm" comes from the XTerm documentation [5].
+        local Pm
+        for fcolor in ${(A)fcolors=${(k)fPs}}; do
+            for bcolor in ${(A)bcolors=${(k)bPs}}; do
+                Pm="$fPs[$fcolor];$bPs[$bcolor]"
+                fgbg[$fcolor,$bcolor]=$'\e['${Pm}m
+            done
+        done
+        ;;
+    *)
+        local bcap cmd fcap numcolors op
+
+        # Determine whether and how to query terminfo/termcap.
+        #
+        # (The tput(1) from recent ncurses allows multiple capabilities
+        # per invocation [e.g., "tput setaf 0 setab 0"], but this isn't
+        # documented as far as I can tell [6], and older versions only
+        # use the first capability.)
+        if zmodload zsh/terminfo 2>/dev/null; then
+            if (( terminfo[colors] >= 8 )); then
+                for fcap bcap in setaf setab setf setb scp scp; do
+                    [[ -n $terminfo[$fcap] && -n $terminfo[$bcap] ]] && break
+                done && cmd=echoti && op=$terminfo[op]
+            fi
+        # I haven't tested this.
+       #elif zmodload zsh/termcap 2>/dev/null; then
+       #    if (( termcap[Co] >= 8 )); then
+       #        for fcap bcap in AF AB Sf Sb sp sp; do
+       #            [[ -n $termcap[$fcap] && -n $termcap[$bcap] ]] && break
+       #        done && cmd=echotc && op=$termcap[op]
+       #    fi
+        elif numcolors=$(tput colors 2>/dev/null); then
+            if (( numcolors >= 8 )); then
+                for fcap bcap in setaf setab setf setb scp scp; do
+                    { tput "$fcap" && tput "$bcap" } >/dev/null 2>&1 && break
+                done && cmd=tput && op=$(tput op 2>/dev/null)
+            fi
+        elif numcolors=$(tput Co 2>/dev/null); then
+            if (( numcolors >= 8 )); then
+                for fcap bcap in AF AB Sf Sb sp sp; do
+                    { tput "$fcap" && tput "$bcap" } >/dev/null 2>&1 && break
+                done && cmd=tput && op=$(tput op 2>/dev/null)
+            fi
+        else
+            fmt='colorpairs: could not determine color support for %s\n'
+            printf >&2 $fmt ${(qq)TERM}
+            return 1
+        fi
+
+        local -A palette
+        case $fcap,$bcap in
+            ,)
+                fmt='colorpairs: %s supports fewer than 8 colors\n'
+                printf >&2 $fmt ${(qq)TERM}
+                return 1
+                ;;
+            scp,scp | sp,sp)
+                if [[ -z $cmd ]]; then
+                    # The terminal entry is broken.
+                    fmt='%s claims color support but lacks capabilities\n'
+                else
+                    # Even if I knew how to use scp/sp, I certainly
+                    # don't have an HP-like terminal to test with.
+                    fmt='%s support unimplemented\n'
+                fi
+                printf >&2 "colorpairs: $fmt" ${(qq)TERM}
+                return 1
+                ;;
+            setaf,setab | AF,AB)
+                palette=(red 1 yellow 3 blue 4 cyan 6)          # [1][2][7]
+                ;|
+            setf,setb | Sf,Sb)
+                palette=(blue 1 cyan 3 red 4 yellow 6)          # [1][2][7]
+                ;|
+            *)
+                palette+=(black 0 green 2 magenta 5 white 7)    # [1][2]
+
+                # Validate the colors passed via option-arguments.
+                for color in $fcolors $bcolors; do
+                    if [[ $color = default ]]; then
+                        if [[ -z $op ]]; then
+                            fmt='%s cannot reset colors to default\n'   # [8]
+                            printf >&2 "colorpairs: $fmt" ${(qq)TERM}
+                            return 1
+                        fi
+                    elif [[ -z $palette[$color] ]]; then
+                        [[ -n $op ]] && palette+=(default '')
+                        fmt='colorpairs: unavailable color: %s\n'
+                        fmt+='available colors: %s\n'
+                        printf >&2 $fmt ${(qq)color} ${(j: :)${(ki)palette}}
+                        return 1
+                    fi
+                done
+
+                # Use all available colors by default.
+                (( $+fcolors )) || fcolors=(${(k)palette} ${op:+default})
+                (( $+bcolors )) || bcolors=(${(k)palette} ${op:+default})
+
+                local -A fseqs bseqs
+
+                # Save sequences to avoid querying repeatedly later.
+                for fcolor in ${fcolors:#default}; do
+                    fseqs[$fcolor]=$($cmd $fcap $palette[$fcolor]) || return 1
+                done
+                for bcolor in ${bcolors:#default}; do
+                    bseqs[$bcolor]=$($cmd $bcap $palette[$bcolor]) || return 1
+                done
+
+                # Combine sequences.  Implement default colors using
+                # "op" because there's no portable way to reset the
+                # foreground and background colors separately [1].
+                # ("setaf 9" and "setab 9" [4] do not yield the defaults
+                # on terminals with more than 8 colors.)  Unfortunately,
+                # some terminals' "op" sequences -- e.g., SGR 0 -- reset
+                # a lot more than colors.  Terminals which *can* reset
+                # colors separately can be handled up in the VIP area.
+                local seq
+                for fcolor in $fcolors; do
+                    for bcolor in $bcolors; do
+                        # If used, the "op" sequence must come first.
+                        case $fcolor,$bcolor in
+                            default,default) seq=$op ;;
+                            default,*) seq=$op$bseqs[$bcolor] ;;
+                            *,default) seq=$op$fseqs[$fcolor] ;;
+                            *) seq=$fseqs[$fcolor]$bseqs[$bcolor] ;;
+                        esac
+                        fgbg[$fcolor,$bcolor]=$seq
+                    done
+                done
+                ;;
+        esac
+        ;;
+esac
+
+
+# References
+#
+#  1. https://invisible-island.net/ncurses/man/terminfo.5.html#h3-Color-Handling
+#  2. https://invisible-island.net/xterm/xterm.faq.html#color_by_number
+#  3. https://mywiki.wooledge.org/BashFAQ/037
+#  4. https://wiki.bash-hackers.org/scripting/terminalcodes
+#  5. https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+#  6. https://invisible-island.net/ncurses/man/tput.1.html
+#  7. https://invisible-island.net/ncurses/ncurses.faq.html#interchanged_colors
+#  8. https://invisible-island.net/ncurses/ncurses.faq.html#white_black
+
+
+# vim: set filetype=zsh:

@@ -17,6 +17,7 @@
 
 all: zsh
 zsh: \
+    zsh/_zsh/functions/colorpairs \
     zsh/_zsh/functions/emulated_eval \
     zsh/_zsh/functions/update_terminal_cwd \
     zsh/_zsh/zshenv \
@@ -38,6 +39,7 @@ zsh-installdirs: FORCE
 install: zsh-install
 zsh-install: sh-install zsh zsh-installdirs FORCE
 	$(INSTALL_DATA) \
+    zsh/_zsh/functions/colorpairs \
     zsh/_zsh/functions/emulated_eval \
     zsh/_zsh/functions/update_terminal_cwd \
     ~/.zsh/functions/
@@ -56,6 +58,7 @@ zsh-install: sh-install zsh zsh-installdirs FORCE
 uninstall: zsh-uninstall
 zsh-uninstall: FORCE
 	rm -f \
+    ~/.zsh/functions/colorpairs \
     ~/.zsh/functions/emulated_eval \
     ~/.zsh/functions/update_terminal_cwd \
     ~/.zsh/zshenv ~/.zshenv \

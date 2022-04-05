@@ -16,29 +16,21 @@
 
 
 # >= 4.3.7: %1F, %2F, %3F, %f (numbered form uses termcap [1])
-if (( ${$(tput colors || tput Co):-0} >= 8 )); then
-    # Prefer terminfo/termcap over raw ANSI escape sequences [2][3].
-    # Avoid using Functions/Misc/colors, which hard-codes ANSI sequences
-    # and might not be installed.  Define my own colors instead.
-    typeset -A fg
-    fg[red]=$(tput setaf 1 || tput AF 1) || fg[red]=$'\e[31m'
-    fg[green]=$(tput setaf 2 || tput AF 2) || fg[green]=$'\e[32m'
-    fg[yellow]=$(tput setaf 3 || tput AF 3) || fg[yellow]=$'\e[33m'
-    # `tput setaf 9` doesn't have the desired effect on xterm-256color.
-    # Note that `tput op` resets the background color as well, which is
-    # fine here.
-    fg[default]=$(tput op) || fg[default]=$'\e[39m'
-fi 2>/dev/null
+# Avoid using Functions/Misc/colors, which hard-codes ANSI sequences and
+# might not be installed.  Define my own colors instead.
+# NOTE: This function creates the "fgbg" global variable.
+autoload -Uz colorpairs
+colorpairs -f red,green,yellow,default -b default
 
 # TODO: If compatible with 4.3.6, move everything into a prompt theme.
 
 # Left prompt: Hostname, history number, indication of last exit status,
 # privileges/shell-nesting indicator.
 PS1='%m %B%h%b '
-if (( $+fg )); then
-    PS1+="%(?.%{$fg[green]%}.%{$fg[red]%})"
+if (( $#fgbg )); then
+    PS1+="%(?.%{$fgbg[green,default]%}.%{$fgbg[red,default]%})"
     PS1+="%B${(r:$((SHLVL * 2))::%#:)}%b"
-    PS1+="%{$fg[default]%} "
+    PS1+="%{$fgbg[default,default]%} "
 else
     # Display the last exit status directly.
     PS1+="(%?) %B${(r:$((SHLVL * 2))::%#:)}%b "
@@ -55,7 +47,7 @@ precmd_rps_cwd() {
 precmd_functions+=(precmd_rps_cwd)
 autoload -Uz +X vcs_info 2>/dev/null && {
     precmd_rps_vcs() {
-        # TODO Rework RPS1 to use %v and psvar [4]?
+        # TODO Rework RPS1 to use %v and psvar [2]?
         local vcs_info_msg_0_
         vcs_info && RPS1+=${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}
     }
@@ -68,14 +60,14 @@ autoload -Uz +X vcs_info 2>/dev/null && {
     zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
     zstyle ':vcs_info:git:*' check-for-changes true
-    if (( $+fg )); then
+    if (( $#fgbg )); then
         # Color green/yellow/red if there are no/staged/unstaged changes.
-        zstyle ':vcs_info:git:*' unstagedstr "%{$fg[red]%}"
-        zstyle ':vcs_info:git:*' stagedstr "%{$fg[yellow]%}"
+        zstyle ':vcs_info:git:*' unstagedstr "%{$fgbg[red,default]%}"
+        zstyle ':vcs_info:git:*' stagedstr "%{$fgbg[yellow,default]%}"
         zstyle ':vcs_info:git:*' formats \
-            "%{$fg[green]%}%u%c(%s:%b)%{$fg[default]%}"
+            "%{$fgbg[green,default]%}%u%c(%s:%b)%{$fgbg[default,default]%}"
         zstyle ':vcs_info:git:*' actionformats \
-            "%{$fg[green]%}%u%c(%s:%b|%a)%{$fg[default]%}"
+            "%{$fgbg[green,default]%}%u%c(%s:%b|%a)%{$fgbg[default,default]%}"
     else
         zstyle ':vcs_info:git:*' unstagedstr ':U'
         zstyle ':vcs_info:git:*' stagedstr ':S'
@@ -93,12 +85,13 @@ autoload -Uz +X update_terminal_cwd 2>/dev/null && {
 autoload -Uz run-help zargs zrecompile
 autoload -Uz compinit && compinit -d $ZDOTDIR/zcompdump && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
-    if (( $+fg )); then
-        zstyle ':completion:*:warnings' format \
-            "%{$fg[red]%}%BNo matches for %d%b%{$fg[default]%}"
-    else
-        zstyle ':completion:*:warnings' format '%BNo matches for %d%b'
+
+    fmt='%BNo matches for %d%b'
+    if (( $#fgbg )); then
+        fmt="%{$fgbg[red,default]%}$fmt%{$fgbg[default,default]%}"
     fi
+    zstyle ':completion:*:warnings' format $fmt
+    unset fmt
 }
 
 # Enable fancy globbing.
@@ -131,12 +124,11 @@ if [[ ! -o LOGIN ]]; then
     unset sourced_scripts
 fi
 
-unset fg
+unset fgbg
+unset -f colorpairs
 
 
 # References
 #
 #  1. https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c
-#  2. https://mywiki.wooledge.org/BashFAQ/037
-#  3. https://wiki.bash-hackers.org/scripting/terminalcodes
-#  4. https://www.zsh.org/mla/workers/2021/msg00811.html
+#  2. https://www.zsh.org/mla/workers/2021/msg00811.html
