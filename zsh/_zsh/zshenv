@@ -18,9 +18,6 @@
 
 : ${ZDOTDIR:=~/.zsh}
 
-# I can't think of a good reason to allow duplicates in these.
-typeset -U FPATH fpath PATH path
-
 fpath=($ZDOTDIR/functions(N) $fpath)
 
 # Source topic scripts.
