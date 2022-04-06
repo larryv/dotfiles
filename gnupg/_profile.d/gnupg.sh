@@ -22,7 +22,9 @@ esac
 # https://www.gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html
 # https://www.gnupg.org/documentation/manuals/gnupg/Agent-Examples.html
 if [ -z "$GPG_TTY" ]; then
-    if gpg_tty=$(tty); then
+    # TTY is a zsh thing, but I check for it here because theoretically
+    # another shell, or even the terminal emulator itself, could set it.
+    if gpg_tty=${TTY:-$(tty)}; then
         export GPG_TTY="$gpg_tty"
     fi
     unset gpg_tty
