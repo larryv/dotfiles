@@ -33,7 +33,7 @@ if (( $#fgbg )); then
     PS1+="%{$fgbg[default,default]%} "
 else
     # Display the last exit status directly.
-    PS1+="(%?) %B${(r:$((SHLVL * 2))::%#:)}%b "
+    PS1+="%(?..(%?%) )%B${(r:$((SHLVL * 2))::%#:)}%b "
 fi
 
 # Leave the -g in case I ever wrap this in a function again.
