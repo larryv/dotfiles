@@ -24,16 +24,16 @@ colorpairs -f red,green,yellow,default -b default
 
 # TODO: If compatible with 4.3.6, move everything into a prompt theme.
 
-# Left prompt: Hostname, history number, indication of last exit status,
-# privileges/shell-nesting indicator.
-PS1='%m %B%h%b '
+# Left prompt: Hostname, history number, job count, indication of last
+# exit status, privileges/shell-nesting indicator.
+PS1='%m %B%h%b%(1j. [%j].)'
 if (( $#fgbg )); then
-    PS1+="%(?.%{$fgbg[green,default]%}.%{$fgbg[red,default]%})"
+    PS1+=" %(?.%{$fgbg[green,default]%}.%{$fgbg[red,default]%})"
     PS1+="%B${(r:$((SHLVL * 2))::%#:)}%b"
     PS1+="%{$fgbg[default,default]%} "
 else
     # Display the last exit status directly.
-    PS1+="%(?..(%?%) )%B${(r:$((SHLVL * 2))::%#:)}%b "
+    PS1+="%(?..%(1j.. )(%?%)) %B${(r:$((SHLVL * 2))::%#:)}%b "
 fi
 
 # Leave the -g in case I ever wrap this in a function again.
