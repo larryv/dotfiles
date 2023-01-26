@@ -2,7 +2,7 @@
     README.markdown
     ---------------
 
-    Written in 2018, 2021-2022 by Lawrence Velazquez <vq@larryv.me>.
+    Written in 2018, 2021-2023 by Lawrence Velazquez <vq@larryv.me>.
 
     To the extent possible under law, the author(s) have dedicated all
     copyright and related and neighboring rights to this software to the
@@ -24,20 +24,26 @@ These are my Unix dotfiles.  You almost certainly don't want to use them
 find a useful tidbit if you take a look.
 
 In theory they're portable, but in practice they're only field-tested on
-macOS.
+Mac OS.
 
 
 ## Installation ##
 
 Intended reader: A future me who has suffered tragic memory loss.
 
-Installation is verified to work with [GNU Make][] 3.81 and [GNU M4][]
-1.4.6.  It may or may not work with other versions.
+Installation should work on systems that conform to [POSIX.1-2017][],
+include [`make`][], and provide a POSIX shell at `/bin/sh`.  It is known
+to work with [GNU Make][] 3.81, [GNU Bash][] 3.2.57, and [GNU M4][]
+1.4.6.
 
+  [POSIX.1-2017]: https://pubs.opengroup.org/onlinepubs/9699919799
+  [`make`]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
   [GNU Make]: https://www.gnu.org/software/make
   [GNU M4]: https://www.gnu.org/software/m4
+  [GNU Bash]: https://www.gnu.org/software/bash
 
-Commands must be run from the project root.
+Invoke `make` from the project root or use the nonstandard `-C` option
+to achieve the moral equivalent.
 
 -   Install/uninstall all files:
 
