@@ -1,7 +1,7 @@
 # Makefile
 # --------
 #
-# Written in 2014, 2016-2018, 2020-2022 by Lawrence Velazquez
+# Written in 2014, 2016-2018, 2020-2023 by Lawrence Velazquez
 # <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
@@ -38,7 +38,6 @@ FORCE:
 # prerequisites of the global rules (e.g., `make install`).
 include git/module.mk
 include gnupg/module.mk
-include grep/module.mk
 include java/module.mk
 include lynx/module.mk
 include macports/module.mk
