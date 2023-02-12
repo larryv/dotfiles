@@ -1,7 +1,7 @@
 # sh/_profile
 # -----------
 #
-# Written in 2020-2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2020-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -27,6 +27,11 @@ for script in ~/.profile.d/[!_]*.sh; do
     fi
 done
 unset script
+
+# Append because I don't (yet?) need to override other utilities.
+if [ -d ~/bin ]; then
+    export PATH="${PATH}${PATH:+:}${HOME}/bin"
+fi
 
 # https://unix.stackexchange.com/a/4413 - Assign absolute paths to
 # maximize compatibility.  Do it here so that topic scripts can modify
