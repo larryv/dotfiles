@@ -22,12 +22,13 @@
 .SUFFIXES: .m4
 SHELL = /bin/sh
 
-# Allow overriding of utilities [4].
-INSTALL = ./install-sh
+# Allow overriding of utilities [4].  Specify "./install-sh" instead of
+# "install-sh" to avoid inadvertent PATH searches [5][6].
+INSTALL = $(SHELL) ./install-sh
 INSTALL_DATA = $(INSTALL) -m 644
 M4 = m4
 
-# Imitate .PHONY portably [5].  List "all" first to make it the default.
+# Imitate .PHONY portably [7].  List "all" first to make it the default.
 all clean maintainer-clean installdirs install uninstall: FORCE
 FORCE:
 
@@ -58,4 +59,6 @@ include zsh/module.mk
 # 2. https://www.gnu.org/software/make/manual/html_node/Special-Targets
 # 3. https://www.gnu.org/software/make/manual/html_node/Makefile-Basics
 # 4. https://www.gnu.org/software/make/manual/html_node/Command-Variables
-# 5. https://www.gnu.org/software/make/manual/html_node/Force-Targets
+# 5. https://www.gnu.org/software/autoconf/manual/autoconf-2.71/html_node/Invoking-the-Shell.html
+# 6. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/sh.html
+# 7. https://www.gnu.org/software/make/manual/html_node/Force-Targets
