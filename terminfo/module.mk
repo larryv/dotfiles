@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2020-2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2020-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -15,13 +15,14 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+all: terminfo
+terminfo: terminfo/_profile.d/terminfo.sh FORCE
+
 installdirs: terminfo-installdirs
 terminfo-installdirs: sh-installdirs FORCE
 
 install: terminfo-install
-terminfo-install: sh-install terminfo-installdirs \
-    terminfo/_profile.d/terminfo.sh \
-    FORCE
+terminfo-install: sh-install terminfo terminfo-installdirs FORCE
 	$(INSTALL_DATA) terminfo/_profile.d/terminfo.sh ~/.profile.d/
 
 uninstall: terminfo-uninstall
