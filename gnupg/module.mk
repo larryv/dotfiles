@@ -1,7 +1,7 @@
 # gnupg/module.mk
 # ---------------
 #
-# Written in 2016, 2018, 2020-2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2016, 2018, 2020-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -34,7 +34,7 @@ gnupg-installdirs: sh-installdirs FORCE
 
 install: gnupg-install
 gnupg-install: gnupg gnupg-installdirs sh-install FORCE
-	$(INSTALL) -C -m 600 \
+	$(INSTALL) -m 600 \
     gnupg/_gnupg/dirmngr.conf \
     gnupg/_gnupg/gpg.conf \
     ~/.gnupg/

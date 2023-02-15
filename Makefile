@@ -24,7 +24,7 @@ SHELL = /bin/sh
 
 # Allow overriding of utilities [4].
 INSTALL = ./install-sh
-INSTALL_DATA = $(INSTALL) -C -m 644
+INSTALL_DATA = $(INSTALL) -m 644
 M4 = m4
 
 # Imitate .PHONY portably [5].  List "all" first to make it the default.
