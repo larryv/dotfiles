@@ -1,7 +1,7 @@
 # lynx/_lynx.cfg.m4
 # -----------------
 #
-# Written in 2013-2014, 2016, 2018, 2020-2022 by Lawrence Velazquez
+# Written in 2013-2014, 2016, 2018, 2020-2023 by Lawrence Velazquez
 # <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
@@ -17,7 +17,7 @@
 
 
 syscmd(`test -d ~/Downloads')dnl
-ifelse(sysval, `0', `SAVE_SPACE:~/Downloads
+ifelse(sysval, 0, `SAVE_SPACE:~/Downloads
 
 ')dnl
 # Local settings.

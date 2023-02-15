@@ -1,7 +1,7 @@
 # git/_gitconfig.m4
 # -----------------
 #
-# Written in 2012-2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2012-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -24,7 +24,7 @@
 [core]
 	autocrlf = input
 syscmd(`test -f /System/Library/LaunchDaemons/com.apple.revisiond.plist')dnl
-ifelse(sysval, `0', `dnl
+ifelse(sysval, 0, `dnl
 	# Avoid problems with Mac revisiond
 	# (https://www.git-tower.com/blog/make-git-rebase-safe-on-osx).
 	trustctime = false
@@ -39,5 +39,5 @@ ifelse(sysval, `0', `dnl
 [include]
 	# Local settings.
 	path = .gitconfig.local
-divert(`-1')
+divert(-1)
 vim: set filetype=gitconfig:
