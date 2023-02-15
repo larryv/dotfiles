@@ -1,6 +1,8 @@
 # git/module.mk
 # -------------
 #
+# SPDX-License-Identifier: CC0-1.0
+#
 # Written in 2018, 2020-2022 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
@@ -10,9 +12,7 @@
 #
 # You should have received a copy of the CC0 Public Domain Dedication
 # along with this software.  If not, see
-# <http://creativecommons.org/publicdomain/zero/1.0/>.
-#
-# SPDX-License-Identifier: CC0-1.0
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
 all: git
