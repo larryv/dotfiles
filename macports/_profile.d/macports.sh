@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2015-2016, 2018, 2020-2022 by Lawrence Velazquez
+# Written in 2015-2016, 2018, 2020-2023 by Lawrence Velazquez
 # <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
@@ -17,7 +17,9 @@
 
 
 case $sourced_scripts in
-    *' .profile.d/macports.sh '*) return 0 ;;
+    *' .profile.d/macports.sh '*)
+        return 0
+        ;;
 esac
 
 # Define promote().
@@ -40,7 +42,9 @@ promote_mp_paths() {
     # isn't worth it.  Use REPLY as the variable because promote() is
     # going to overwrite it anyway, so I don't have to unset it here.
     while IFS= read -r REPLY || [ -n "$REPLY" ]; do
-        [ -z "$REPLY" ] || set -- "$@" "$REPLY"
+        if [ -n "$REPLY" ]; then
+            set -- "$@" "$REPLY"
+        fi
     done <"$1" || return
 
     shift
@@ -51,15 +55,13 @@ promote_mp_paths() {
 # myself.  They usually contain "/opt/local/bin", "/opt/local/sbin", and
 # "/opt/local/share/man".
 
-if [ -n "$PATH" ] && promote_mp_paths /etc/paths.d/macports "$PATH"
-then
-    PATH=$REPLY
+if [ -n "$PATH" ]; then
+    promote_mp_paths /etc/paths.d/macports "$PATH" && PATH=$REPLY
 fi
 
 # MANPATH is only set on older versions of Mac OS X.
-if [ -n "$MANPATH" ] && promote_mp_paths /etc/manpaths.d/macports "$MANPATH"
-then
-    MANPATH=$REPLY
+if [ -n "$MANPATH" ]; then
+    promote_mp_paths /etc/manpaths.d/macports "$MANPATH" && MANPATH=$REPLY
 fi
 
 unset REPLY

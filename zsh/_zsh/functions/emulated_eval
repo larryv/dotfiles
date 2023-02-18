@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -48,8 +48,11 @@ origmode="$(emulate 2>/dev/null)" || origmode=zsh
 emulate -L zsh
 
 {
-    local minargc=1
-    [[ $1 = -R ]] && minargc=2
+    if [[ $1 = -R ]]; then
+        local minargc=2
+    else
+        local minargc=1
+    fi
 
     if (( ARGC < minargc )); then
         print >&2 'usage: emulated_eval [-R] <mode> [<arg> ...]'
