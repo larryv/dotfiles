@@ -22,6 +22,36 @@ case $sourced_scripts in
 esac
 
 
+# Given a colon-delimited list and a series of search terms, moves
+# elements to the back of the list if they appear in the series.
+#
+#     demote [input_list [search_term...]]
+#
+# The REPLY variable is set to a colon-delimited list comprising the
+# elements of the input list, rearranged so that all elements that are
+# equal to any search term (by string comparison) follow all elements
+# that are not equal to any search term.  The rearrangement is stable --
+# i.e., relative ordering is preserved within the new prefix and suffix.
+#
+# If only the input list argument is provided, then REPLY is set to its
+# value.  If no arguments are provided at all, then REPLY is unset.  If
+# the exit status is not zero, then REPLY should not be used because it
+# is not guaranteed to be in any particular state.
+
+demote() {
+    partition "$@" || return
+
+    case ${PARTITION_MATCHED+m}${PARTITION_UNMATCHED+u} in
+        mu) REPLY=$PARTITION_UNMATCHED:$PARTITION_MATCHED ;;
+        u) REPLY=$PARTITION_UNMATCHED ;;
+        m) REPLY=$PARTITION_MATCHED ;;
+        '') unset REPLY ;;
+    esac
+
+    unset PARTITION_MATCHED PARTITION_UNMATCHED
+}
+
+
 # Given a colon-delimited list and a series of search terms, partitions
 # the list's elements based on whether they appear in the series.
 #
@@ -107,7 +137,7 @@ promote() {
 
 
 unset_sh_helper_functions() {
-    unset -f partition promote
+    unset -f demote partition promote
     unset -f unset_sh_helper_functions
 }
 
