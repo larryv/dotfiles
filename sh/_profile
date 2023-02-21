@@ -20,6 +20,12 @@ if [ -z "$ZSH_VERSION" ]; then
     sourced_scripts=
 fi
 
+# Do this up here to give the topic scripts access.  Append because
+# I don't (yet?) need to override other utilities.
+if [ -d ~/bin ]; then
+    export PATH="${PATH:+$PATH:}$HOME/bin"
+fi
+
 # Source topic scripts.
 for script in ~/.profile.d/[!_]*.sh; do
     if [ -r "$script" ] && [ ! -d "$script" ]; then
@@ -28,9 +34,10 @@ for script in ~/.profile.d/[!_]*.sh; do
 done
 unset script
 
-# Append because I don't (yet?) need to override other utilities.
-if [ -d ~/bin ]; then
-    export PATH="${PATH}${PATH:+:}${HOME}/bin"
+# Ensure that ~/bin follows anything added by the topic scripts.
+if . ~/.profile.d/_functions.sh && demote "$PATH" ~/bin; then
+    PATH=$REPLY
+    unset REPLY
 fi
 
 # https://unix.stackexchange.com/a/4413 - Assign absolute paths to
