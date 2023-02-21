@@ -32,12 +32,12 @@ for script in ~/.profile.d/[!_]*.sh; do
         . "$script"
     fi
 done
-unset script
+unset -v script
 
 # Ensure that ~/bin follows anything added by the topic scripts.
 if . ~/.profile.d/_functions.sh && demote "$PATH" ~/bin; then
     PATH=$REPLY
-    unset REPLY
+    unset -v REPLY
 fi
 
 # https://unix.stackexchange.com/a/4413 - Assign absolute paths to
@@ -50,20 +50,20 @@ if [ -z "$PAGER" ]; then
     if pager=$(command -v less); then
         export PAGER="$pager"
     fi
-    unset pager
+    unset -v pager
 fi
 
 if [ -z "$VISUAL" ]; then
     if visual=$(command -v vim || command -v vi); then
         export VISUAL="$visual"
     fi
-    unset visual
+    unset -v visual
 fi
 
 # The zsh startup files will do this later.
 if [ -z "$ZSH_VERSION" ]; then
     unset_sh_helper_functions 2>/dev/null
-    unset sourced_scripts
+    unset -v sourced_scripts
 fi
 
 # vim: set filetype=sh:

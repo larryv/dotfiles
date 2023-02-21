@@ -29,7 +29,7 @@ if [ -z "$GPG_TTY" ]; then
     if gpg_tty=${TTY:-$(tty)}; then
         export GPG_TTY="$gpg_tty"
     fi
-    unset gpg_tty
+    unset -v gpg_tty
 fi
 
 sourced_scripts="$sourced_scripts .profile.d/gnupg.sh "

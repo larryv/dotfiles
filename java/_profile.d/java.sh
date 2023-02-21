@@ -29,7 +29,7 @@ if [ -z "$JAVA_HOME" ]; then
     if jh=$(/usr/libexec/java_home --failfast 2>/dev/null && echo .); then
         export JAVA_HOME="${jh%??}"
     fi
-    unset jh
+    unset -v jh
 fi
 
 sourced_scripts="$sourced_scripts .profile.d/java.sh "

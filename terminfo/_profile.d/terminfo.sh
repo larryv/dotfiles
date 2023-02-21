@@ -83,7 +83,7 @@ EOF
             term=nsterm-bce         # 10.3 - 10.4
         fi
 
-        unset major minor rest zeros
+        unset -v major minor rest zeros
     fi
 
     if
@@ -103,7 +103,7 @@ EOF
         export TERM="$term"
     fi
 
-    unset term
+    unset -v term
 fi
 
 sourced_scripts="$sourced_scripts .profile.d/terminfo.sh "

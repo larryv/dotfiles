@@ -64,7 +64,7 @@ if [ -n "$MANPATH" ]; then
     promote_mp_paths /etc/manpaths.d/macports "$MANPATH" && MANPATH=$REPLY
 fi
 
-unset REPLY
+unset -v REPLY
 unset -f promote_mp_paths
 
 sourced_scripts="$sourced_scripts .profile.d/macports.sh "

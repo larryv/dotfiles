@@ -45,10 +45,10 @@ demote() {
         mu) REPLY=$PARTITION_UNMATCHED:$PARTITION_MATCHED ;;
         u) REPLY=$PARTITION_UNMATCHED ;;
         m) REPLY=$PARTITION_MATCHED ;;
-        '') unset REPLY ;;
+        '') unset -v REPLY ;;
     esac
 
-    unset PARTITION_MATCHED PARTITION_UNMATCHED
+    unset -v PARTITION_MATCHED PARTITION_UNMATCHED
 }
 
 
@@ -76,7 +76,7 @@ demote() {
 # elements.
 
 partition() {
-    unset PARTITION_MATCHED PARTITION_UNMATCHED
+    unset -v PARTITION_MATCHED PARTITION_UNMATCHED
 
     if [ "$#" -lt 1 ]; then
         return 0
@@ -102,7 +102,7 @@ partition() {
         PARTITION_UNMATCHED=${PARTITION_UNMATCHED+$PARTITION_UNMATCHED:}$x
     done
 
-    unset arg x xs
+    unset -v arg x xs
 }
 
 
@@ -129,10 +129,10 @@ promote() {
         mu) REPLY=$PARTITION_MATCHED:$PARTITION_UNMATCHED ;;
         u) REPLY=$PARTITION_UNMATCHED ;;
         m) REPLY=$PARTITION_MATCHED ;;
-        '') unset REPLY ;;
+        '') unset -v REPLY ;;
     esac
 
-    unset PARTITION_MATCHED PARTITION_UNMATCHED
+    unset -v PARTITION_MATCHED PARTITION_UNMATCHED
 }
 
 
