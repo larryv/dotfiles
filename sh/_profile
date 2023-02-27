@@ -63,6 +63,7 @@ fi
 # The zsh startup files will do this later.
 if [ -z "$ZSH_VERSION" ]; then
     unset_sh_helper_functions 2>/dev/null
+    unset -f unset_sh_helper_functions 2>/dev/null
     unset -v sourced_scripts
 fi
 

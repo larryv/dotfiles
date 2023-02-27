@@ -136,9 +136,11 @@ promote() {
 }
 
 
+# Removes all other functions defined in this file.  Ideally this would
+# also remove itself, but that causes ksh93u+ 2012-08-01 to segfault.
+
 unset_sh_helper_functions() {
     unset -f demote partition promote
-    unset -f unset_sh_helper_functions
 }
 
 
