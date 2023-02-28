@@ -16,7 +16,7 @@
 
 
 # The zsh startup files have already done this.
-if [ -z "$ZSH_VERSION" ]; then
+if [ ! "$ZSH_VERSION" ]; then
     sourced_scripts=
 fi
 
@@ -46,14 +46,14 @@ fi
 # desired.  Assume that the system startup files did not define
 # identically named aliases or functions, which would be obnoxious.
 
-if [ -z "$PAGER" ]; then
+if [ ! "$PAGER" ]; then
     if pager=$(command -v less); then
         export PAGER="$pager"
     fi
     unset -v pager
 fi
 
-if [ -z "$VISUAL" ]; then
+if [ ! "$VISUAL" ]; then
     if visual=$(command -v vim || command -v vi); then
         export VISUAL="$visual"
     fi
@@ -61,7 +61,7 @@ if [ -z "$VISUAL" ]; then
 fi
 
 # The zsh startup files will do this later.
-if [ -z "$ZSH_VERSION" ]; then
+if [ ! "$ZSH_VERSION" ]; then
     unset_sh_helper_functions 2>/dev/null
     unset -f unset_sh_helper_functions 2>/dev/null
     unset -v sourced_scripts

@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -112,9 +112,9 @@ case ${TERM_PROGRAM:-$TERM} in
 
         # Validate the colors passed via option-arguments.
         for color in $fcolors; do
-            [[ -n $fPs[$color] ]] || ! break
+            [[ $fPs[$color] ]] || ! break
         done && for color in $bcolors; do
-            [[ -n $bPs[$color] ]] || ! break
+            [[ $bPs[$color] ]] || ! break
         done || {
             printf 'colorpairs: unavailable color: %s\n' ${(qq)color}
             printf 'available fg colors: %s\n' ${(j: :)${(ki)fPs}}
@@ -144,14 +144,14 @@ case ${TERM_PROGRAM:-$TERM} in
         if zmodload zsh/terminfo 2>/dev/null; then
             if (( terminfo[colors] >= 8 )); then
                 for fcap bcap in setaf setab setf setb scp scp; do
-                    [[ -n $terminfo[$fcap] && -n $terminfo[$bcap] ]] && break
+                    [[ $terminfo[$fcap] && $terminfo[$bcap] ]] && break
                 done && cmd=echoti && op=$terminfo[op]
             fi
         # I haven't tested this.
        #elif zmodload zsh/termcap 2>/dev/null; then
        #    if (( termcap[Co] >= 8 )); then
        #        for fcap bcap in AF AB Sf Sb sp sp; do
-       #            [[ -n $termcap[$fcap] && -n $termcap[$bcap] ]] && break
+       #            [[ $termcap[$fcap] && $termcap[$bcap] ]] && break
        #        done && cmd=echotc && op=$termcap[op]
        #    fi
         elif numcolors=$(tput colors 2>/dev/null); then
@@ -180,7 +180,7 @@ case ${TERM_PROGRAM:-$TERM} in
                 return 1
                 ;;
             scp,scp | sp,sp)
-                if [[ -z $cmd ]]; then
+                if [[ ! $cmd ]]; then
                     # The terminal entry is broken.
                     fmt='%s claims color support but lacks capabilities\n'
                 else
@@ -203,13 +203,13 @@ case ${TERM_PROGRAM:-$TERM} in
                 # Validate the colors passed via option-arguments.
                 for color in $fcolors $bcolors; do
                     if [[ $color = default ]]; then
-                        if [[ -z $op ]]; then
+                        if [[ ! $op ]]; then
                             fmt='%s cannot reset colors to default\n'   # [8]
                             printf >&2 "colorpairs: $fmt" ${(qq)TERM}
                             return 1
                         fi
-                    elif [[ -z $palette[$color] ]]; then
-                        [[ -n $op ]] && palette+=(default '')
+                    elif [[ ! $palette[$color] ]]; then
+                        [[ $op ]] && palette+=(default '')
                         fmt='colorpairs: unavailable color: %s\n'
                         fmt+='available colors: %s\n'
                         printf >&2 $fmt ${(qq)color} ${(j: :)${(ki)palette}}

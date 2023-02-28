@@ -87,7 +87,7 @@ partition() {
     xs=$1:
     shift
 
-    while [ -n "$xs" ]; do
+    while [ "$xs" ]; do
         x=${xs%%:*}
         xs=${xs#*:}
 

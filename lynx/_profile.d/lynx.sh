@@ -22,7 +22,7 @@ case $sourced_scripts in
         ;;
 esac
 
-if [ -z "$LYNX_CFG" ]; then
+if [ ! "$LYNX_CFG" ]; then
     export LYNX_CFG="$HOME/.lynx.cfg"
 fi
 

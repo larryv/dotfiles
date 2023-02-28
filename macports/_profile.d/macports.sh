@@ -41,8 +41,8 @@ promote_mp_paths() {
     # lines.  The files are usually very short, so using sed(1) for this
     # isn't worth it.  Use REPLY as the variable because promote() is
     # going to overwrite it anyway, so I don't have to unset it here.
-    while IFS= read -r REPLY || [ -n "$REPLY" ]; do
-        if [ -n "$REPLY" ]; then
+    while IFS= read -r REPLY || [ "$REPLY" ]; do
+        if [ "$REPLY" ]; then
             set -- "$@" "$REPLY"
         fi
     done <"$1" || return
@@ -55,12 +55,12 @@ promote_mp_paths() {
 # myself.  They usually contain "/opt/local/bin", "/opt/local/sbin", and
 # "/opt/local/share/man".
 
-if [ -n "$PATH" ]; then
+if [ "$PATH" ]; then
     promote_mp_paths /etc/paths.d/macports "$PATH" && PATH=$REPLY
 fi
 
 # MANPATH is only set on older versions of Mac OS X.
-if [ -n "$MANPATH" ]; then
+if [ "$MANPATH" ]; then
     promote_mp_paths /etc/manpaths.d/macports "$MANPATH" && MANPATH=$REPLY
 fi
 

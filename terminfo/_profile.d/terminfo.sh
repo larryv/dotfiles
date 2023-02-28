@@ -25,7 +25,7 @@ esac
 # terminal emulator properly.
 
 # Do nothing within screen or tmux.
-if [ -z "${STY}${TMUX}" ]; then
+if [ ! "${STY}${TMUX}" ]; then
     term=$TERM
 
     if
@@ -73,13 +73,13 @@ EOF
 
     if
         [ "$term" != "$TERM" ] \
-            && if [ -n "$ZSH_VERSION" ]; then
+            && if [ "$ZSH_VERSION" ]; then
                     # On assignment to TERM, zsh automatically tries to
                     # reinitialize the terminal.  As far as I can tell,
                     # the only way to discern failure is to check for an
                     # error message, as neither the exit status nor the
                     # assignment itself is affected.
-                   [ -z "$(TERM=$term 2>&1)" ]
+                   [ ! "$(TERM=$term 2>&1)" ]
                else
                    # Not sure whether "init" or "reset" is better here.
                    tput -T "$term" init 2>/dev/null
