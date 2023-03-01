@@ -43,7 +43,7 @@ promote_mp_paths() {
     # going to overwrite it anyway, so I don't have to unset it here.
     while IFS= read -r REPLY || [ "$REPLY" ]; do
         if [ "$REPLY" ]; then
-            set -- "$@" "$REPLY"
+            set -- "$@" "$REPLY" || return
         fi
     done <"$1" || return
 
