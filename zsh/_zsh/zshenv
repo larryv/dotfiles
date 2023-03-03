@@ -16,7 +16,7 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-: ${ZDOTDIR:=~/.zsh}
+: ${ZDOTDIR=~/.zsh}
 
 fpath=($ZDOTDIR/functions(N) $fpath)
 

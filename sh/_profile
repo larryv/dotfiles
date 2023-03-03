@@ -51,14 +51,14 @@ fi
 # desired.  Assume that the system startup files did not define
 # identically named aliases or functions, which would be obnoxious.
 
-if [ ! "$PAGER" ]; then
+if [ ! "${PAGER+y}" ]; then
     if pager=$(command -v less); then
         export PAGER="$pager"
     fi
     unset -v pager
 fi
 
-if [ ! "$VISUAL" ]; then
+if [ ! "${VISUAL+y}" ]; then
     if visual=$(command -v vim || command -v vi); then
         export VISUAL="$visual"
     fi
