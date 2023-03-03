@@ -20,10 +20,15 @@ if [ ! "$ZSH_VERSION" ]; then
     sourced_scripts=
 fi
 
+# I currently assume that the system (at some level) is supposed to add
+# PATH to the shell's environment.  (For example, Mac OS exports PATH in
+# /etc/profile and /etc/zprofile.)  Avoid exporting PATH myself so I can
+# tell if the system isn't doing that.
+
 # Do this up here to give the topic scripts access.  Append because
 # I don't (yet?) need to override other utilities.
 if [ -d ~/bin ]; then
-    export PATH="${PATH:+$PATH:}$HOME/bin"
+    PATH=${PATH:+$PATH:}$HOME/bin
 fi
 
 # Source topic scripts.
