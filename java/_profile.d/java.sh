@@ -26,10 +26,12 @@ esac
 if [ ! "${JAVA_HOME+y}" ]; then
     # https://www.etalabs.net/sh_tricks.html ("Getting non-clobbered
     # output from command substitution")
-    if jh=$(/usr/libexec/java_home --failfast 2>/dev/null && echo .); then
-        export JAVA_HOME="${jh%??}"
+    if JAVA_HOME=$(/usr/libexec/java_home --failfast 2>/dev/null && echo .)
+    then
+        export JAVA_HOME="${JAVA_HOME%??}"
+    else
+        unset -v JAVA_HOME
     fi
-    unset -v jh
 fi
 
 sourced_scripts="$sourced_scripts .profile.d/java.sh "

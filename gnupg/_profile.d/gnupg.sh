@@ -26,10 +26,11 @@ esac
 if [ ! "${GPG_TTY+y}" ]; then
     # TTY is a zsh thing, but I check for it here because theoretically
     # another shell, or even the terminal emulator itself, could set it.
-    if gpg_tty=${TTY:-$(tty)}; then
-        export GPG_TTY="$gpg_tty"
+    if GPG_TTY=${TTY:-$(tty)}; then
+        export GPG_TTY
+    else
+        unset -v GPG_TTY
     fi
-    unset -v gpg_tty
 fi
 
 sourced_scripts="$sourced_scripts .profile.d/gnupg.sh "

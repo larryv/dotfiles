@@ -52,17 +52,19 @@ fi
 # identically named aliases or functions, which would be obnoxious.
 
 if [ ! "${PAGER+y}" ]; then
-    if pager=$(command -v less); then
-        export PAGER="$pager"
+    if PAGER=$(command -v less); then
+        export PAGER
+    else
+        unset -v PAGER
     fi
-    unset -v pager
 fi
 
 if [ ! "${VISUAL+y}" ]; then
-    if visual=$(command -v vim || command -v vi); then
-        export VISUAL="$visual"
+    if VISUAL=$(command -v vim || command -v vi); then
+        export VISUAL
+    else
+        unset -v VISUAL
     fi
-    unset -v visual
 fi
 
 # The zsh startup files will do this later.
