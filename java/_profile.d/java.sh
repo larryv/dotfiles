@@ -28,7 +28,7 @@ if [ ! "${JAVA_HOME+y}" ]; then
     # output from command substitution")
     if JAVA_HOME=$(/usr/libexec/java_home --failfast 2>/dev/null && echo .)
     then
-        export JAVA_HOME="${JAVA_HOME%??}"
+        JAVA_HOME=${JAVA_HOME%??} && export JAVA_HOME
     else
         unset -v JAVA_HOME
     fi

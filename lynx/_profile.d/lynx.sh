@@ -23,7 +23,7 @@ case $sourced_scripts in
 esac
 
 if [ ! "${LYNX_CFG+y}" ]; then
-    export LYNX_CFG="$HOME/.lynx.cfg"
+    LYNX_CFG=~/.lynx.cfg && export LYNX_CFG
 fi
 
 sourced_scripts="$sourced_scripts .profile.d/lynx.sh "

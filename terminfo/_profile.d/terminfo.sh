@@ -85,7 +85,7 @@ EOF
                    tput -T "$term" init 2>/dev/null
                fi
     then
-        export TERM="$term"
+        TERM=$term && export TERM
     fi
 
     unset -v term
