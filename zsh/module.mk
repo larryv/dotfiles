@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2016, 2018, 2020-2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2016, 2018, 2020-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -61,7 +61,7 @@ zsh-uninstall: FORCE
     ~/.zsh/functions/colorpairs \
     ~/.zsh/functions/emulated_eval \
     ~/.zsh/functions/update_terminal_cwd \
-    ~/.zsh/zshenv ~/.zshenv \
+    ~/.zsh/zshenv ~/.zsh/.zshenv ~/.zshenv \
     ~/.zsh/zprofile ~/.zsh/.zprofile \
     ~/.zsh/zshrc ~/.zsh/.zshrc \
     ~/.zsh/zlogin ~/.zsh/.zlogin
