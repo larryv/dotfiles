@@ -20,10 +20,10 @@ zsh: \
     zsh/_zsh/functions/colorpairs \
     zsh/_zsh/functions/emulated_eval \
     zsh/_zsh/functions/update_terminal_cwd \
-    zsh/_zsh/zshenv \
-    zsh/_zsh/zprofile \
-    zsh/_zsh/zshrc \
-    zsh/_zsh/zlogin \
+    zsh/_zshenv \
+    zsh/_zsh/_zprofile \
+    zsh/_zsh/_zshrc \
+    zsh/_zsh/_zlogin \
     FORCE
 
 installdirs: zsh-installdirs
@@ -43,17 +43,15 @@ zsh-install: sh-install zsh zsh-installdirs FORCE
     zsh/_zsh/functions/emulated_eval \
     zsh/_zsh/functions/update_terminal_cwd \
     ~/.zsh/functions/
-	$(INSTALL_DATA) \
-    zsh/_zsh/zshenv \
-    zsh/_zsh/zprofile \
-    zsh/_zsh/zshrc \
-    zsh/_zsh/zlogin \
-    ~/.zsh/
-	ln -fs .zsh/zshenv ~/.zshenv
-	ln -fs zshenv ~/.zsh/.zshenv
-	ln -fs zprofile ~/.zsh/.zprofile
-	ln -fs zshrc ~/.zsh/.zshrc
-	ln -fs zlogin ~/.zsh/.zlogin
+	$(INSTALL_DATA) zsh/_zshenv ~/.zshenv
+	$(INSTALL_DATA) zsh/_zsh/_zprofile ~/.zsh/.zprofile
+	$(INSTALL_DATA) zsh/_zsh/_zshrc ~/.zsh/.zshrc
+	$(INSTALL_DATA) zsh/_zsh/_zlogin ~/.zsh/.zlogin
+	ln -fs ../.zshenv ~/.zsh/.zshenv
+	ln -fs ../.zshenv ~/.zsh/zshenv
+	ln -fs .zprofile ~/.zsh/zprofile
+	ln -fs .zshrc ~/.zsh/zshrc
+	ln -fs .zlogin ~/.zsh/zlogin
 
 uninstall: zsh-uninstall
 zsh-uninstall: FORCE
