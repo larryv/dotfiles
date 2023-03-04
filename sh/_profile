@@ -15,11 +15,6 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-# The zsh startup files have already done this.
-if [ ! "$ZSH_VERSION" ]; then
-    sourced_scripts=
-fi
-
 # I currently assume that the system (at some level) is supposed to add
 # PATH to the shell's environment.  (For example, Mac OS exports PATH in
 # /etc/profile and /etc/zprofile.)  Avoid exporting PATH myself so I can
@@ -29,6 +24,11 @@ fi
 # I don't (yet?) need to override other utilities.
 if [ -d ~/bin ]; then
     PATH=${PATH:+$PATH:}$HOME/bin
+fi
+
+# The zsh startup files have already done this.
+if [ ! "$ZSH_VERSION" ]; then
+    sourced_scripts=
 fi
 
 # Source topic scripts.
