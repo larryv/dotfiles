@@ -16,14 +16,14 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-: ${ZDOTDIR=~/.zsh}
+: "${ZDOTDIR=$HOME/.zsh}"
 
-fpath=($ZDOTDIR/functions(N) "$fpath[@]")
+fpath=("$ZDOTDIR"/functions(N) "$fpath[@]")
 
 # Source topic scripts.
 sourced_scripts=
-for script in $ZDOTDIR/zshenv.d/*.zsh(N-^/); do
-    . $script
+for script in "$ZDOTDIR"/zshenv.d/*.zsh(N-^/); do
+    . "$script"
 done
 unset script
 

@@ -83,14 +83,14 @@ autoload -Uz +X update_terminal_cwd 2>/dev/null && {
 
 # Enable completion and other things.
 autoload -Uz run-help zargs zrecompile
-autoload -Uz compinit && compinit -d $ZDOTDIR/zcompdump && {
+autoload -Uz compinit && compinit -d "$ZDOTDIR"/zcompdump && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
 
     fmt='%BNo matches for %d%b'
     if (( $#fgbg )); then
         fmt="%{$fgbg[red,default]%}$fmt%{$fgbg[default,default]%}"
     fi
-    zstyle ':completion:*:warnings' format $fmt
+    zstyle ':completion:*:warnings' format "$fmt"
     unset fmt
 }
 
@@ -109,8 +109,8 @@ setopt INC_APPEND_HISTORY_TIME 2>/dev/null
 REPORTTIME=10
 
 # Source topic scripts.
-for script in $ZDOTDIR/zshrc.d/*.zsh(N-^/); do
-    . $script
+for script in "$ZDOTDIR"/zshrc.d/*.zsh(N-^/); do
+    . "$script"
 done
 unset script
 
