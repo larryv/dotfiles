@@ -16,13 +16,17 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-autoload -Uz emulated_eval
-emulated_eval sh '. ~/.profile'
-
 # Source topic scripts.
 for script in "$ZDOTDIR"/zprofile.d/*.zsh(N-^/); do
     . "$script"
 done
 unset script
+
+# Source portable login profile.  Do this last so errors in ~/.profile
+# that abort the dot command terminate this file too, making it easier
+# to reason about errors in ~/.profile.  (If there were any subsequent
+# commands, execution would continue.)
+autoload -Uz emulated_eval
+emulated_eval sh '. ~/.profile'
 
 # vim: set filetype=zsh:
