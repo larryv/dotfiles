@@ -129,3 +129,5 @@ unfunction colorpairs
 #
 #  1. https://sourceforge.net/p/zsh/code/ci/zsh-4.3.7/tree/Src/prompt.c
 #  2. https://www.zsh.org/mla/workers/2021/msg00811.html
+
+# vim: set filetype=zsh:

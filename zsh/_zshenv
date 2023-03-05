@@ -33,3 +33,5 @@ if [[ ! -o LOGIN && ! -o INTERACTIVE ]]; then
     unfunction emulated_eval unset_sh_helper_functions 2>/dev/null
     unset sourced_scripts
 fi
+
+# vim: set filetype=zsh:
