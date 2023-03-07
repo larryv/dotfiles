@@ -18,7 +18,7 @@
 
 : ${ZDOTDIR=~/.zsh}
 
-fpath=($ZDOTDIR/functions(N) $fpath)
+fpath=($ZDOTDIR/functions(N) "$fpath[@]")
 
 # Source topic scripts.
 sourced_scripts=
