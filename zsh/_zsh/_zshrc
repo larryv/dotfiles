@@ -82,8 +82,12 @@ autoload -Uz +X update_terminal_cwd 2>/dev/null && {
 }
 
 # Enable completion and other things.
-autoload -Uz run-help zargs zrecompile
-autoload -Uz compinit && compinit -d "$ZDOTDIR"/zcompdump && {
+autoload -Uz compinit run-help zargs zrecompile
+if [[ ${ZDOTDIR-~} != ~ ]]; then
+    compinit -d "$ZDOTDIR"/zcompdump
+else
+    compinit
+fi && {
     zstyle ':completion:*:descriptions' format '%B%d%b'
 
     fmt='%BNo matches for %d%b'
@@ -100,7 +104,11 @@ setopt EXTENDED_GLOB
 # History.
 SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
-HISTFILE=$ZDOTDIR/zsh_history
+if (( $+ZDOTDIR )); then
+    HISTFILE=$ZDOTDIR/zsh_history
+else
+    HISTFILE=~/.zsh_history
+fi
 setopt EXTENDED_HISTORY
 # < 5.0.6: Just append history at exit, it's fine.
 setopt INC_APPEND_HISTORY_TIME 2>/dev/null
@@ -109,7 +117,7 @@ setopt INC_APPEND_HISTORY_TIME 2>/dev/null
 REPORTTIME=10
 
 # Source topic scripts.
-for script in "$ZDOTDIR"/zshrc.d/*.zsh(N-^/); do
+for script in "${ZDOTDIR-$HOME}"/zshrc.d/*.zsh(N-^/); do
     . "$script"
 done
 unset script

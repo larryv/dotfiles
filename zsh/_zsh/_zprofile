@@ -17,7 +17,7 @@
 
 
 # Source topic scripts.
-for script in "$ZDOTDIR"/zprofile.d/*.zsh(N-^/); do
+for script in "${ZDOTDIR-$HOME}"/zprofile.d/*.zsh(N-^/); do
     . "$script"
 done
 unset script
