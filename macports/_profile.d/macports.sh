@@ -26,7 +26,7 @@ case $already_sourced in
 esac
 
 # Define promote().
-. ~/.profile.d/_functions.sh
+. ~/.profile.d/_functions.sh || return
 
 # Move MacPorts directories to the beginning of PATH and MANPATH so its
 # software and man pages take precedence over the system's.  I used to

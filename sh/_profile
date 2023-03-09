@@ -40,10 +40,10 @@ done
 unset -v script
 
 # Ensure that ~/bin follows anything added by the topic scripts.
-if . ~/.profile.d/_functions.sh && demote "$PATH" ~/bin; then
-    PATH=$REPLY
+. ~/.profile.d/_functions.sh && {
+    demote "$PATH" ~/bin && PATH=$REPLY
     unset -v REPLY
-fi
+}
 
 # https://unix.stackexchange.com/a/4413 - Assign absolute paths to
 # maximize compatibility.  Do it here so that topic scripts can modify
