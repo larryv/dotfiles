@@ -16,10 +16,10 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-if [[ $sourced_scripts == *' .zsh/zshenv.d/macports.zsh '* ]]; then
+if [[ $already_sourced == *' .zsh/zshenv.d/macports.zsh '* ]]; then
     return 0
 else
-    sourced_scripts+=' .zsh/zshenv.d/macports.zsh '
+    already_sourced+=' .zsh/zshenv.d/macports.zsh '
 fi
 
 # On OS X 10.10 Yosemite and earlier, /etc/zshenv unconditionally

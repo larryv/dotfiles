@@ -28,7 +28,7 @@ fi
 
 # The zsh startup files have already done this.
 if [ ! "$ZSH_VERSION" ]; then
-    sourced_scripts=
+    already_sourced=
 fi
 
 # Source topic scripts.
@@ -71,7 +71,7 @@ fi
 if [ ! "$ZSH_VERSION" ]; then
     unset_sh_helper_functions 2>/dev/null
     unset -f unset_sh_helper_functions 2>/dev/null
-    unset -v sourced_scripts
+    unset -v already_sourced
 fi
 
 # vim: set filetype=sh:

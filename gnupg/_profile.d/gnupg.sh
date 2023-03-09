@@ -15,12 +15,12 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-case $sourced_scripts in
+case $already_sourced in
     *' .profile.d/gnupg.sh '*)
         return 0
         ;;
     *)
-        sourced_scripts="$sourced_scripts .profile.d/gnupg.sh "
+        already_sourced="$already_sourced .profile.d/gnupg.sh "
         ;;
 esac
 

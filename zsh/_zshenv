@@ -20,8 +20,9 @@
 
 fpath=("$ZDOTDIR"/functions(N) "$fpath[@]")
 
+already_sourced=
+
 # Source topic scripts.
-sourced_scripts=
 for script in "$ZDOTDIR"/zshenv.d/*.zsh(N-^/); do
     . "$script"
 done
@@ -31,7 +32,7 @@ unset script
 if [[ ! -o LOGIN && ! -o INTERACTIVE ]]; then
     unset_sh_helper_functions 2>/dev/null
     unfunction emulated_eval unset_sh_helper_functions 2>/dev/null
-    unset sourced_scripts
+    unset already_sourced
 fi
 
 # vim: set filetype=zsh:

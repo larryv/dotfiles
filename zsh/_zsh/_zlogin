@@ -24,6 +24,6 @@ unset script
 
 unset_sh_helper_functions 2>/dev/null
 unfunction emulated_eval unset_sh_helper_functions 2>/dev/null
-unset sourced_scripts
+unset already_sourced
 
 # vim: set filetype=zsh:

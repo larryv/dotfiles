@@ -118,7 +118,7 @@ unset script
 if [[ ! -o LOGIN ]]; then
     unset_sh_helper_functions 2>/dev/null
     unfunction emulated_eval unset_sh_helper_functions 2>/dev/null
-    unset sourced_scripts
+    unset already_sourced
 fi
 
 unset fgbg
