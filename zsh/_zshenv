@@ -16,9 +16,7 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-: "${ZDOTDIR=$HOME/.zsh}"
-
-fpath=("$ZDOTDIR"/functions(N) "$fpath[@]")
+fpath=("${ZDOTDIR=$HOME/.zsh}"/functions(N) "$fpath[@]")
 
 already_sourced=
 
