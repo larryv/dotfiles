@@ -33,7 +33,7 @@ fi
 
 # Source topic scripts.
 for script in ~/.profile.d/[!_]*.sh; do
-    if [ -r "$script" ] && [ ! -d "$script" ]; then
+    if [ -e "$script" ] && [ ! -d "$script" ]; then
         . "$script"
     fi
 done
