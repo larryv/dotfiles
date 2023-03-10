@@ -38,8 +38,6 @@ esac
 
 # Use a helper function for its temporary positional parameters.
 promote_mp_paths() {
-    [ -f "$1" ] || return
-
     # Like path_helper(8), treat newlines as delimiters and ignore blank
     # lines.  The files are usually very short, so using sed(1) for this
     # isn't worth it.  Use REPLY as the variable because promote() is
@@ -58,12 +56,12 @@ promote_mp_paths() {
 # myself.  They usually contain "/opt/local/bin", "/opt/local/sbin", and
 # "/opt/local/share/man".
 
-if [ "$PATH" ]; then
+if [ "$PATH" ] && [ -e /etc/paths.d/macports ]; then
     promote_mp_paths /etc/paths.d/macports "$PATH" && PATH=$REPLY
 fi
 
 # MANPATH is only set on older versions of Mac OS X.
-if [ "$MANPATH" ]; then
+if [ "$MANPATH" ] && [ -e /etc/manpaths.d/macports ]; then
     promote_mp_paths /etc/manpaths.d/macports "$MANPATH" && MANPATH=$REPLY
 fi
 
