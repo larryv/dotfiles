@@ -27,6 +27,7 @@ unset script
 # to reason about errors in ~/.profile.  (If there were any subsequent
 # commands, execution would continue.)
 autoload -Uz emulated_eval
+functions_to_unset+=' emulated_eval '
 emulated_eval sh '. ~/.profile'
 
 # vim: set filetype=zsh:

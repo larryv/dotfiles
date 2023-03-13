@@ -29,6 +29,7 @@ fi
 # The zsh startup files have already done this.
 if [ ! "$ZSH_VERSION" ]; then
     already_sourced=
+    functions_to_unset=
 fi
 
 # Source topic scripts.
@@ -69,9 +70,10 @@ fi
 
 # The zsh startup files will do this later.
 if [ ! "$ZSH_VERSION" ]; then
-    unset_sh_helper_functions 2>/dev/null
-    unset -f unset_sh_helper_functions 2>/dev/null
-    unset -v already_sourced
+    if [ "$functions_to_unset" ]; then
+        unset -f $functions_to_unset
+    fi
+    unset -v already_sourced functions_to_unset
 fi
 
 # vim: set filetype=sh:

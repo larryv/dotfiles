@@ -30,5 +30,6 @@ fi
 
 if [[ ! -o LOGIN ]]; then
     autoload -Uz emulated_eval
+    functions_to_unset+=' emulated_eval '
     emulated_eval sh '. ~/.profile.d/macports.sh'
 fi

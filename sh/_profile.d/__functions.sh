@@ -54,6 +54,8 @@ demote() {
     unset -v PARTITION_MATCHED PARTITION_UNMATCHED
 }
 
+functions_to_unset="$functions_to_unset demote "
+
 
 # Given a colon-delimited list and a series of search terms, partitions
 # the list's elements based on whether they appear in the series.
@@ -108,6 +110,8 @@ partition() {
     unset -v arg x xs
 }
 
+functions_to_unset="$functions_to_unset partition "
+
 
 # Given a colon-delimited list and a series of search terms, moves
 # elements to the front of the list if they appear in the series.
@@ -138,10 +142,4 @@ promote() {
     unset -v PARTITION_MATCHED PARTITION_UNMATCHED
 }
 
-
-# Removes all other functions defined in this file.  Ideally this would
-# also remove itself, but that causes ksh93u+ 2012-08-01 to segfault.
-
-unset_sh_helper_functions() {
-    unset -f demote partition promote
-}
+functions_to_unset="$functions_to_unset promote "

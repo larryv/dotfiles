@@ -124,9 +124,10 @@ unset script
 
 # Login shells will do this later.
 if [[ ! -o LOGIN ]]; then
-    unset_sh_helper_functions 2>/dev/null
-    unfunction emulated_eval unset_sh_helper_functions 2>/dev/null
-    unset already_sourced
+    if [[ $functions_to_unset ]]; then
+        unfunction ${(u)=functions_to_unset}
+    fi
+    unset already_sourced functions_to_unset
 fi
 
 unset fgbg
