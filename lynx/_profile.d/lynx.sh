@@ -20,10 +20,11 @@ case $sourced_scripts in
     *' .profile.d/lynx.sh '*)
         return 0
         ;;
+    *)
+        sourced_scripts="$sourced_scripts .profile.d/lynx.sh "
+        ;;
 esac
 
 if [ ! "${LYNX_CFG+y}" ]; then
     LYNX_CFG=~/.lynx.cfg && export LYNX_CFG
 fi
-
-sourced_scripts="$sourced_scripts .profile.d/lynx.sh "

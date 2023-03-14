@@ -19,6 +19,9 @@ case $sourced_scripts in
     *' .profile.d/java.sh '*)
         return 0
         ;;
+    *)
+        sourced_scripts="$sourced_scripts .profile.d/java.sh "
+        ;;
 esac
 
 # On Mac, set JAVA_HOME to the active JVM, if there is one.
@@ -33,5 +36,3 @@ if [ ! "${JAVA_HOME+y}" ]; then
         unset -v JAVA_HOME
     fi
 fi
-
-sourced_scripts="$sourced_scripts .profile.d/java.sh "

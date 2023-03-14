@@ -19,6 +19,9 @@ case $sourced_scripts in
     *' .profile.d/gnupg.sh '*)
         return 0
         ;;
+    *)
+        sourced_scripts="$sourced_scripts .profile.d/gnupg.sh "
+        ;;
 esac
 
 # https://www.gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html
@@ -32,5 +35,3 @@ if [ ! "${GPG_TTY+y}" ]; then
         unset -v GPG_TTY
     fi
 fi
-
-sourced_scripts="$sourced_scripts .profile.d/gnupg.sh "

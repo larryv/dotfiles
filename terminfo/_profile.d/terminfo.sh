@@ -19,6 +19,9 @@ case $sourced_scripts in
     *' .profile.d/terminfo.sh '*)
         return 0
         ;;
+    *)
+        sourced_scripts="$sourced_scripts .profile.d/terminfo.sh "
+        ;;
 esac
 
 # Set a more appropriate TERM if it is not feasible to configure the
@@ -90,5 +93,3 @@ EOF
 
     unset -v term
 fi
-
-sourced_scripts="$sourced_scripts .profile.d/terminfo.sh "

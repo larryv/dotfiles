@@ -20,6 +20,9 @@ case $sourced_scripts in
     *' .profile.d/macports.sh '*)
         return 0
         ;;
+    *)
+        sourced_scripts="$sourced_scripts .profile.d/macports.sh "
+        ;;
 esac
 
 # Define promote().
@@ -66,5 +69,3 @@ fi
 
 unset -v REPLY
 unset -f promote_mp_paths
-
-sourced_scripts="$sourced_scripts .profile.d/macports.sh "

@@ -18,6 +18,8 @@
 
 if [[ $sourced_scripts == *' .zsh/zshenv.d/macports.zsh '* ]]; then
     return 0
+else
+    sourced_scripts+=' .zsh/zshenv.d/macports.zsh '
 fi
 
 # On OS X 10.10 Yosemite and earlier, /etc/zshenv unconditionally
@@ -30,5 +32,3 @@ if [[ ! -o LOGIN ]]; then
     autoload -Uz emulated_eval
     emulated_eval sh '. ~/.profile.d/macports.sh'
 fi
-
-sourced_scripts+=' .zsh/zshenv.d/macports.zsh '

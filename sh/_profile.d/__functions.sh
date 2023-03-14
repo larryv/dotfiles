@@ -19,6 +19,9 @@ case $sourced_scripts in
     *' .profile.d/_functions.sh '*)
         return 0
         ;;
+    *)
+        sourced_scripts="$sourced_scripts .profile.d/_functions.sh "
+        ;;
 esac
 
 
@@ -142,6 +145,3 @@ promote() {
 unset_sh_helper_functions() {
     unset -f demote partition promote
 }
-
-
-sourced_scripts="$sourced_scripts .profile.d/_functions.sh "
