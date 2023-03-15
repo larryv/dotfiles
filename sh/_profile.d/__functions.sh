@@ -20,7 +20,7 @@ case $already_sourced in
         return 0
         ;;
     *)
-        already_sourced="$already_sourced .profile.d/_functions.sh "
+        already_sourced="$already_sourced .profile.d/_functions.sh " || return
         ;;
 esac
 
@@ -49,7 +49,7 @@ demote() {
         u) REPLY=$PARTITION_UNMATCHED ;;
         m) REPLY=$PARTITION_MATCHED ;;
         '') unset -v REPLY ;;
-    esac
+    esac || return
 
     unset -v PARTITION_MATCHED PARTITION_UNMATCHED
 }
@@ -81,7 +81,7 @@ functions_to_unset="$functions_to_unset demote "
 # elements.
 
 partition() {
-    unset -v PARTITION_MATCHED PARTITION_UNMATCHED
+    unset -v PARTITION_MATCHED PARTITION_UNMATCHED || return
 
     if [ "$#" -lt 1 ]; then
         return 0
@@ -89,11 +89,11 @@ partition() {
 
     # Turn the colon-delimited list into a colon-terminated one, making
     # it unnecessary to treat the final element as a special case.
-    xs=$1:
+    xs=$1: || return
     shift
 
     while [ "$xs" ]; do
-        x=${xs%%:*}
+        x=${xs%%:*} || return
         xs=${xs#*:}
 
         for arg
@@ -102,7 +102,7 @@ partition() {
                 PARTITION_MATCHED=${PARTITION_MATCHED+$PARTITION_MATCHED:}$x
                 continue 2
             fi
-        done
+        done || return
 
         PARTITION_UNMATCHED=${PARTITION_UNMATCHED+$PARTITION_UNMATCHED:}$x
     done
@@ -137,7 +137,7 @@ promote() {
         u) REPLY=$PARTITION_UNMATCHED ;;
         m) REPLY=$PARTITION_MATCHED ;;
         '') unset -v REPLY ;;
-    esac
+    esac || return
 
     unset -v PARTITION_MATCHED PARTITION_UNMATCHED
 }

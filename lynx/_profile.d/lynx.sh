@@ -21,7 +21,7 @@ case $already_sourced in
         return 0
         ;;
     *)
-        already_sourced="$already_sourced .profile.d/lynx.sh "
+        already_sourced="$already_sourced .profile.d/lynx.sh " || return
         ;;
 esac
 

@@ -20,7 +20,7 @@ case $already_sourced in
         return 0
         ;;
     *)
-        already_sourced="$already_sourced .profile.d/terminfo.sh "
+        already_sourced="$already_sourced .profile.d/terminfo.sh " || return
         ;;
 esac
 
@@ -29,7 +29,7 @@ esac
 
 # Do nothing within screen or tmux.
 if [ ! "${STY}${TMUX}" ]; then
-    term=$TERM
+    term=$TERM || return
 
     if
         # Version shouldn't be malformed but validate it anyway.
@@ -46,12 +46,14 @@ if [ ! "${STY}${TMUX}" ]; then
         # accurately described by any of the preference's choices.  The
         # required build numbers are taken from the source.
 
-        IFS=. read -r major minor rest <<EOF
+        IFS=. read -r major minor rest <<EOF || return
 $TERM_PROGRAM_VERSION
 EOF
         # There shouldn't be any leading zeros but strip them anyway.
-        zeros=${major%%[!0]*}; major=${major#"$zeros"}
-        zeros=${minor%%[!0]*}; minor=${minor#"$zeros"}
+        zeros=${major%%[!0]*} || return
+        major=${major#"$zeros"}
+        zeros=${minor%%[!0]*}
+        minor=${minor#"$zeros"}
 
         if [ "$((major >= 400))" -ne 0 ]; then
             term=nsterm-build400    # 10.13 and later
