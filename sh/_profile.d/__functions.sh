@@ -15,6 +15,9 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+# shellcheck shell=sh
+
+
 case $already_sourced in
     *' .profile.d/_functions.sh '*)
         return 0

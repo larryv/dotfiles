@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2014, 2016, 2018, 2020-2022 by Lawrence Velazquez
+# Written in 2014, 2016, 2018, 2020-2023 by Lawrence Velazquez
 # <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
@@ -16,8 +16,19 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+# Shared prerequisites.
+lynx lynx-check: lynx/_lynx.cfg lynx/_profile.d/lynx.sh
+
 all: lynx
-lynx: lynx/_lynx.cfg lynx/_profile.d/lynx.sh FORCE
+lynx: FORCE
+
+# Unfortunately "lynx -show_cfg" doesn't seem to ever have a nonzero
+# exit status, but its output can be visually inspected to verify that
+# lynx is interpreting the configuration file as intended.
+check: lynx-check
+lynx-check: FORCE
+	$(LYNX) -cfg=lynx/_lynx.cfg -show_cfg
+	$(SHELLCHECK) lynx/_profile.d/lynx.sh
 
 clean: lynx-clean
 lynx-clean: FORCE

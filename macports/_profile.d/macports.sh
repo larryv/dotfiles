@@ -16,6 +16,9 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+# shellcheck shell=sh
+
+
 case $already_sourced in
     *' .profile.d/macports.sh '*)
         return 0
@@ -26,6 +29,7 @@ case $already_sourced in
 esac
 
 # Define promote().
+# shellcheck source=sh/_profile.d/__functions.sh
 . ~/.profile.d/_functions.sh || return
 
 # Move MacPorts directories to the beginning of PATH and MANPATH so its

@@ -71,6 +71,34 @@ tools may be hard-coded to use `/bin/sh`).
     $ make SHELL=/usr/local/bin/sh M4=gm4 install
 
 
+## Testing ##
+
+Intended reader: A future me who is trying to be responsible for once.
+
+Some (but not all) modules provide best-effort sanity checks.  These are
+not particularly rigorous, so don't take passing results too seriously.
+
+Invoke `make` from the project root or use the nonstandard `-C` option
+to achieve the moral equivalent.
+
+-   Run all tests:
+
+        $ make check
+
+-   Run tests from specific modules:
+
+        $ make git-check
+        $ make gnupg-check
+        $ make zsh-check
+
+The tests use nonstandard tools, which are listed in [the makefile][].
+If any of the defaults are unsuitable, override them as necessary.
+
+  [the makefile]: Makefile
+
+    $ make GPG=gpg2 SHELLCHECK=/opt/local/bin/shellcheck gnupg-check
+
+
 ## Legal ##
 
 Unless otherwise noted, this work is published from the United States of

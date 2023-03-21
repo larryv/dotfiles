@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2018, 2020-2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2018, 2020-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -15,8 +15,16 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+# Shared prerequisites.
+git git-check: git/_gitconfig
+
 all: git
-git: git/_config/git/ignore git/_gitconfig FORCE
+git: git/_config/git/ignore FORCE
+
+# TODO: Look into concocting a dummy command to test the ignore file.
+check: git-check
+git-check: FORCE
+	$(GIT) --no-pager config --file git/_gitconfig --list
 
 clean: git-clean
 git-clean: FORCE

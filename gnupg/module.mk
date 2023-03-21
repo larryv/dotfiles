@@ -15,12 +15,20 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-all: gnupg
-gnupg: \
+# Shared prerequisites.
+gnupg gnupg-check: \
     gnupg/_gnupg/dirmngr.conf \
     gnupg/_gnupg/gpg.conf \
-    gnupg/_profile.d/gnupg.sh \
-    FORCE
+    gnupg/_profile.d/gnupg.sh
+
+all: gnupg
+gnupg: FORCE
+
+check: gnupg-check
+gnupg-check: FORCE
+	$(GPG) --options gnupg/_gnupg/dirmngr.conf --gpgconf-test
+	$(GPG) --options gnupg/_gnupg/gpg.conf --gpgconf-test
+	$(SHELLCHECK) gnupg/_profile.d/gnupg.sh
 
 # Set restrictive permissions on the configuration as GnuPG requires.
 # Use chmod(1) on directories instead of `$(INSTALL) -d -m` because my

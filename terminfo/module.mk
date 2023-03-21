@@ -31,8 +31,15 @@
 # I think this has something to do with the alternate screen, but that's
 # just a hunch, and I have not yet attempted to look into it.
 
+# Shared prerequisites.
+terminfo terminfo-check: terminfo/_profile.d/terminfo.sh
+
 #all: terminfo
-terminfo: terminfo/_profile.d/terminfo.sh FORCE
+terminfo: FORCE
+
+#check: terminfo-check
+terminfo-check: FORCE
+	$(SHELLCHECK) terminfo/_profile.d/terminfo.sh
 
 #installdirs: terminfo-installdirs
 terminfo-installdirs: sh-installdirs FORCE

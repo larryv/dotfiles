@@ -15,16 +15,29 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-all: zsh
-zsh: \
+# Shared prerequisites.
+zsh zsh-check: \
     zsh/_zsh/functions/colorpairs \
     zsh/_zsh/functions/emulated_eval \
     zsh/_zsh/functions/update_terminal_cwd \
     zsh/_zshenv \
     zsh/_zsh/_zprofile \
     zsh/_zsh/_zshrc \
-    zsh/_zsh/_zlogin \
-    FORCE
+    zsh/_zsh/_zlogin
+
+all: zsh
+zsh: FORCE
+
+# Until someone writes ZShellCheck or whatever, "zsh -n" will have to
+# do.  Since zsh-check doesn't exist and is never created, the "$?"
+# macro should expand to all prerequisites.
+check: zsh-check
+zsh-check: FORCE
+	for f in $?; do \
+    if test "x$$f" != xFORCE; then \
+        zsh -n -- "$$f" || exit; \
+    fi; \
+done
 
 installdirs: zsh-installdirs
 zsh-installdirs: FORCE

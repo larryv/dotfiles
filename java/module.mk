@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2018, 2020-2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2018, 2020-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -15,8 +15,15 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+# Shared prerequisites.
+java java-check: java/_profile.d/java.sh
+
 all: java
-java: java/_profile.d/java.sh FORCE
+java: FORCE
+
+check: java-check
+java-check: FORCE
+	$(SHELLCHECK) java/_profile.d/java.sh
 
 installdirs: java-installdirs
 java-installdirs: sh-installdirs FORCE

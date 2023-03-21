@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2016, 2018, 2020-2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2016, 2018, 2020-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -15,11 +15,19 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-all: macports
-macports: \
+# Shared prerequisites.
+macports macports-check: \
     macports/_profile.d/macports.sh \
-    macports/_zsh/zshenv.d/macports.zsh \
-    FORCE
+    macports/_zsh/zshenv.d/macports.zsh
+
+all: macports
+macports: FORCE
+
+# Until someone writes ZShellCheck or whatever, "zsh -n" will have to do.
+check: macports-check
+macports-check: sh/_profile.d/__functions.sh FORCE
+	$(SHELLCHECK) -x macports/_profile.d/macports.sh
+	$(ZSH) -n macports/_zsh/zshenv.d/macports.zsh
 
 installdirs: macports-installdirs
 macports-installdirs: sh-installdirs zsh-installdirs FORCE

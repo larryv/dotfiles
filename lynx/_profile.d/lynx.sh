@@ -16,6 +16,9 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+# shellcheck shell=sh
+
+
 case $already_sourced in
     *' .profile.d/lynx.sh '*)
         return 0

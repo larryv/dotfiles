@@ -27,9 +27,14 @@ SHELL = /bin/sh
 INSTALL = $(SHELL) ./install-sh
 INSTALL_DATA = $(INSTALL) -m 644
 M4 = m4
+GIT = git
+GPG = gpg
+LYNX = lynx
+SHELLCHECK = shellcheck
+ZSH = zsh
 
 # Imitate .PHONY portably [7].  List "all" first to make it the default.
-all clean maintainer-clean installdirs install uninstall: FORCE
+all check clean maintainer-clean installdirs install uninstall: FORCE
 FORCE:
 
 # These subdirectories and their submakefiles constitute "modules",
