@@ -46,6 +46,10 @@ if [[ ${TERM_PROGRAM:-$TERM} != (Apple_Terminal|nsterm-*|nsterm) ]]; then
 fi
 
 # Process pathnames bytewise and use POSIX character classes.
+#
+# TODO: Reassess whether this is the best way to handle paths.  For
+# wrinkles, see https://www.etalabs.net/sh_tricks.html, section
+# "Overriding locale categories".
 local LC_ALL= LC_CTYPE=C
 
 # Provide alternatives if HOST [1] or PWD (which are set by zsh) are

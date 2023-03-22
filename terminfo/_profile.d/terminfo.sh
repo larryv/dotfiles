@@ -53,6 +53,7 @@ if [ ! "${STY}${TMUX}" ]; then
 $TERM_PROGRAM_VERSION
 EOF
         # There shouldn't be any leading zeros but strip them anyway.
+        # https://mywiki.wooledge.org/BashFAQ/067
         zeros=${major%%[!0]*} || return
         major=${major#"$zeros"}
         zeros=${minor%%[!0]*}

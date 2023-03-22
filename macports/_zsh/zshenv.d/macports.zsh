@@ -26,7 +26,7 @@ fi
 # redefines the command path using path_helper(8), even in non-login
 # shells (e.g., executing a script).  This puts the directories from
 # /etc/paths back in front.  In non-login shells, reclaim that position
-# for MacPorts directories.  (Login shells do this in .zprofile.)
+# for MacPorts directories.  (Login shells do this via .zprofile.)
 
 if [[ ! -o LOGIN ]]; then
     autoload -Uz emulated_eval

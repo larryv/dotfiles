@@ -18,6 +18,8 @@
 
 fpath=("${ZDOTDIR=$HOME/.zsh}"/functions(N) "$fpath[@]")
 
+# Ideally these would be arrays, but I'm using space-delimited scalars
+# so they can be shared with ~/.profile and the scripts it sources.
 already_sourced=
 functions_to_unset=
 

@@ -16,24 +16,27 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-# Minimize differences between make implementations [1][2][3].
+# Reduce differences between make(1) implementations [1][2][3][4].
 .POSIX:
 .SUFFIXES:
 .SUFFIXES: .m4
 SHELL = /bin/sh
 
-# Allow overriding of utilities [4].  Specify "./install-sh" instead of
-# "install-sh" to avoid inadvertent PATH searches [5][6].
+# Core utilities [5].  Reduce the number of shells in play by invoking
+# install-sh with the same shell that make(1) uses.  Use "./install-sh"
+# instead of "install-sh" to preclude inadvertent PATH searches [6][7].
 INSTALL = $(SHELL) ./install-sh
 INSTALL_DATA = $(INSTALL) -m 644
 M4 = m4
+
+# Utilities [5] used by "check" targets only.
 GIT = git
 GPG = gpg
 LYNX = lynx
 SHELLCHECK = shellcheck
 ZSH = zsh
 
-# Imitate .PHONY portably [7].  List "all" first to make it the default.
+# Imitate .PHONY portably [8].  List "all" first to make it the default.
 all check clean maintainer-clean installdirs install uninstall: FORCE
 FORCE:
 
@@ -53,7 +56,8 @@ include terminfo/module.mk
 include tmux/module.mk
 include zsh/module.mk
 
-# Process M4 templates.
+# Process M4 templates.  Portably imitate .DELETE_ON_ERROR [9] because
+# m4(1) may fail after the shell creates/truncates the target.
 .m4:
 	$(M4) $< >$@ || { rc=$$?; rm -f $@ && exit "$$rc"; }
 
@@ -63,7 +67,9 @@ include zsh/module.mk
 # 1. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
 # 2. https://www.gnu.org/software/make/manual/html_node/Special-Targets
 # 3. https://www.gnu.org/software/make/manual/html_node/Makefile-Basics
-# 4. https://www.gnu.org/software/make/manual/html_node/Command-Variables
-# 5. https://www.gnu.org/software/autoconf/manual/autoconf-2.71/html_node/Invoking-the-Shell.html
-# 6. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/sh.html
-# 7. https://www.gnu.org/software/make/manual/html_node/Force-Targets
+# 4. https://www.gnu.org/software/autoconf/manual/autoconf-2.71/html_node/The-Make-Macro-SHELL.html
+# 5. https://www.gnu.org/software/make/manual/html_node/Command-Variables
+# 6. https://www.gnu.org/software/autoconf/manual/autoconf-2.71/html_node/Invoking-the-Shell.html
+# 7. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/sh.html
+# 8. https://www.gnu.org/software/make/manual/html_node/Force-Targets
+# 9. https://www.gnu.org/software/make/manual/html_node/Errors.html

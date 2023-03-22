@@ -49,7 +49,7 @@ to achieve the moral equivalent.
         $ make install
         $ make uninstall
 
--   Install/uninstall files from specific top-level modules:
+-   Install/uninstall files from specific modules:
 
         $ make git-install
         $ make gnupg-install
