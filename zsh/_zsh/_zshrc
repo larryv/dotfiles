@@ -49,7 +49,7 @@ autoload -Uz +X vcs_info 2>/dev/null && {
     precmd_rps_vcs() {
         # TODO Rework RPS1 to use %v and psvar [2]?
         local vcs_info_msg_0_
-        vcs_info && RPS1+=${vcs_info_msg_0_:+ ${vcs_info_msg_0_}}
+        vcs_info && RPS1+=${vcs_info_msg_0_:+ $vcs_info_msg_0_}
     }
     precmd_functions+=(precmd_rps_vcs)
 

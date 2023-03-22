@@ -71,10 +71,10 @@ local encpath=${PWD//(#m)[!-\/[:alnum:]._~!$&\'()*+,=:@]/%$(([##16] #MATCH))}
 
 # Assemble the OSC sequences specified in Terminal's Preferences.  Clear
 # the current working document in case another program set it.
-local uri=${encpath:+file://${enchost}${encpath}}
-local dirseq=$'\e]7;'${uri}$'\a'
+local uri=${encpath:+file://$enchost$encpath}
+local dirseq=$'\e]7;'$uri$'\a'
 local docseq=$'\e]6;\a'
-local seqs=${dirseq}${docseq}
+local seqs=$dirseq$docseq
 
 # Modify the sequences so tmux passes them through [6].
 if [[ $TMUX ]]; then

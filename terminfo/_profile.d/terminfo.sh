@@ -31,7 +31,7 @@ esac
 # terminal emulator properly.
 
 # Do nothing within screen or tmux.
-if [ ! "${STY}${TMUX}" ]; then
+if [ ! "$STY$TMUX" ]; then
     term=$TERM || return
 
     if
