@@ -15,10 +15,10 @@ Installation
 Intended reader: A future me who has suffered tragic memory loss.
 
 Installation should work on any system that conforms to POSIX.1-2017 [1]
-and includes `make` [2].  It is known to work with GNU Make 3.81 [3],
+and includes make [2].  It is known to work with GNU Make 3.81 [3],
 GNU Bash 3.2.57 [4], and GNU M4 1.4.6 [5].
 
-Invoke `make` from the project root or use the nonstandard `-C` option
+Invoke make from the project root or use the nonstandard `-C` option
 to achieve the moral equivalent.
 
   - Install/uninstall all files:
@@ -36,14 +36,14 @@ to achieve the moral equivalent.
         $ make gnupg-uninstall
         $ make zsh-uninstall
 
-Files are always installed to `$HOME`.  To use a directory other than the
-user's home directory (e.g., for testing), override `$HOME`.
+Files are always installed to $HOME.  To use a directory other than the
+user's home directory (e.g., for testing), override $HOME.
 
     $ HOME=/tmp/dotfiles_test make install
 
 The build system uses `/bin/sh` and `m4` by default.  If those are
-unusable, override `SHELL` or `M4` as necessary (but note that some tools
-may be hard-coded to use `/bin/sh`).
+unusable, override SHELL or M4 as necessary (but note that some tools
+may be hard-coded to use /bin/sh).
 
     $ make SHELL=/usr/local/bin/sh M4=gm4 install
 
@@ -56,7 +56,7 @@ Intended reader: A future me who is trying to be responsible for once.
 Some (but not all) modules provide best-effort sanity checks.  These are
 not particularly rigorous, so don't take passing results too seriously.
 
-Invoke `make` from the project root or use the nonstandard `-C` option
+Invoke make from the project root or use the nonstandard `-C` option
 to achieve the moral equivalent.
 
   - Run all tests:
