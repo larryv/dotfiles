@@ -51,6 +51,9 @@ option to achieve the moral equivalent.
 
     ```sh
     make install
+    ```
+
+    ```sh
     make uninstall
     ```
 
@@ -60,7 +63,9 @@ option to achieve the moral equivalent.
     make git-install
     make gnupg-install
     make zsh-install
+    ```
 
+    ```sh
     make git-uninstall
     make gnupg-uninstall
     make zsh-uninstall

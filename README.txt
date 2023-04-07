@@ -24,6 +24,7 @@ to achieve the moral equivalent.
   - Install/uninstall all files:
 
         $ make install
+
         $ make uninstall
 
   - Install/uninstall files from specific modules:
