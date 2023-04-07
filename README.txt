@@ -89,12 +89,12 @@ Refer to install-sh for its separate licensing terms.
 References
 ----------
 
- 1. https://pubs.opengroup.org/onlinepubs/9699919799
+ 1. https://pubs.opengroup.org/onlinepubs/9699919799/
  2. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
- 3. https://www.gnu.org/software/make
- 4. https://www.gnu.org/software/bash
- 5. https://www.gnu.org/software/m4
- 6. https://creativecommons.org/publicdomain/zero/1.0
+ 3. https://www.gnu.org/software/make/
+ 4. https://www.gnu.org/software/bash/
+ 5. https://www.gnu.org/software/m4/
+ 6. https://creativecommons.org/publicdomain/zero/1.0/
 
 
 SPDX-License-Identifier: CC0-1.0

@@ -38,11 +38,11 @@ Installation should work on any system that conforms to
 work with [GNU Make][GMAKE] 3.81, [GNU Bash][BASH] 3.2.57, and
 [GNU M4][GM4] 1.4.6.
 
-  [POSIX]: https://pubs.opengroup.org/onlinepubs/9699919799
+  [POSIX]: https://pubs.opengroup.org/onlinepubs/9699919799/
   [MAKE]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html "POSIX.1-2017 - XCU Chapter 4 (Utilities - make)"
-  [GMAKE]: https://www.gnu.org/software/make
-  [BASH]: https://www.gnu.org/software/bash
-  [GM4]: https://www.gnu.org/software/m4
+  [GMAKE]: https://www.gnu.org/software/make/
+  [BASH]: https://www.gnu.org/software/bash/
+  [GM4]: https://www.gnu.org/software/m4/
 
 Invoke `make(1)` from the project root or use the nonstandard `-C`
 option to achieve the moral equivalent.
