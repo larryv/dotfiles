@@ -34,7 +34,7 @@ Mac OS.
 Intended reader: A future me who has suffered tragic memory loss.
 
 Installation should work on any system that conforms to
-[POSIX.1-2017][POSIX] and includes [`make`][MAKE].  It is known to
+[POSIX.1-2017][POSIX] and includes [`make(1)`][MAKE].  It is known to
 work with [GNU Make][GMAKE] 3.81, [GNU Bash][BASH] 3.2.57, and
 [GNU M4][GM4] 1.4.6.
 
@@ -44,7 +44,7 @@ work with [GNU Make][GMAKE] 3.81, [GNU Bash][BASH] 3.2.57, and
   [BASH]: https://www.gnu.org/software/bash
   [GM4]: https://www.gnu.org/software/m4
 
-Invoke `make` from the project root or use the nonstandard `-C`
+Invoke `make(1)` from the project root or use the nonstandard `-C`
 option to achieve the moral equivalent.
 
 -   Install/uninstall all files:
@@ -81,7 +81,7 @@ Intended reader: A future me who is trying to be responsible for once.
 Some (but not all) modules provide best-effort sanity checks.  These are
 not particularly rigorous, so don't take passing results too seriously.
 
-Invoke `make` from the project root or use the nonstandard `-C`
+Invoke `make(1)` from the project root or use the nonstandard `-C`
 option to achieve the moral equivalent.
 
 -   Run all tests:

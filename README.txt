@@ -15,10 +15,10 @@ Installation
 Intended reader: A future me who has suffered tragic memory loss.
 
 Installation should work on any system that conforms to POSIX.1-2017 [1]
-and includes make [2].  It is known to work with GNU Make 3.81 [3],
+and includes make(1) [2].  It is known to work with GNU Make 3.81 [3],
 GNU Bash 3.2.57 [4], and GNU M4 1.4.6 [5].
 
-Invoke make from the project root or use the nonstandard `-C` option
+Invoke make(1) from the project root or use the nonstandard `-C` option
 to achieve the moral equivalent.
 
   - Install/uninstall all files:
@@ -56,7 +56,7 @@ Intended reader: A future me who is trying to be responsible for once.
 Some (but not all) modules provide best-effort sanity checks.  These are
 not particularly rigorous, so don't take passing results too seriously.
 
-Invoke make from the project root or use the nonstandard `-C` option
+Invoke make(1) from the project root or use the nonstandard `-C` option
 to achieve the moral equivalent.
 
   - Run all tests:
