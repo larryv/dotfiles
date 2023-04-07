@@ -29,13 +29,9 @@ to achieve the moral equivalent.
 
   - Install/uninstall files from specific modules:
 
-        $ make git-install
-        $ make gnupg-install
-        $ make zsh-install
+        $ make git-install gnupg-install zsh-install
 
-        $ make git-uninstall
-        $ make gnupg-uninstall
-        $ make zsh-uninstall
+        $ make git-uninstall gnupg-uninstall zsh-uninstall
 
 Files are always installed to $HOME.  To use a directory other than the
 user's home directory (e.g., for testing), override HOME.
@@ -66,9 +62,7 @@ to achieve the moral equivalent.
 
   - Run tests from specific modules:
 
-        $ make git-check
-        $ make gnupg-check
-        $ make zsh-check
+        $ make git-check gnupg-check zsh-check
 
 The tests use nonstandard tools, which are listed in the makefile.  If
 any of the defaults are unsuitable, override them as necessary.
