@@ -49,29 +49,37 @@ option to achieve the moral equivalent.
 
 -   Install/uninstall all files:
 
-        $ make install
-        $ make uninstall
+    ```sh
+    $ make install
+    $ make uninstall
+    ```
 
 -   Install/uninstall files from specific modules:
 
-        $ make git-install
-        $ make gnupg-install
-        $ make zsh-install
+    ```sh
+    $ make git-install
+    $ make gnupg-install
+    $ make zsh-install
 
-        $ make git-uninstall
-        $ make gnupg-uninstall
-        $ make zsh-uninstall
+    $ make git-uninstall
+    $ make gnupg-uninstall
+    $ make zsh-uninstall
+    ```
 
 Files are always installed to `$HOME`.  To use a directory other than
 the user's home directory (e.g., for testing), override `HOME`.
 
-    $ HOME=/tmp/dotfiles_test make install
+```sh
+$ HOME=/tmp/dotfiles_test make install
+```
 
 The build system uses `/bin/sh` and `m4` by default.  If those are
 unusable, override `SHELL` or `M4` as necessary (but note that some
 tools may be hard-coded to use `/bin/sh`).
 
-    $ make SHELL=/usr/local/bin/sh M4=gm4 install
+```sh
+$ make SHELL=/usr/local/bin/sh M4=gm4 install
+```
 
 
 ## Testing ##
@@ -86,13 +94,17 @@ option to achieve the moral equivalent.
 
 -   Run all tests:
 
-        $ make check
+    ```sh
+    $ make check
+    ```
 
 -   Run tests from specific modules:
 
-        $ make git-check
-        $ make gnupg-check
-        $ make zsh-check
+    ```sh
+    $ make git-check
+    $ make gnupg-check
+    $ make zsh-check
+    ```
 
 The tests use nonstandard tools, which are listed in
 [the makefile][MAKEFILE].  If any of the defaults are unsuitable,
@@ -100,7 +112,9 @@ override them as necessary.
 
   [MAKEFILE]: ../Makefile
 
-    $ make GPG=gpg2 SHELLCHECK=/opt/local/bin/shellcheck gnupg-check
+```sh
+$ make GPG=gpg2 SHELLCHECK=/opt/local/bin/shellcheck gnupg-check
+```
 
 
 ## Legal ##
