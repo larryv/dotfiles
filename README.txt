@@ -1,20 +1,8 @@
-<!--
-    README.markdown
-    ---------------
-
     SPDX-License-Identifier: CC0-1.0
 
-    Written in 2018, 2021-2023 by Lawrence Velazquez <vq@larryv.me>.
-
-    To the extent possible under law, the author(s) have dedicated all
-    copyright and related and neighboring rights to this software to the
-    public domain worldwide.  This software is distributed without any
-    warranty.
-
-    You should have received a copy of the CC0 Public Domain Dedication
-    along with this software.  If not, see
-    <https://creativecommons.org/publicdomain/zero/1.0/>.
--->
+    Written by Lawrence Velazquez <vq@larryv.me> in:
+      - 2018, 2021-2023 (as README.markdown)
+      - 2023 (as README.txt)
 
 
 # dotfiles #
@@ -94,7 +82,7 @@ to achieve the moral equivalent.
 The tests use nonstandard tools, which are listed in [the makefile][].
 If any of the defaults are unsuitable, override them as necessary.
 
-  [the makefile]: Makefile
+  [the makefile]: ../Makefile
 
     $ make GPG=gpg2 SHELLCHECK=/opt/local/bin/shellcheck gnupg-check
 
