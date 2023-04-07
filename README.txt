@@ -37,7 +37,7 @@ to achieve the moral equivalent.
         $ make zsh-uninstall
 
 Files are always installed to $HOME.  To use a directory other than the
-user's home directory (e.g., for testing), override $HOME.
+user's home directory (e.g., for testing), override HOME.
 
     $ HOME=/tmp/dotfiles_test make install
 
