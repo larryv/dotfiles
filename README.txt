@@ -78,8 +78,12 @@ any of the defaults are unsuitable, override them as necessary.
 Legal
 -----
 
-Unless otherwise noted, this work is published from the United States of
-America using the CC0 1.0 Universal Public Domain Dedication [6].
+To the extent possible under law, the author has dedicated [6] all
+copyright and related and neighboring rights to this software to the
+public domain worldwide.  This software is published from the United
+States of America and distributed without any warranty.
+
+Refer to install-sh for its separate licensing terms.
 
 
 References

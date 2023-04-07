@@ -105,7 +105,12 @@ override them as necessary.
 
 ## Legal ##
 
-Unless otherwise noted, this work is published from the United States of
-America using the [CC0 1.0 Universal Public Domain Dedication][CC0].
+To the extent possible under law, the author has [dedicated][CC0] all
+copyright and related and neighboring rights to this software to the
+public domain worldwide.  This software is published from the United
+States of America and distributed without any warranty.
 
-  [CC0]: https://creativecommons.org/publicdomain/zero/1.0
+Refer to [`install-sh`][INSTALL-SH] for its separate licensing terms.
+
+  [CC0]: https://creativecommons.org/publicdomain/zero/1.0 "CC0 1.0 Universal Public Domain Dedication"
+  [INSTALL-SH]: ../install-sh
