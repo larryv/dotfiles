@@ -26,7 +26,7 @@ don't want to use them -- that'd be like using my toothbrush -- but you
 might find a useful tidbit somewhere in the bristles.  End analogy.
 
 In theory they're portable, but in practice they're only field-tested on
-Mac OS.
+Mac&nbsp;OS.
 
 
 ## Installation ##
