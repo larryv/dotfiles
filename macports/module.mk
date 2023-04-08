@@ -26,8 +26,8 @@ macports: FORCE
 # Until someone writes ZShellCheck or whatever, "zsh -n" will have to do.
 check: macports-check
 macports-check: sh/_profile.d/__functions.sh FORCE
-	$(SHELLCHECK) -x macports/_profile.d/macports.sh
-	$(ZSH) -n macports/_zsh/zshenv.d/macports.zsh
+	$(SHELLCHECK) -x $(SHELLCHECKFLAGS) macports/_profile.d/macports.sh
+	$(ZSH) -n $(ZSHFLAGS) macports/_zsh/zshenv.d/macports.zsh
 
 installdirs: macports-installdirs
 macports-installdirs: sh-installdirs zsh-installdirs FORCE

@@ -59,7 +59,7 @@ include zsh/module.mk
 # Process M4 templates.  Portably imitate .DELETE_ON_ERROR [9] because
 # m4(1) may fail after the shell creates/truncates the target.
 .m4:
-	$(M4) $< >$@ || { rc=$$?; rm -f $@ && exit "$$rc"; }
+	$(M4) $(M4FLAGS) $< >$@ || { rc=$$?; rm -f $@ && exit "$$rc"; }
 
 
 # References

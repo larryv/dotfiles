@@ -27,8 +27,8 @@ lynx: FORCE
 # lynx is interpreting the configuration file as intended.
 check: lynx-check
 lynx-check: FORCE
-	$(LYNX) -cfg=lynx/_lynx.cfg -show_cfg
-	$(SHELLCHECK) lynx/_profile.d/lynx.sh
+	$(LYNX) -cfg=lynx/_lynx.cfg $(LYNXFLAGS) -show_cfg
+	$(SHELLCHECK) $(SHELLCHECKFLAGS) lynx/_profile.d/lynx.sh
 
 clean: lynx-clean
 lynx-clean: FORCE

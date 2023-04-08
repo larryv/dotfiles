@@ -23,7 +23,7 @@ sh: FORCE
 
 check: sh-check
 sh-check: FORCE
-	$(SHELLCHECK) sh/_profile sh/_profile.d/__functions.sh
+	$(SHELLCHECK) $(SHELLCHECKFLAGS) sh/_profile sh/_profile.d/__functions.sh
 
 installdirs: sh-installdirs
 sh-installdirs: FORCE

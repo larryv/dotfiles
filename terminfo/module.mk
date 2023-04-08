@@ -39,7 +39,7 @@ terminfo: FORCE
 
 #check: terminfo-check
 terminfo-check: FORCE
-	$(SHELLCHECK) terminfo/_profile.d/terminfo.sh
+	$(SHELLCHECK) $(SHELLCHECKFLAGS) terminfo/_profile.d/terminfo.sh
 
 #installdirs: terminfo-installdirs
 terminfo-installdirs: sh-installdirs FORCE

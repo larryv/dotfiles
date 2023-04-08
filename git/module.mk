@@ -24,7 +24,7 @@ git: git/_config/git/ignore FORCE
 # TODO: Look into concocting a dummy command to test the ignore file.
 check: git-check
 git-check: FORCE
-	$(GIT) --no-pager config --file git/_gitconfig --list
+	$(GIT) --no-pager config --file git/_gitconfig $(GITFLAGS) --list
 
 clean: git-clean
 git-clean: FORCE

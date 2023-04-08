@@ -35,7 +35,7 @@ check: zsh-check
 zsh-check: FORCE
 	for f in $?; do \
     if test "x$$f" != xFORCE; then \
-        zsh -n -- "$$f" || exit; \
+        zsh -n $(ZSHFLAGS) -- "$$f" || exit; \
     fi; \
 done
 

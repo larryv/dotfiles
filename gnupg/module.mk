@@ -26,9 +26,9 @@ gnupg: FORCE
 
 check: gnupg-check
 gnupg-check: FORCE
-	$(GPG) --options gnupg/_gnupg/dirmngr.conf --gpgconf-test
-	$(GPG) --options gnupg/_gnupg/gpg.conf --gpgconf-test
-	$(SHELLCHECK) gnupg/_profile.d/gnupg.sh
+	$(GPG) --options gnupg/_gnupg/dirmngr.conf $(GPGFLAGS) --gpgconf-test
+	$(GPG) --options gnupg/_gnupg/gpg.conf $(GPGFLAGS) --gpgconf-test
+	$(SHELLCHECK) $(SHELLCHECKFLAGS) gnupg/_profile.d/gnupg.sh
 
 # Set restrictive permissions on the configuration as GnuPG requires.
 # Use chmod(1) on directories instead of `$(INSTALL) -d -m` because my

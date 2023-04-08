@@ -23,7 +23,7 @@ java: FORCE
 
 check: java-check
 java-check: FORCE
-	$(SHELLCHECK) java/_profile.d/java.sh
+	$(SHELLCHECK) $(SHELLCHECKFLAGS) java/_profile.d/java.sh
 
 installdirs: java-installdirs
 java-installdirs: sh-installdirs FORCE
