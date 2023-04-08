@@ -34,15 +34,15 @@ Mac OS.
 Intended reader: A future me who has suffered tragic memory loss.
 
 Installation should work on any system that conforms to
-[POSIX.1-2017][] and includes [`make`][].  It is known to
-work with [GNU Make][] 3.81, [GNU Bash][] 3.2.57, and
-[GNU M4][] 1.4.6.
+[POSIX.1-2017][POSIX] and includes [`make`][MAKE].  It is known to
+work with [GNU Make][GMAKE] 3.81, [GNU Bash][BASH] 3.2.57, and
+[GNU M4][GM4] 1.4.6.
 
-  [POSIX.1-2017]: https://pubs.opengroup.org/onlinepubs/9699919799
-  [`make`]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
-  [GNU Make]: https://www.gnu.org/software/make
-  [GNU Bash]: https://www.gnu.org/software/bash
-  [GNU M4]: https://www.gnu.org/software/m4
+  [POSIX]: https://pubs.opengroup.org/onlinepubs/9699919799
+  [MAKE]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
+  [GMAKE]: https://www.gnu.org/software/make
+  [BASH]: https://www.gnu.org/software/bash
+  [GM4]: https://www.gnu.org/software/m4
 
 Invoke `make` from the project root or use the nonstandard `-C`
 option to achieve the moral equivalent.
@@ -95,10 +95,10 @@ option to achieve the moral equivalent.
         $ make zsh-check
 
 The tests use nonstandard tools, which are listed in
-[the makefile][].  If any of the defaults are unsuitable,
+[the makefile][MAKEFILE].  If any of the defaults are unsuitable,
 override them as necessary.
 
-  [the makefile]: ../Makefile
+  [MAKEFILE]: ../Makefile
 
     $ make GPG=gpg2 SHELLCHECK=/opt/local/bin/shellcheck gnupg-check
 
