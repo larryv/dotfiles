@@ -112,5 +112,5 @@ States of America and distributed without any warranty.
 
 Refer to [`install-sh`][INSTALL-SH] for its separate licensing terms.
 
-  [CC0]: https://creativecommons.org/publicdomain/zero/1.0 "CC0 1.0 Universal Public Domain Dedication"
+  [CC0]: ../COPYING.txt "CC0 1.0 Universal Public Domain Dedication"
   [INSTALL-SH]: ../install-sh
