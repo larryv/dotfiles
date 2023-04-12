@@ -14,15 +14,9 @@ Installation
 
 Intended reader: A future me who has suffered tragic memory loss.
 
-Installation should work on any system that conforms to [POSIX.1-2017][]
-and includes [`make`][].  It is known to work with [GNU Make][] 3.81,
-[GNU Bash][] 3.2.57, and [GNU M4][] 1.4.6.
-
-  [POSIX.1-2017]: https://pubs.opengroup.org/onlinepubs/9699919799
-  [`make`]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
-  [GNU Make]: https://www.gnu.org/software/make
-  [GNU Bash]: https://www.gnu.org/software/bash
-  [GNU M4]: https://www.gnu.org/software/m4
+Installation should work on any system that conforms to POSIX.1-2017 [1]
+and includes `make` [2].  It is known to work with GNU Make 3.81 [3],
+GNU Bash 3.2.57 [4], and GNU M4 1.4.6 [5].
 
 Invoke `make` from the project root or use the nonstandard `-C` option
 to achieve the moral equivalent.
@@ -75,10 +69,8 @@ to achieve the moral equivalent.
         $ make gnupg-check
         $ make zsh-check
 
-The tests use nonstandard tools, which are listed in [the makefile][].  If
+The tests use nonstandard tools, which are listed in the makefile.  If
 any of the defaults are unsuitable, override them as necessary.
-
-  [the makefile]: ../Makefile
 
     $ make GPG=gpg2 SHELLCHECK=/opt/local/bin/shellcheck gnupg-check
 
@@ -87,9 +79,18 @@ Legal
 -----
 
 Unless otherwise noted, this work is published from the United States of
-America using the [CC0 1.0 Universal Public Domain Dedication][CC0].
+America using the CC0 1.0 Universal Public Domain Dedication [6].
 
-  [CC0]: https://creativecommons.org/publicdomain/zero/1.0
+
+References
+----------
+
+ 1. https://pubs.opengroup.org/onlinepubs/9699919799
+ 2. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
+ 3. https://www.gnu.org/software/make
+ 4. https://www.gnu.org/software/bash
+ 5. https://www.gnu.org/software/m4
+ 6. https://creativecommons.org/publicdomain/zero/1.0
 
 
 SPDX-License-Identifier: CC0-1.0
