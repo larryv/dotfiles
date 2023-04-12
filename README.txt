@@ -1,10 +1,3 @@
-    SPDX-License-Identifier: CC0-1.0
-
-    Written by Lawrence Velazquez <vq@larryv.me> in:
-      - 2018, 2021-2023 (as README.markdown)
-      - 2023 (as README.txt)
-
-
 # dotfiles #
 
 These are my hopelessly overengineered Unix dotfiles.  You definitely
@@ -93,3 +86,10 @@ Unless otherwise noted, this work is published from the United States of
 America using the [CC0 1.0 Universal Public Domain Dedication][CC0].
 
   [CC0]: https://creativecommons.org/publicdomain/zero/1.0
+
+
+SPDX-License-Identifier: CC0-1.0
+
+Written by Lawrence Velazquez <vq@larryv.me> in:
+  - 2018, 2021-2023 (as README.markdown)
+  - 2023 (as README.txt)
