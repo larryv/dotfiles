@@ -1,4 +1,5 @@
-# dotfiles #
+dotfiles
+========
 
 These are my hopelessly overengineered Unix dotfiles.  You definitely
 don't want to use them -- that'd be like using my toothbrush -- but you
@@ -8,7 +9,8 @@ In theory they're portable, but in practice they're only field-tested on
 Mac OS.
 
 
-## Installation ##
+Installation
+------------
 
 Intended reader: A future me who has suffered tragic memory loss.
 
@@ -52,7 +54,8 @@ may be hard-coded to use `/bin/sh`).
     $ make SHELL=/usr/local/bin/sh M4=gm4 install
 
 
-## Testing ##
+Testing
+-------
 
 Intended reader: A future me who is trying to be responsible for once.
 
@@ -80,7 +83,8 @@ any of the defaults are unsuitable, override them as necessary.
     $ make GPG=gpg2 SHELLCHECK=/opt/local/bin/shellcheck gnupg-check
 
 
-## Legal ##
+Legal
+-----
 
 Unless otherwise noted, this work is published from the United States of
 America using the [CC0 1.0 Universal Public Domain Dedication][CC0].
