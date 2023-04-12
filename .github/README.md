@@ -33,9 +33,10 @@ Mac OS.
 
 Intended reader: A future me who has suffered tragic memory loss.
 
-Installation should work on any system that conforms to [POSIX.1-2017][]
-and includes [`make`][].  It is known to work with [GNU Make][] 3.81,
-[GNU Bash][] 3.2.57, and [GNU M4][] 1.4.6.
+Installation should work on any system that conforms to
+[POSIX.1-2017][] and includes [`make`][].  It is known to
+work with [GNU Make][] 3.81, [GNU Bash][] 3.2.57, and
+[GNU M4][] 1.4.6.
 
   [POSIX.1-2017]: https://pubs.opengroup.org/onlinepubs/9699919799
   [`make`]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
@@ -43,8 +44,8 @@ and includes [`make`][].  It is known to work with [GNU Make][] 3.81,
   [GNU Bash]: https://www.gnu.org/software/bash
   [GNU M4]: https://www.gnu.org/software/m4
 
-Invoke `make` from the project root or use the nonstandard `-C` option
-to achieve the moral equivalent.
+Invoke `make` from the project root or use the nonstandard `-C`
+option to achieve the moral equivalent.
 
 -   Install/uninstall all files:
 
@@ -80,8 +81,8 @@ Intended reader: A future me who is trying to be responsible for once.
 Some (but not all) modules provide best-effort sanity checks.  These are
 not particularly rigorous, so don't take passing results too seriously.
 
-Invoke `make` from the project root or use the nonstandard `-C` option
-to achieve the moral equivalent.
+Invoke `make` from the project root or use the nonstandard `-C`
+option to achieve the moral equivalent.
 
 -   Run all tests:
 
@@ -93,8 +94,9 @@ to achieve the moral equivalent.
         $ make gnupg-check
         $ make zsh-check
 
-The tests use nonstandard tools, which are listed in [the makefile][].
-If any of the defaults are unsuitable, override them as necessary.
+The tests use nonstandard tools, which are listed in
+[the makefile][].  If any of the defaults are unsuitable,
+override them as necessary.
 
   [the makefile]: ../Makefile
 
