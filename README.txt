@@ -21,12 +21,12 @@ GNU Bash 3.2.57 [4], and GNU M4 1.4.6 [5].
 Invoke `make` from the project root or use the nonstandard `-C` option
 to achieve the moral equivalent.
 
--   Install/uninstall all files:
+  - Install/uninstall all files:
 
         $ make install
         $ make uninstall
 
--   Install/uninstall files from specific modules:
+  - Install/uninstall files from specific modules:
 
         $ make git-install
         $ make gnupg-install
@@ -59,11 +59,11 @@ not particularly rigorous, so don't take passing results too seriously.
 Invoke `make` from the project root or use the nonstandard `-C` option
 to achieve the moral equivalent.
 
--   Run all tests:
+  - Run all tests:
 
         $ make check
 
--   Run tests from specific modules:
+  - Run tests from specific modules:
 
         $ make git-check
         $ make gnupg-check
