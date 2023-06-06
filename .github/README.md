@@ -74,12 +74,11 @@ the user's home directory (e.g., for testing), override `HOME`.
 HOME=/tmp/dotfiles_test make install
 ```
 
-The build system uses `/bin/sh` and `m4` by default.  If those are
-unusable, override `SHELL` or `M4` as necessary (but note that some
-tools may be hard-coded to use `/bin/sh`).
+The build system uses `m4` by default.  If that is unusable, override
+`M4` as necessary.
 
 ```sh
-make SHELL=/usr/local/bin/sh M4=gm4 install
+make M4=gm4 install
 ```
 
 

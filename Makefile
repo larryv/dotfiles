@@ -22,10 +22,8 @@
 .SUFFIXES: .m4
 SHELL = /bin/sh
 
-# Core utilities [5].  Reduce the number of shells in play by invoking
-# install-sh with the same shell that make(1) uses.  Use "./install-sh"
-# instead of "install-sh" to preclude inadvertent PATH searches [6][7].
-INSTALL = $(SHELL) ./install-sh
+# Core utilities [5].
+INSTALL = ./install-sh
 INSTALL_DATA = $(INSTALL) -m 644
 M4 = m4
 
@@ -36,7 +34,7 @@ LYNX = lynx
 SHELLCHECK = shellcheck
 ZSH = zsh
 
-# Imitate .PHONY portably [8].  List "all" first to make it the default.
+# Imitate .PHONY portably [6].  List "all" first to make it the default.
 all check clean maintainer-clean installdirs install uninstall: FORCE
 FORCE:
 
@@ -56,7 +54,7 @@ include terminfo/module.mk
 include tmux/module.mk
 include zsh/module.mk
 
-# Process M4 templates.  Portably imitate .DELETE_ON_ERROR [9] because
+# Process M4 templates.  Portably imitate .DELETE_ON_ERROR [7] because
 # m4(1) may fail after the shell creates/truncates the target.
 .m4:
 	$(M4) $(M4FLAGS) $< >$@ || { rc=$$?; rm -f $@ && exit "$$rc"; }
@@ -69,7 +67,5 @@ include zsh/module.mk
 # 3. https://www.gnu.org/software/make/manual/html_node/Makefile-Basics
 # 4. https://www.gnu.org/software/autoconf/manual/autoconf-2.71/html_node/The-Make-Macro-SHELL.html
 # 5. https://www.gnu.org/software/make/manual/html_node/Command-Variables
-# 6. https://www.gnu.org/software/autoconf/manual/autoconf-2.71/html_node/Invoking-the-Shell.html
-# 7. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/sh.html
-# 8. https://www.gnu.org/software/make/manual/html_node/Force-Targets
-# 9. https://www.gnu.org/software/make/manual/html_node/Errors.html
+# 6. https://www.gnu.org/software/make/manual/html_node/Force-Targets
+# 7. https://www.gnu.org/software/make/manual/html_node/Errors.html
