@@ -28,12 +28,12 @@ colorpairs -f red,green,yellow,default -b default
 # exit status, privileges/shell-nesting indicator.
 PS1='%m %B%h%b%(1j. [%j].)'
 if (( $#fgbg )); then
-    PS1+=" %(?.%{$fgbg[green,default]%}.%{$fgbg[red,default]%})"
-    PS1+="%B${(r:SHLVL * 2::%#:)}%b"
-    PS1+="%{$fgbg[default,default]%} "
+	PS1+=" %(?.%{$fgbg[green,default]%}.%{$fgbg[red,default]%})"
+	PS1+="%B${(r:SHLVL * 2::%#:)}%b"
+	PS1+="%{$fgbg[default,default]%} "
 else
-    # Display the last exit status directly.
-    PS1+="%(?..%(1j.. )(%?%)) %B${(r:SHLVL * 2::%#:)}%b "
+	# Display the last exit status directly.
+	PS1+="%(?..%(1j.. )(%?%)) %B${(r:SHLVL * 2::%#:)}%b "
 fi
 
 # Leave the -g in case I ever wrap this in a function again.
@@ -42,60 +42,60 @@ typeset -ag precmd_functions
 # Right prompt: Current working directory (truncated to half screen
 # width) and version control info.
 precmd_rps_cwd() {
-    RPS1="%B%$((COLUMNS / 2))<..<%~%b"
+	RPS1="%B%$((COLUMNS / 2))<..<%~%b"
 }
 precmd_functions+=(precmd_rps_cwd)
 autoload -Uz +X vcs_info 2>/dev/null && {
-    precmd_rps_vcs() {
-        # TODO Rework RPS1 to use %v and psvar [2]?
-        local vcs_info_msg_0_
-        vcs_info && RPS1+=${vcs_info_msg_0_:+ $vcs_info_msg_0_}
-    }
-    precmd_functions+=(precmd_rps_vcs)
+	precmd_rps_vcs() {
+		# TODO Rework RPS1 to use %v and psvar [2]?
+		local vcs_info_msg_0_
+		vcs_info && RPS1+=${vcs_info_msg_0_:+ $vcs_info_msg_0_}
+	}
+	precmd_functions+=(precmd_rps_vcs)
 
-    zstyle ':vcs_info:*' enable git hg svn
+	zstyle ':vcs_info:*' enable git hg svn
 
-    zstyle ':vcs_info:*' formats '(%s:%b)'
-    zstyle ':vcs_info:*' actionformats '(%s:%b|%a)'
-    zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
+	zstyle ':vcs_info:*' formats '(%s:%b)'
+	zstyle ':vcs_info:*' actionformats '(%s:%b|%a)'
+	zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
-    zstyle ':vcs_info:git:*' check-for-changes true
-    if (( $#fgbg )); then
-        # Color green/yellow/red if there are no/staged/unstaged changes.
-        zstyle ':vcs_info:git:*' unstagedstr "%{$fgbg[red,default]%}"
-        zstyle ':vcs_info:git:*' stagedstr "%{$fgbg[yellow,default]%}"
-        zstyle ':vcs_info:git:*' formats \
-            "%{$fgbg[green,default]%}%u%c(%s:%b)%{$fgbg[default,default]%}"
-        zstyle ':vcs_info:git:*' actionformats \
-            "%{$fgbg[green,default]%}%u%c(%s:%b|%a)%{$fgbg[default,default]%}"
-    else
-        zstyle ':vcs_info:git:*' unstagedstr ':U'
-        zstyle ':vcs_info:git:*' stagedstr ':S'
-        zstyle ':vcs_info:git:*' formats '(%s:%b%u%c)'
-        zstyle ':vcs_info:git:*' actionformats '(%s:%b%u%c|%a)'
-    fi
+	zstyle ':vcs_info:git:*' check-for-changes true
+	if (( $#fgbg )); then
+		# Color green/yellow/red if there are no/staged/unstaged changes.
+		zstyle ':vcs_info:git:*' unstagedstr "%{$fgbg[red,default]%}"
+		zstyle ':vcs_info:git:*' stagedstr "%{$fgbg[yellow,default]%}"
+		zstyle ':vcs_info:git:*' formats \
+			"%{$fgbg[green,default]%}%u%c(%s:%b)%{$fgbg[default,default]%}"
+		zstyle ':vcs_info:git:*' actionformats \
+			"%{$fgbg[green,default]%}%u%c(%s:%b|%a)%{$fgbg[default,default]%}"
+	else
+		zstyle ':vcs_info:git:*' unstagedstr ':U'
+		zstyle ':vcs_info:git:*' stagedstr ':S'
+		zstyle ':vcs_info:git:*' formats '(%s:%b%u%c)'
+		zstyle ':vcs_info:git:*' actionformats '(%s:%b%u%c|%a)'
+	fi
 }
 
 # Send current working directory to the terminal emulator.
 autoload -Uz +X update_terminal_cwd 2>/dev/null && {
-    precmd_functions+=(update_terminal_cwd)
+	precmd_functions+=(update_terminal_cwd)
 }
 
 # Enable completion and other things.
 autoload -Uz compinit run-help zargs zrecompile
 if [[ ${ZDOTDIR-~} != ~ ]]; then
-    compinit -d "$ZDOTDIR"/zcompdump
+	compinit -d "$ZDOTDIR"/zcompdump
 else
-    compinit
+	compinit
 fi && {
-    zstyle ':completion:*:descriptions' format '%B%d%b'
+	zstyle ':completion:*:descriptions' format '%B%d%b'
 
-    fmt='%BNo matches for %d%b'
-    if (( $#fgbg )); then
-        fmt="%{$fgbg[red,default]%}$fmt%{$fgbg[default,default]%}"
-    fi
-    zstyle ':completion:*:warnings' format "$fmt"
-    unset fmt
+	fmt='%BNo matches for %d%b'
+	if (( $#fgbg )); then
+		fmt="%{$fgbg[red,default]%}$fmt%{$fgbg[default,default]%}"
+	fi
+	zstyle ':completion:*:warnings' format "$fmt"
+	unset fmt
 }
 
 # Enable fancy globbing.
@@ -105,9 +105,9 @@ setopt EXTENDED_GLOB
 SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
 if (( $+ZDOTDIR )); then
-    HISTFILE=$ZDOTDIR/zsh_history
+	HISTFILE=$ZDOTDIR/zsh_history
 else
-    HISTFILE=~/.zsh_history
+	HISTFILE=~/.zsh_history
 fi
 setopt EXTENDED_HISTORY
 # < 5.0.6: Just append history at exit, it's fine.
@@ -118,16 +118,16 @@ REPORTTIME=10
 
 # Source topic scripts.
 for script in "${ZDOTDIR-$HOME}"/zshrc.d/*.zsh(N-^/); do
-    . "$script"
+	. "$script"
 done
 unset script
 
 # Login shells will do this later.
 if [[ ! -o LOGIN ]]; then
-    if [[ $functions_to_unset ]]; then
-        unfunction ${(u)=functions_to_unset}
-    fi
-    unset already_sourced functions_to_unset
+	if [[ $functions_to_unset ]]; then
+		unfunction ${(u)=functions_to_unset}
+	fi
+	unset already_sourced functions_to_unset
 fi
 
 unset fgbg

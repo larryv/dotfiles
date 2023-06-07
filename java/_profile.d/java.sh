@@ -19,23 +19,23 @@
 
 
 case $already_sourced in
-    *' .profile.d/java.sh '*)
-        return 0
-        ;;
-    *)
-        already_sourced="$already_sourced .profile.d/java.sh " || return
-        ;;
+	*' .profile.d/java.sh '*)
+		return 0
+		;;
+	*)
+		already_sourced="$already_sourced .profile.d/java.sh " || return
+		;;
 esac
 
 # On Mac, set JAVA_HOME to the active JVM, if there is one.
 
 if [ ! "${JAVA_HOME+y}" ]; then
-    # https://www.etalabs.net/sh_tricks.html ("Getting non-clobbered
-    # output from command substitution")
-    if JAVA_HOME=$(/usr/libexec/java_home --failfast 2>/dev/null && echo .)
-    then
-        JAVA_HOME=${JAVA_HOME%??} && export JAVA_HOME
-    else
-        unset -v JAVA_HOME
-    fi
+	# https://www.etalabs.net/sh_tricks.html ("Getting non-clobbered
+	# output from command substitution")
+	if JAVA_HOME=$(/usr/libexec/java_home --failfast 2>/dev/null && echo .)
+	then
+		JAVA_HOME=${JAVA_HOME%??} && export JAVA_HOME
+	else
+		unset -v JAVA_HOME
+	fi
 fi

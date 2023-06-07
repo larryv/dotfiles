@@ -18,12 +18,12 @@
 
 # Source topic scripts.
 for script in "${ZDOTDIR-$HOME}"/zlogin.d/*.zsh(N-^/); do
-    . "$script"
+	. "$script"
 done
 unset script
 
 if [[ $functions_to_unset ]]; then
-    unfunction ${(u)=functions_to_unset}
+	unfunction ${(u)=functions_to_unset}
 fi
 unset already_sourced functions_to_unset
 

@@ -20,14 +20,14 @@
 
 
 case $already_sourced in
-    *' .profile.d/lynx.sh '*)
-        return 0
-        ;;
-    *)
-        already_sourced="$already_sourced .profile.d/lynx.sh " || return
-        ;;
+	*' .profile.d/lynx.sh '*)
+		return 0
+		;;
+	*)
+		already_sourced="$already_sourced .profile.d/lynx.sh " || return
+		;;
 esac
 
 if [ ! "${LYNX_CFG+y}" ]; then
-    LYNX_CFG=~/.lynx.cfg && export LYNX_CFG
+	LYNX_CFG=~/.lynx.cfg && export LYNX_CFG
 fi

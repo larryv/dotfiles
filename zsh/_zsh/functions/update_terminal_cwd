@@ -18,16 +18,16 @@
 # Identify the current working directory to the terminal.  Use by
 # registering as a chpwd or precmd hook:
 #
-#     fpath=(/wherever/this/file/lives $fpath)
+#	fpath=(/wherever/this/file/lives $fpath)
 #
-#     # With add-zsh-hook (requires zsh 4.3.4 or later).
-#     autoload -Uz add-zsh-hook
-#     add-zsh-hook -Uz chpwd update_terminal_cwd
+#	# With add-zsh-hook (requires zsh 4.3.4 or later).
+#	autoload -Uz add-zsh-hook
+#	add-zsh-hook -Uz chpwd update_terminal_cwd
 #
-#     # Without add-zsh-hook.
-#     autoload -Uz update_terminal_cwd
-#     typeset -ag chpwd_functions
-#     chpwd_functions+=(update_terminal_cwd)
+#	# Without add-zsh-hook.
+#	autoload -Uz update_terminal_cwd
+#	typeset -ag chpwd_functions
+#	chpwd_functions+=(update_terminal_cwd)
 #
 # Currently supports Apple Terminal.
 
@@ -35,14 +35,14 @@
 emulate -L zsh
 
 if [[ $INSIDE_EMACS ]]; then
-    return 0
+	return 0
 fi
 
 # TODO: Accommodate other terminal emulators.
 # TODO: Identify terminals in tmux sessions, where TERM_PROGRAM and TERM
 # are changed.
 if [[ ${TERM_PROGRAM:-$TERM} != (Apple_Terminal|nsterm-*|nsterm) ]]; then
-    return 1
+	return 1
 fi
 
 # Process pathnames bytewise and use POSIX character classes.
@@ -56,10 +56,10 @@ local LC_ALL= LC_CTYPE=C
 # null for some reason.  It's fine if HOST ends up null after all
 # because RFC 8089 considers "file-auth"-less URIs [2] to be local [3].
 if (( ! $+HOST )); then
-    local HOST=$(hostname 2>/dev/null)
+	local HOST=$(hostname 2>/dev/null)
 fi
 if (( ! $+PWD )); then
-    local PWD=${"$(pwd && echo x)"%??}
+	local PWD=${"$(pwd && echo x)"%??}
 fi
 
 # Percent-encode URI components as per RFC 3986, except for permitted
@@ -78,7 +78,7 @@ local seqs=$dirseq$docseq
 
 # Modify the sequences so tmux passes them through [6].
 if [[ $TMUX ]]; then
-    seqs=$'\ePtmux;'${seqs//$'\e'/$'\e\e'}$'\e\\'
+	seqs=$'\ePtmux;'${seqs//$'\e'/$'\e\e'}$'\e\\'
 fi
 
 # Print final sequences to the terminal emulator.

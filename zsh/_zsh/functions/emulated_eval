@@ -17,7 +17,7 @@
 
 # Construct and evaluate a command in the given emulation mode.
 #
-#       emulated_eval [-R] <mode> [<arg> ...]
+#	emulated_eval [-R] <mode> [<arg> ...]
 #
 # The -R option and <mode> argument are passed to `emulate -L`, while
 # the <arg> arguments are passed to `eval`.  The evaluated command is
@@ -29,10 +29,10 @@
 # mode because I don't know how to determine what the original mode was.
 # If this is a problem, the caller can restore the correct mode itself:
 #
-#       emulate ksh
-#       # do other things
-#       emulated_eval sh '. foo.sh'
-#       emulate ksh
+#	emulate ksh
+#	# do other things
+#	emulated_eval sh '. foo.sh'
+#	emulate ksh
 #
 # This function is fairly limited, as it prioritizes portability.
 # Consider using `emulate ... -c` if targeting zsh 4.3.10 or later or
@@ -48,27 +48,27 @@ origmode="$(emulate 2>/dev/null)" || origmode=zsh
 emulate -L zsh
 
 {
-    if [[ $1 = -R ]]; then
-        local minargc=2
-    else
-        local minargc=1
-    fi
+	if [[ $1 = -R ]]; then
+		local minargc=2
+	else
+		local minargc=1
+	fi
 
-    if (( ARGC < minargc )); then
-        print >&2 'usage: emulated_eval [-R] <mode> [<arg> ...]'
-        return 1
-    fi
+	if (( ARGC < minargc )); then
+		print >&2 'usage: emulated_eval [-R] <mode> [<arg> ...]'
+		return 1
+	fi
 
-    emulate -L "${(@)argv[1,minargc]}"
-    shift "$minargc"
-    eval "$@"
+	emulate -L "${(@)argv[1,minargc]}"
+	shift "$minargc"
+	eval "$@"
 } always {
-    # https://www.zsh.org/mla/users/2008/msg00785.html (users/13169)
-    # In zsh prior to 4.3.7, options are restored at function exit but
-    # emulation mode is not.  Explicitly restore the original mode, or
-    # things get weird later.  (A trap might be better for this, but I'm
-    # not sure.)
-    emulate -L "$origmode"
+	# https://www.zsh.org/mla/users/2008/msg00785.html (users/13169)
+	# In zsh prior to 4.3.7, options are restored at function exit but
+	# emulation mode is not.  Explicitly restore the original mode, or
+	# things get weird later.  (A trap might be better for this, but I'm
+	# not sure.)
+	emulate -L "$origmode"
 }
 
 

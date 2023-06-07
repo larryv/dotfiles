@@ -20,12 +20,12 @@
 
 
 case $already_sourced in
-    *' .profile.d/macports.sh '*)
-        return 0
-        ;;
-    *)
-        already_sourced="$already_sourced .profile.d/macports.sh " || return
-        ;;
+	*' .profile.d/macports.sh '*)
+		return 0
+		;;
+	*)
+		already_sourced="$already_sourced .profile.d/macports.sh " || return
+		;;
 esac
 
 # Define promote().
@@ -42,18 +42,18 @@ esac
 
 # Use a helper function for its temporary positional parameters.
 promote_mp_paths() {
-    # Like path_helper(8), treat newlines as delimiters and ignore blank
-    # lines.  The files are usually very short, so using sed(1) for this
-    # isn't worth it.  Use REPLY as the variable because promote() is
-    # going to overwrite it anyway, so I don't have to unset it here.
-    while IFS= read -r REPLY || [ "$REPLY" ]; do
-        if [ "$REPLY" ]; then
-            set -- "$@" "$REPLY" || return
-        fi
-    done <"$1" || return
+	# Like path_helper(8), treat newlines as delimiters and ignore blank
+	# lines.  The files are usually very short, so using sed(1) for this
+	# isn't worth it.  Use REPLY as the variable because promote() is
+	# going to overwrite it anyway, so I don't have to unset it here.
+	while IFS= read -r REPLY || [ "$REPLY" ]; do
+		if [ "$REPLY" ]; then
+			set -- "$@" "$REPLY" || return
+		fi
+	done <"$1" || return
 
-    shift
-    promote "$@"
+	shift
+	promote "$@"
 }
 
 # MacPorts does not put files in /etc/{paths,manpaths}.d; I create them
@@ -61,12 +61,12 @@ promote_mp_paths() {
 # "/opt/local/share/man".
 
 if [ "$PATH" ] && [ -e /etc/paths.d/macports ]; then
-    promote_mp_paths /etc/paths.d/macports "$PATH" && PATH=$REPLY
+	promote_mp_paths /etc/paths.d/macports "$PATH" && PATH=$REPLY
 fi
 
 # MANPATH is only set on older versions of Mac OS X.
 if [ "$MANPATH" ] && [ -e /etc/manpaths.d/macports ]; then
-    promote_mp_paths /etc/manpaths.d/macports "$MANPATH" && MANPATH=$REPLY
+	promote_mp_paths /etc/manpaths.d/macports "$MANPATH" && MANPATH=$REPLY
 fi
 
 unset -v REPLY

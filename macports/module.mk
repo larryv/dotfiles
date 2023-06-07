@@ -17,8 +17,8 @@
 
 # Shared prerequisites.
 macports macports-check: \
-    macports/_profile.d/macports.sh \
-    macports/_zsh/zshenv.d/macports.zsh
+	macports/_profile.d/macports.sh \
+	macports/_zsh/zshenv.d/macports.zsh
 
 all: macports
 macports: FORCE

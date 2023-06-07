@@ -19,19 +19,19 @@
 
 
 case $already_sourced in
-    *' .profile.d/_functions.sh '*)
-        return 0
-        ;;
-    *)
-        already_sourced="$already_sourced .profile.d/_functions.sh " || return
-        ;;
+	*' .profile.d/_functions.sh '*)
+		return 0
+		;;
+	*)
+		already_sourced="$already_sourced .profile.d/_functions.sh " || return
+		;;
 esac
 
 
 # Given a colon-delimited list and a series of search terms, moves
 # elements to the back of the list if they appear in the series.
 #
-#     demote [input_list [search_term...]]
+#	demote [input_list [search_term...]]
 #
 # The REPLY variable is set to a colon-delimited list comprising the
 # elements of the input list, rearranged so that all elements that are
@@ -45,16 +45,16 @@ esac
 # is not guaranteed to be in any particular state.
 
 demote() {
-    partition "$@" || return
+	partition "$@" || return
 
-    case ${PARTITION_MATCHED+m}${PARTITION_UNMATCHED+u} in
-        mu) REPLY=$PARTITION_UNMATCHED:$PARTITION_MATCHED ;;
-        u) REPLY=$PARTITION_UNMATCHED ;;
-        m) REPLY=$PARTITION_MATCHED ;;
-        '') unset -v REPLY ;;
-    esac || return
+	case ${PARTITION_MATCHED+m}${PARTITION_UNMATCHED+u} in
+		mu) REPLY=$PARTITION_UNMATCHED:$PARTITION_MATCHED ;;
+		u) REPLY=$PARTITION_UNMATCHED ;;
+		m) REPLY=$PARTITION_MATCHED ;;
+		'') unset -v REPLY ;;
+	esac || return
 
-    unset -v PARTITION_MATCHED PARTITION_UNMATCHED
+	unset -v PARTITION_MATCHED PARTITION_UNMATCHED
 }
 
 functions_to_unset="$functions_to_unset demote "
@@ -63,7 +63,7 @@ functions_to_unset="$functions_to_unset demote "
 # Given a colon-delimited list and a series of search terms, partitions
 # the list's elements based on whether they appear in the series.
 #
-#     partition [input_list [search_term...]]
+#	partition [input_list [search_term...]]
 #
 # The PARTITION_MATCHED and PARTITION_UNMATCHED variables are set to
 # colon-delimited lists comprising input elements that are and are not
@@ -84,33 +84,33 @@ functions_to_unset="$functions_to_unset demote "
 # elements.
 
 partition() {
-    unset -v PARTITION_MATCHED PARTITION_UNMATCHED || return
+	unset -v PARTITION_MATCHED PARTITION_UNMATCHED || return
 
-    if [ "$#" -lt 1 ]; then
-        return 0
-    fi
+	if [ "$#" -lt 1 ]; then
+		return 0
+	fi
 
-    # Turn the colon-delimited list into a colon-terminated one, making
-    # it unnecessary to treat the final element as a special case.
-    xs=$1: || return
-    shift
+	# Turn the colon-delimited list into a colon-terminated one, making
+	# it unnecessary to treat the final element as a special case.
+	xs=$1: || return
+	shift
 
-    while [ "$xs" ]; do
-        x=${xs%%:*} || return
-        xs=${xs#*:}
+	while [ "$xs" ]; do
+		x=${xs%%:*} || return
+		xs=${xs#*:}
 
-        for arg
-        do
-            if [ "$arg" = "$x" ]; then
-                PARTITION_MATCHED=${PARTITION_MATCHED+$PARTITION_MATCHED:}$x
-                continue 2
-            fi
-        done || return
+		for arg
+		do
+			if [ "$arg" = "$x" ]; then
+				PARTITION_MATCHED=${PARTITION_MATCHED+$PARTITION_MATCHED:}$x
+				continue 2
+			fi
+		done || return
 
-        PARTITION_UNMATCHED=${PARTITION_UNMATCHED+$PARTITION_UNMATCHED:}$x
-    done
+		PARTITION_UNMATCHED=${PARTITION_UNMATCHED+$PARTITION_UNMATCHED:}$x
+	done
 
-    unset -v arg x xs
+	unset -v arg x xs
 }
 
 functions_to_unset="$functions_to_unset partition "
@@ -133,16 +133,16 @@ functions_to_unset="$functions_to_unset partition "
 # is not guaranteed to be in any particular state.
 
 promote() {
-    partition "$@" || return
+	partition "$@" || return
 
-    case ${PARTITION_MATCHED+m}${PARTITION_UNMATCHED+u} in
-        mu) REPLY=$PARTITION_MATCHED:$PARTITION_UNMATCHED ;;
-        u) REPLY=$PARTITION_UNMATCHED ;;
-        m) REPLY=$PARTITION_MATCHED ;;
-        '') unset -v REPLY ;;
-    esac || return
+	case ${PARTITION_MATCHED+m}${PARTITION_UNMATCHED+u} in
+		mu) REPLY=$PARTITION_MATCHED:$PARTITION_UNMATCHED ;;
+		u) REPLY=$PARTITION_UNMATCHED ;;
+		m) REPLY=$PARTITION_MATCHED ;;
+		'') unset -v REPLY ;;
+	esac || return
 
-    unset -v PARTITION_MATCHED PARTITION_UNMATCHED
+	unset -v PARTITION_MATCHED PARTITION_UNMATCHED
 }
 
 functions_to_unset="$functions_to_unset promote "

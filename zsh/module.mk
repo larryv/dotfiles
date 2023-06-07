@@ -17,13 +17,13 @@
 
 # Shared prerequisites.
 zsh zsh-check: \
-    zsh/_zsh/functions/colorpairs \
-    zsh/_zsh/functions/emulated_eval \
-    zsh/_zsh/functions/update_terminal_cwd \
-    zsh/_zshenv \
-    zsh/_zsh/_zprofile \
-    zsh/_zsh/_zshrc \
-    zsh/_zsh/_zlogin
+	zsh/_zsh/functions/colorpairs \
+	zsh/_zsh/functions/emulated_eval \
+	zsh/_zsh/functions/update_terminal_cwd \
+	zsh/_zshenv \
+	zsh/_zsh/_zprofile \
+	zsh/_zsh/_zshrc \
+	zsh/_zsh/_zlogin
 
 all: zsh
 zsh: FORCE

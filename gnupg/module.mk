@@ -17,9 +17,9 @@
 
 # Shared prerequisites.
 gnupg gnupg-check: \
-    gnupg/_gnupg/dirmngr.conf \
-    gnupg/_gnupg/gpg.conf \
-    gnupg/_profile.d/gnupg.sh
+	gnupg/_gnupg/dirmngr.conf \
+	gnupg/_gnupg/gpg.conf \
+	gnupg/_profile.d/gnupg.sh
 
 all: gnupg
 gnupg: FORCE

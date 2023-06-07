@@ -25,16 +25,16 @@ functions_to_unset=
 
 # Source topic scripts.
 for script in "$ZDOTDIR"/zshenv.d/*.zsh(N-^/); do
-    . "$script"
+	. "$script"
 done
 unset script
 
 # Login and interactive shells will do this later.
 if [[ ! -o LOGIN && ! -o INTERACTIVE ]]; then
-    if [[ $functions_to_unset ]]; then
-        unfunction ${(u)=functions_to_unset}
-    fi
-    unset already_sourced functions_to_unset
+	if [[ $functions_to_unset ]]; then
+		unfunction ${(u)=functions_to_unset}
+	fi
+	unset already_sourced functions_to_unset
 fi
 
 # vim: set filetype=zsh:

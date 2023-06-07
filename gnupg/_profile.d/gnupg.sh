@@ -19,22 +19,22 @@
 
 
 case $already_sourced in
-    *' .profile.d/gnupg.sh '*)
-        return 0
-        ;;
-    *)
-        already_sourced="$already_sourced .profile.d/gnupg.sh " || return
-        ;;
+	*' .profile.d/gnupg.sh '*)
+		return 0
+		;;
+	*)
+		already_sourced="$already_sourced .profile.d/gnupg.sh " || return
+		;;
 esac
 
 # https://www.gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html
 # https://www.gnupg.org/documentation/manuals/gnupg/Agent-Examples.html
 if [ ! "${GPG_TTY+y}" ]; then
-    # TTY is a zsh thing, but I check for it here because theoretically
-    # another shell, or even the terminal emulator itself, could set it.
-    if GPG_TTY=${TTY:-$(tty)}; then
-        export GPG_TTY
-    else
-        unset -v GPG_TTY
-    fi
+	# TTY is a zsh thing, but I check for it here because theoretically
+	# another shell, or even the terminal emulator itself, could set it.
+	if GPG_TTY=${TTY:-$(tty)}; then
+		export GPG_TTY
+	else
+		unset -v GPG_TTY
+	fi
 fi

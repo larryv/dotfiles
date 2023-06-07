@@ -26,32 +26,32 @@
 # Do this up here to give the topic scripts access.  Append because
 # I don't (yet?) need to override other utilities.
 if [ -d ~/bin ]; then
-    PATH=${PATH:+$PATH:}$HOME/bin
+	PATH=${PATH:+$PATH:}$HOME/bin
 fi
 
 # The zsh startup files have already done this.
 if [ ! "$ZSH_VERSION" ]; then
-    # This script doesn't use already_sourced, but the topic scripts do.
-    # shellcheck disable=SC2034
-    already_sourced=
-    functions_to_unset=
+	# This script doesn't use already_sourced, but the topic scripts do.
+	# shellcheck disable=SC2034
+	already_sourced=
+	functions_to_unset=
 fi
 
 # Source topic scripts.
 for script in ~/.profile.d/[!_]*.sh; do
-    if [ -e "$script" ] && [ ! -d "$script" ]; then
-        # I don't know if ShellCheck can use multiple sources somehow.
-        # shellcheck source=/dev/null
-        . "$script"
-    fi
+	if [ -e "$script" ] && [ ! -d "$script" ]; then
+		# I don't know if ShellCheck can use multiple sources somehow.
+		# shellcheck source=/dev/null
+		. "$script"
+	fi
 done
 unset -v script
 
 # Ensure that ~/bin follows anything added by the topic scripts.
 # shellcheck source=sh/_profile.d/__functions.sh
 . ~/.profile.d/_functions.sh && {
-    demote "$PATH" ~/bin && PATH=$REPLY
-    unset -v REPLY
+	demote "$PATH" ~/bin && PATH=$REPLY
+	unset -v REPLY
 }
 
 # https://unix.stackexchange.com/a/4413 - Assign absolute paths to
@@ -61,29 +61,29 @@ unset -v script
 # identically named aliases or functions, which would be obnoxious.
 
 if [ ! "${PAGER+y}" ]; then
-    if PAGER=$(command -v less); then
-        export PAGER
-    else
-        unset -v PAGER
-    fi
+	if PAGER=$(command -v less); then
+		export PAGER
+	else
+		unset -v PAGER
+	fi
 fi
 
 if [ ! "${VISUAL+y}" ]; then
-    if VISUAL=$(command -v vim || command -v vi); then
-        export VISUAL
-    else
-        unset -v VISUAL
-    fi
+	if VISUAL=$(command -v vim || command -v vi); then
+		export VISUAL
+	else
+		unset -v VISUAL
+	fi
 fi
 
 # The zsh startup files will do this later.
 if [ ! "$ZSH_VERSION" ]; then
-    if [ "$functions_to_unset" ]; then
-        # I have to use field splitting, since arrays aren't portable.
-        # shellcheck disable=SC2086
-        unset -f $functions_to_unset
-    fi
-    unset -v already_sourced functions_to_unset
+	if [ "$functions_to_unset" ]; then
+		# I have to use field splitting, since arrays aren't portable.
+		# shellcheck disable=SC2086
+		unset -f $functions_to_unset
+	fi
+	unset -v already_sourced functions_to_unset
 fi
 
 # vim: set filetype=sh:
