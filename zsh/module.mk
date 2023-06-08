@@ -60,11 +60,11 @@ zsh-install: sh-install zsh zsh-installdirs FORCE
 	$(INSTALL_DATA) zsh/_zsh/_zprofile ~/.zsh/.zprofile
 	$(INSTALL_DATA) zsh/_zsh/_zshrc ~/.zsh/.zshrc
 	$(INSTALL_DATA) zsh/_zsh/_zlogin ~/.zsh/.zlogin
-	ln -fs ../.zshenv ~/.zsh/.zshenv
-	ln -fs ../.zshenv ~/.zsh/zshenv
-	ln -fs .zprofile ~/.zsh/zprofile
-	ln -fs .zshrc ~/.zsh/zshrc
-	ln -fs .zlogin ~/.zsh/zlogin
+	-ln -fs ../.zshenv ~/.zsh/.zshenv
+	-ln -fs ../.zshenv ~/.zsh/zshenv
+	-ln -fs .zprofile ~/.zsh/zprofile
+	-ln -fs .zshrc ~/.zsh/zshrc
+	-ln -fs .zlogin ~/.zsh/zlogin
 
 uninstall: zsh-uninstall
 zsh-uninstall: FORCE
