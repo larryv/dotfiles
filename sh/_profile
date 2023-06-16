@@ -31,21 +31,21 @@ fi
 
 # The zsh startup files have already done this.
 if [ ! "$ZSH_VERSION" ]; then
-	# This script doesn't use already_sourced, but the topic scripts do.
+	# This script doesn't use `srcd`, but the topic scripts do.
 	# shellcheck disable=SC2034
-	already_sourced=
-	functions_to_unset=
+	srcd=
+	tmpfuncs=
 fi
 
 # Source topic scripts.
-for script in ~/.profile.d/[!_]*.sh; do
-	if [ -e "$script" ] && [ ! -d "$script" ]; then
+for scpt in ~/.profile.d/[!_]*.sh; do
+	if [ -e "$scpt" ] && [ ! -d "$scpt" ]; then
 		# I don't know if ShellCheck can use multiple sources somehow.
 		# shellcheck source=/dev/null
-		. "$script"
+		. "$scpt"
 	fi
 done
-unset -v script
+unset -v scpt
 
 # Ensure that ~/bin follows anything added by the topic scripts.
 # shellcheck source=sh/_profile.d/__functions.sh
@@ -78,12 +78,12 @@ fi
 
 # The zsh startup files will do this later.
 if [ ! "$ZSH_VERSION" ]; then
-	if [ "$functions_to_unset" ]; then
+	if [ "$tmpfuncs" ]; then
 		# I have to use field splitting, since arrays aren't portable.
 		# shellcheck disable=SC2086
-		unset -f $functions_to_unset
+		unset -f $tmpfuncs
 	fi
-	unset -v already_sourced functions_to_unset
+	unset -v srcd tmpfuncs
 fi
 
 # vim: set filetype=sh:

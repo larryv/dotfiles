@@ -19,12 +19,12 @@
 # shellcheck shell=sh
 
 
-case $already_sourced in
+case $srcd in
 	*' .profile.d/lynx.sh '*)
 		return 0
 		;;
 	*)
-		already_sourced="$already_sourced .profile.d/lynx.sh " || return
+		srcd="$srcd .profile.d/lynx.sh " || return
 		;;
 esac
 

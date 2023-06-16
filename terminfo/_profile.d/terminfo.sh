@@ -18,12 +18,12 @@
 # shellcheck shell=sh
 
 
-case $already_sourced in
+case $srcd in
 	*' .profile.d/terminfo.sh '*)
 		return 0
 		;;
 	*)
-		already_sourced="$already_sourced .profile.d/terminfo.sh " || return
+		srcd="$srcd .profile.d/terminfo.sh " || return
 		;;
 esac
 

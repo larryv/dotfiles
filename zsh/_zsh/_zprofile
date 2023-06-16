@@ -17,17 +17,17 @@
 
 
 # Source topic scripts.
-for script in "${ZDOTDIR-$HOME}"/zprofile.d/*.zsh(N-^/); do
-	. "$script"
+for scpt in "${ZDOTDIR-$HOME}"/zprofile.d/*.zsh(N-^/); do
+	. "$scpt"
 done
-unset script
+unset scpt
 
 # Source portable login profile.  Do this last so errors in ~/.profile
 # that abort the dot command terminate this file too, making it easier
 # to reason about errors in ~/.profile.  (If there were any subsequent
 # commands, execution would continue.)
 autoload -Uz emulated_eval
-functions_to_unset+=' emulated_eval '
+tmpfuncs+=' emulated_eval '
 emulated_eval sh '. ~/.profile'
 
 # vim: set filetype=zsh:

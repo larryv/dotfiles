@@ -16,10 +16,10 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-if [[ $already_sourced == *' .zsh/zshenv.d/macports.zsh '* ]]; then
+if [[ $srcd == *' .zsh/zshenv.d/macports.zsh '* ]]; then
 	return 0
 else
-	already_sourced+=' .zsh/zshenv.d/macports.zsh '
+	srcd+=' .zsh/zshenv.d/macports.zsh '
 fi
 
 # On OS X 10.10 Yosemite and earlier, /etc/zshenv unconditionally
@@ -30,6 +30,6 @@ fi
 
 if [[ ! -o LOGIN ]]; then
 	autoload -Uz emulated_eval
-	functions_to_unset+=' emulated_eval '
+	tmpfuncs+=' emulated_eval '
 	emulated_eval sh '. ~/.profile.d/macports.sh'
 fi

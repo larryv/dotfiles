@@ -20,21 +20,21 @@ fpath=("${ZDOTDIR=$HOME/.zsh}"/functions(N) "$fpath[@]")
 
 # Ideally these would be arrays, but I'm using space-delimited scalars
 # so they can be shared with ~/.profile and the scripts it sources.
-already_sourced=
-functions_to_unset=
+srcd=
+tmpfuncs=
 
 # Source topic scripts.
-for script in "$ZDOTDIR"/zshenv.d/*.zsh(N-^/); do
-	. "$script"
+for scpt in "$ZDOTDIR"/zshenv.d/*.zsh(N-^/); do
+	. "$scpt"
 done
-unset script
+unset scpt
 
 # Login and interactive shells will do this later.
 if [[ ! -o LOGIN && ! -o INTERACTIVE ]]; then
-	if [[ $functions_to_unset ]]; then
-		unfunction ${(u)=functions_to_unset}
+	if [[ $tmpfuncs ]]; then
+		unfunction ${(u)=tmpfuncs}
 	fi
-	unset already_sourced functions_to_unset
+	unset srcd tmpfuncs
 fi
 
 # vim: set filetype=zsh:

@@ -18,12 +18,12 @@
 # shellcheck shell=sh
 
 
-case $already_sourced in
+case $srcd in
 	*' .profile.d/_functions.sh '*)
 		return 0
 		;;
 	*)
-		already_sourced="$already_sourced .profile.d/_functions.sh " || return
+		srcd="$srcd .profile.d/_functions.sh " || return
 		;;
 esac
 
@@ -47,17 +47,17 @@ esac
 demote() {
 	partition "$@" || return
 
-	case ${PARTITION_MATCHED+m}${PARTITION_UNMATCHED+u} in
-		mu) REPLY=$PARTITION_UNMATCHED:$PARTITION_MATCHED ;;
-		u) REPLY=$PARTITION_UNMATCHED ;;
-		m) REPLY=$PARTITION_MATCHED ;;
+	case ${MATCHED+m}${UNMATCHED+u} in
+		mu) REPLY=$UNMATCHED:$MATCHED ;;
+		u) REPLY=$UNMATCHED ;;
+		m) REPLY=$MATCHED ;;
 		'') unset -v REPLY ;;
 	esac || return
 
-	unset -v PARTITION_MATCHED PARTITION_UNMATCHED
+	unset -v MATCHED UNMATCHED
 }
 
-functions_to_unset="$functions_to_unset demote "
+tmpfuncs="$tmpfuncs demote "
 
 
 # Given a colon-delimited list and a series of search terms, partitions
@@ -65,28 +65,28 @@ functions_to_unset="$functions_to_unset demote "
 #
 #	partition [input_list [search_term...]]
 #
-# The PARTITION_MATCHED and PARTITION_UNMATCHED variables are set to
-# colon-delimited lists comprising input elements that are and are not
-# equal to any search term (by string comparison), respectively.  The
-# partition is stable -- i.e., relative ordering is preserved within
-# each new list.  If no input element is equal to any search term, then
-# PARTITION_MATCHED is unset; if every element is equal to a term, then
-# PARTITION_UNMATCHED is unset.
+# The MATCHED and UNMATCHED variables are set to colon-delimited lists
+# comprising input elements that are and are not equal to any search
+# term (by string comparison), respectively.  The partition is stable --
+# i.e., relative ordering is preserved within each new list.  If no
+# input element is equal to any search term, then MATCHED is unset; if
+# every element is equal to a term, then UNMATCHED is unset.
 #
-# If only the input list argument is provided, then PARTITION_UNMATCHED
-# is set to its value, and PARTITION_MATCHED is unset.  If no arguments
-# are provided at all, then both PARTITION_* variables are unset.  If
-# the exit status is not zero, then the PARTITION_* variables should not
-# be used because they are not guaranteed to be in any particular state.
+# If only the input list argument is provided, then UNMATCHED is set to
+# its value, and MATCHED is unset.  If no arguments are provided at all,
+# then both MATCHED and UNMATCHED are unset.  If the exit status is not
+# zero, then MATCHED and UNMATCHED should not be used because they are
+# not guaranteed to be in any particular state.
 #
 # A zero-length value for any "colon-delimited list" parameter denotes
 # a list comprising a single zero-length element, not a list of zero
 # elements.
 
 partition() {
-	unset -v PARTITION_MATCHED PARTITION_UNMATCHED || return
+	unset -v MATCHED UNMATCHED || return
 
-	if [ "$#" -lt 1 ]; then
+	if [ "$#" -lt 1 ]
+	then
 		return 0
 	fi
 
@@ -102,18 +102,18 @@ partition() {
 		for arg
 		do
 			if [ "$arg" = "$x" ]; then
-				PARTITION_MATCHED=${PARTITION_MATCHED+$PARTITION_MATCHED:}$x
+				MATCHED=${MATCHED+$MATCHED:}$x
 				continue 2
 			fi
 		done || return
 
-		PARTITION_UNMATCHED=${PARTITION_UNMATCHED+$PARTITION_UNMATCHED:}$x
+		UNMATCHED=${UNMATCHED+$UNMATCHED:}$x
 	done
 
 	unset -v arg x xs
 }
 
-functions_to_unset="$functions_to_unset partition "
+tmpfuncs="$tmpfuncs partition "
 
 
 # Given a colon-delimited list and a series of search terms, moves
@@ -135,14 +135,14 @@ functions_to_unset="$functions_to_unset partition "
 promote() {
 	partition "$@" || return
 
-	case ${PARTITION_MATCHED+m}${PARTITION_UNMATCHED+u} in
-		mu) REPLY=$PARTITION_MATCHED:$PARTITION_UNMATCHED ;;
-		u) REPLY=$PARTITION_UNMATCHED ;;
-		m) REPLY=$PARTITION_MATCHED ;;
+	case ${MATCHED+m}${UNMATCHED+u} in
+		mu) REPLY=$MATCHED:$UNMATCHED ;;
+		u) REPLY=$UNMATCHED ;;
+		m) REPLY=$MATCHED ;;
 		'') unset -v REPLY ;;
 	esac || return
 
-	unset -v PARTITION_MATCHED PARTITION_UNMATCHED
+	unset -v MATCHED UNMATCHED
 }
 
-functions_to_unset="$functions_to_unset promote "
+tmpfuncs="$tmpfuncs promote "

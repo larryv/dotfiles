@@ -17,14 +17,14 @@
 
 
 # Source topic scripts.
-for script in "${ZDOTDIR-$HOME}"/zlogin.d/*.zsh(N-^/); do
-	. "$script"
+for scpt in "${ZDOTDIR-$HOME}"/zlogin.d/*.zsh(N-^/); do
+	. "$scpt"
 done
-unset script
+unset scpt
 
-if [[ $functions_to_unset ]]; then
-	unfunction ${(u)=functions_to_unset}
+if [[ $tmpfuncs ]]; then
+	unfunction ${(u)=tmpfuncs}
 fi
-unset already_sourced functions_to_unset
+unset srcd tmpfuncs
 
 # vim: set filetype=zsh:

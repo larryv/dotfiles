@@ -19,12 +19,12 @@
 # shellcheck shell=sh
 
 
-case $already_sourced in
+case $srcd in
 	*' .profile.d/macports.sh '*)
 		return 0
 		;;
 	*)
-		already_sourced="$already_sourced .profile.d/macports.sh " || return
+		srcd="$srcd .profile.d/macports.sh " || return
 		;;
 esac
 
