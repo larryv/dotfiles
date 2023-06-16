@@ -48,13 +48,15 @@ origmode="$(emulate 2>/dev/null)" || origmode=zsh
 emulate -L zsh
 
 {
-	if [[ $1 = -R ]]; then
+	if [[ $1 = -R ]]
+	then
 		local minargc=2
 	else
 		local minargc=1
 	fi
 
-	if (( ARGC < minargc )); then
+	if (( ARGC < minargc ))
+	then
 		print >&2 'usage: emulated_eval [-R] <mode> [<arg> ...]'
 		return 1
 	fi

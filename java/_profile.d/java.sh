@@ -29,7 +29,8 @@ esac
 
 # On Mac, set JAVA_HOME to the active JVM, if there is one.
 
-if [ ! "${JAVA_HOME+y}" ]; then
+if [ ! "${JAVA_HOME+y}" ]
+then
 	# https://www.etalabs.net/sh_tricks.html ("Getting non-clobbered
 	# output from command substitution")
 	if JAVA_HOME=$(/usr/libexec/java_home --failfast 2>/dev/null && echo .)

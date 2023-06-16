@@ -24,14 +24,17 @@ srcd=
 tmpfuncs=
 
 # Source topic scripts.
-for scpt in "$ZDOTDIR"/zshenv.d/*.zsh(N-^/); do
+for scpt in "$ZDOTDIR"/zshenv.d/*.zsh(N-^/)
+do
 	. "$scpt"
 done
 unset scpt
 
 # Login and interactive shells will do this later.
-if [[ ! -o LOGIN && ! -o INTERACTIVE ]]; then
-	if [[ $tmpfuncs ]]; then
+if [[ ! -o LOGIN && ! -o INTERACTIVE ]]
+then
+	if [[ $tmpfuncs ]]
+	then
 		unfunction ${(u)=tmpfuncs}
 	fi
 	unset srcd tmpfuncs

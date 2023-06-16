@@ -25,12 +25,14 @@
 
 # Do this up here to give the topic scripts access.  Append because
 # I don't (yet?) need to override other utilities.
-if [ -d ~/bin ]; then
+if [ -d ~/bin ]
+then
 	PATH=${PATH:+$PATH:}$HOME/bin
 fi
 
 # The zsh startup files have already done this.
-if [ ! "$ZSH_VERSION" ]; then
+if [ ! "$ZSH_VERSION" ]
+then
 	# This script doesn't use `srcd`, but the topic scripts do.
 	# shellcheck disable=SC2034
 	srcd=
@@ -38,8 +40,10 @@ if [ ! "$ZSH_VERSION" ]; then
 fi
 
 # Source topic scripts.
-for scpt in ~/.profile.d/[!_]*.sh; do
-	if [ -e "$scpt" ] && [ ! -d "$scpt" ]; then
+for scpt in ~/.profile.d/[!_]*.sh
+do
+	if [ -e "$scpt" ] && [ ! -d "$scpt" ]
+	then
 		# I don't know if ShellCheck can use multiple sources somehow.
 		# shellcheck source=/dev/null
 		. "$scpt"
@@ -60,16 +64,20 @@ unset -v scpt
 # desired.  Assume that the system startup files did not define
 # identically named aliases or functions, which would be obnoxious.
 
-if [ ! "${PAGER+y}" ]; then
-	if PAGER=$(command -v less); then
+if [ ! "${PAGER+y}" ]
+then
+	if PAGER=$(command -v less)
+	then
 		export PAGER
 	else
 		unset -v PAGER
 	fi
 fi
 
-if [ ! "${VISUAL+y}" ]; then
-	if VISUAL=$(command -v vim || command -v vi); then
+if [ ! "${VISUAL+y}" ]
+then
+	if VISUAL=$(command -v vim || command -v vi)
+	then
 		export VISUAL
 	else
 		unset -v VISUAL
@@ -77,8 +85,10 @@ if [ ! "${VISUAL+y}" ]; then
 fi
 
 # The zsh startup files will do this later.
-if [ ! "$ZSH_VERSION" ]; then
-	if [ "$tmpfuncs" ]; then
+if [ ! "$ZSH_VERSION" ]
+then
+	if [ "$tmpfuncs" ]
+	then
 		# I have to use field splitting, since arrays aren't portable.
 		# shellcheck disable=SC2086
 		unset -f $tmpfuncs

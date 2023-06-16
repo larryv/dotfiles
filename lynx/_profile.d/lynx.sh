@@ -28,6 +28,7 @@ case $srcd in
 		;;
 esac
 
-if [ ! "${LYNX_CFG+y}" ]; then
+if [ ! "${LYNX_CFG+y}" ]
+then
 	LYNX_CFG=~/.lynx.cfg && export LYNX_CFG
 fi

@@ -16,7 +16,8 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-if [[ $srcd == *' .zsh/zshenv.d/macports.zsh '* ]]; then
+if [[ $srcd == *' .zsh/zshenv.d/macports.zsh '* ]]
+then
 	return 0
 else
 	srcd+=' .zsh/zshenv.d/macports.zsh '
@@ -28,7 +29,8 @@ fi
 # /etc/paths back in front.  In non-login shells, reclaim that position
 # for MacPorts directories.  (Login shells do this via .zprofile.)
 
-if [[ ! -o LOGIN ]]; then
+if [[ ! -o LOGIN ]]
+then
 	autoload -Uz emulated_eval
 	tmpfuncs+=' emulated_eval '
 	emulated_eval sh '. ~/.profile.d/macports.sh'

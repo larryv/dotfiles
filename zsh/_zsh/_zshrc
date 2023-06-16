@@ -27,7 +27,8 @@ colorpairs -f red,green,yellow,default -b default
 # Left prompt: Hostname, history number, job count, indication of last
 # exit status, privileges/shell-nesting indicator.
 PS1='%m %B%h%b%(1j. [%j].)'
-if (( $#fgbg )); then
+if (( $#fgbg ))
+then
 	PS1+=" %(?.%{$fgbg[green,default]%}.%{$fgbg[red,default]%})"
 	PS1+="%B${(r:SHLVL * 2::%#:)}%b"
 	PS1+="%{$fgbg[default,default]%} "
@@ -60,7 +61,8 @@ autoload -Uz +X vcs_info 2>/dev/null && {
 	zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
 	zstyle ':vcs_info:git:*' check-for-changes true
-	if (( $#fgbg )); then
+	if (( $#fgbg ))
+	then
 		# Color green/yellow/red if there are no/staged/unstaged changes.
 		zstyle ':vcs_info:git:*' unstagedstr "%{$fgbg[red,default]%}"
 		zstyle ':vcs_info:git:*' stagedstr "%{$fgbg[yellow,default]%}"
@@ -83,7 +85,8 @@ autoload -Uz +X update_terminal_cwd 2>/dev/null && {
 
 # Enable completion and other things.
 autoload -Uz compinit run-help zargs zrecompile
-if [[ ${ZDOTDIR-~} != ~ ]]; then
+if [[ ${ZDOTDIR-~} != ~ ]]
+then
 	compinit -d "$ZDOTDIR"/zcompdump
 else
 	compinit
@@ -91,7 +94,8 @@ fi && {
 	zstyle ':completion:*:descriptions' format '%B%d%b'
 
 	fmt='%BNo matches for %d%b'
-	if (( $#fgbg )); then
+	if (( $#fgbg ))
+	then
 		fmt="%{$fgbg[red,default]%}$fmt%{$fgbg[default,default]%}"
 	fi
 	zstyle ':completion:*:warnings' format "$fmt"
@@ -104,7 +108,8 @@ setopt EXTENDED_GLOB
 # History.
 SAVEHIST=1000000
 HISTSIZE=$SAVEHIST
-if (( $+ZDOTDIR )); then
+if (( $+ZDOTDIR ))
+then
 	HISTFILE=$ZDOTDIR/zsh_history
 else
 	HISTFILE=~/.zsh_history
@@ -117,14 +122,17 @@ setopt INC_APPEND_HISTORY_TIME 2>/dev/null
 REPORTTIME=10
 
 # Source topic scripts.
-for scpt in "${ZDOTDIR-$HOME}"/zshrc.d/*.zsh(N-^/); do
+for scpt in "${ZDOTDIR-$HOME}"/zshrc.d/*.zsh(N-^/)
+do
 	. "$scpt"
 done
 unset scpt
 
 # Login shells will do this later.
-if [[ ! -o LOGIN ]]; then
-	if [[ $tmpfuncs ]]; then
+if [[ ! -o LOGIN ]]
+then
+	if [[ $tmpfuncs ]]
+	then
 		unfunction ${(u)=tmpfuncs}
 	fi
 	unset srcd tmpfuncs

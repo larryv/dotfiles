@@ -34,14 +34,16 @@
 
 emulate -L zsh
 
-if [[ $INSIDE_EMACS ]]; then
+if [[ $INSIDE_EMACS ]]
+then
 	return 0
 fi
 
 # TODO: Accommodate other terminal emulators.
 # TODO: Identify terminals in tmux sessions, where TERM_PROGRAM and TERM
 # are changed.
-if [[ ${TERM_PROGRAM:-$TERM} != (Apple_Terminal|nsterm-*|nsterm) ]]; then
+if [[ ${TERM_PROGRAM:-$TERM} != (Apple_Terminal|nsterm-*|nsterm) ]]
+then
 	return 1
 fi
 
@@ -55,10 +57,12 @@ local LC_ALL= LC_CTYPE=C
 # Provide alternatives if HOST [1] or PWD (which are set by zsh) are
 # null for some reason.  It's fine if HOST ends up null after all
 # because RFC 8089 considers "file-auth"-less URIs [2] to be local [3].
-if (( ! $+HOST )); then
+if (( ! $+HOST ))
+then
 	local HOST=$(hostname 2>/dev/null)
 fi
-if (( ! $+PWD )); then
+if (( ! $+PWD ))
+then
 	local PWD=${"$(pwd && echo x)"%??}
 fi
 
@@ -77,7 +81,8 @@ local docseq=$'\e]6;\a'
 local seqs=$dirseq$docseq
 
 # Modify the sequences so tmux passes them through [6].
-if [[ $TMUX ]]; then
+if [[ $TMUX ]]
+then
 	seqs=$'\ePtmux;'${seqs//$'\e'/$'\e\e'}$'\e\\'
 fi
 

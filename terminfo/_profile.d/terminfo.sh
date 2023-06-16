@@ -31,7 +31,8 @@ esac
 # terminal emulator properly.
 
 # Do nothing within screen or tmux.
-if [ ! "$STY$TMUX" ]; then
+if [ ! "$STY$TMUX" ]
+then
 	term=$TERM || return
 
 	if
@@ -59,21 +60,28 @@ EOF
 		zeros=${minor%%[!0]*}
 		minor=${minor#"$zeros"}
 
-		if [ "$((major >= 400))" -ne 0 ]; then
+		if [ "$((major >= 400))" -ne 0 ]
+		then
 			term=nsterm-build400    # 10.13 and later
-		elif [ "$((major >= 361))" -ne 0 ]; then
+		elif [ "$((major >= 361))" -ne 0 ]
+		then
 			term=nsterm-build361    # 10.11 - 10.12
-		elif [ "$((major == 343 && minor >= 7 || major > 343))" -ne 0 ]; then
+		elif [ "$((major == 343 && minor >= 7 || major > 343))" -ne 0 ]
+		then
 			# Mismatch is intentional; see the terminfo source.
 			term=nsterm-build343    # 10.10
-		elif [ "$((major >= 326))" -ne 0 ]; then
+		elif [ "$((major >= 326))" -ne 0 ]
+		then
 			term=nsterm-build326    # 10.9
-		elif [ "$((major >= 303))" -ne 0 ]; then
+		elif [ "$((major >= 303))" -ne 0 ]
+		then
 			# Mismatch is intentional; see the terminfo source.
 			term=nsterm-build309    # 10.7 - 10.8
-		elif [ "$((major == 240 && minor >= 2 || major > 240))" -ne 0 ]; then
+		elif [ "$((major == 240 && minor >= 2 || major > 240))" -ne 0 ]
+		then
 			term=nsterm-16color     # 10.5 - 10.6
-		elif [ "$((major >= 71))" -ne 0 ]; then
+		elif [ "$((major >= 71))" -ne 0 ]
+		then
 			term=nsterm-bce         # 10.3 - 10.4
 		fi
 
@@ -82,7 +90,8 @@ EOF
 
 	if
 		[ "$term" != "$TERM" ] \
-			&& if [ "$ZSH_VERSION" ]; then
+			&& if [ "$ZSH_VERSION" ]
+			   then
 			   	# On assignment to TERM, zsh automatically tries to
 			   	# reinitialize the terminal.  As far as I can tell,
 			   	# the only way to discern failure is to check for an

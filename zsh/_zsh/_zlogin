@@ -17,12 +17,14 @@
 
 
 # Source topic scripts.
-for scpt in "${ZDOTDIR-$HOME}"/zlogin.d/*.zsh(N-^/); do
+for scpt in "${ZDOTDIR-$HOME}"/zlogin.d/*.zsh(N-^/)
+do
 	. "$scpt"
 done
 unset scpt
 
-if [[ $tmpfuncs ]]; then
+if [[ $tmpfuncs ]]
+then
 	unfunction ${(u)=tmpfuncs}
 fi
 unset srcd tmpfuncs

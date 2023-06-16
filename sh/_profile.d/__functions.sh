@@ -95,13 +95,15 @@ partition() {
 	xs=$1: || return
 	shift
 
-	while [ "$xs" ]; do
+	while [ "$xs" ]
+	do
 		x=${xs%%:*} || return
 		xs=${xs#*:}
 
 		for arg
 		do
-			if [ "$arg" = "$x" ]; then
+			if [ "$arg" = "$x" ]
+			then
 				MATCHED=${MATCHED+$MATCHED:}$x
 				continue 2
 			fi

@@ -70,7 +70,8 @@ trap $trapcmd EXIT
 unset fcolors bcolors
 
 local opt
-while getopts f:b: opt; do
+while getopts f:b: opt
+do
 	# Drop empty elements intentionally, since they're useless.
 	case $opt in
 		f) fcolors=(${(Lus:,:)OPTARG}) ;;
@@ -125,8 +126,10 @@ case ${TERM_PROGRAM:-$TERM} in
 		# Construct sequences, using all available colors by default.
 		# "Pm" comes from the XTerm documentation [5].
 		local Pm
-		for fcolor in ${(A)fcolors=${(k)fPs}}; do
-			for bcolor in ${(A)bcolors=${(k)bPs}}; do
+		for fcolor in ${(A)fcolors=${(k)fPs}}
+		do
+			for bcolor in ${(A)bcolors=${(k)bPs}}
+			do
 				Pm="$fPs[$fcolor];$bPs[$bcolor]"
 				fgbg[$fcolor,$bcolor]=$'\e['${Pm}m
 			done
@@ -141,28 +144,40 @@ case ${TERM_PROGRAM:-$TERM} in
 		# per invocation [e.g., "tput setaf 0 setab 0"], but this isn't
 		# documented as far as I can tell [6], and older versions only
 		# use the first capability.)
-		if zmodload zsh/terminfo 2>/dev/null; then
-			if (( terminfo[colors] >= 8 )); then
-				for fcap bcap in setaf setab setf setb scp scp; do
+		if zmodload zsh/terminfo 2>/dev/null
+		then
+			if (( terminfo[colors] >= 8 ))
+			then
+				for fcap bcap in setaf setab setf setb scp scp
+				do
 					[[ $terminfo[$fcap] && $terminfo[$bcap] ]] && break
 				done && cmd=echoti && op=$terminfo[op]
 			fi
 		# I haven't tested this.
-		#elif zmodload zsh/termcap 2>/dev/null; then
-		#	if (( termcap[Co] >= 8 )); then
-		#		for fcap bcap in AF AB Sf Sb sp sp; do
+		#elif zmodload zsh/termcap 2>/dev/null
+		#then
+		#	if (( termcap[Co] >= 8 ))
+		#	then
+		#		for fcap bcap in AF AB Sf Sb sp sp
+		#		do
 		#			[[ $termcap[$fcap] && $termcap[$bcap] ]] && break
 		#		done && cmd=echotc && op=$termcap[op]
 		#	fi
-		elif numcolors=$(tput colors 2>/dev/null); then
-			if (( numcolors >= 8 )); then
-				for fcap bcap in setaf setab setf setb scp scp; do
+		elif numcolors=$(tput colors 2>/dev/null)
+		then
+			if (( numcolors >= 8 ))
+			then
+				for fcap bcap in setaf setab setf setb scp scp
+				do
 					{ tput "$fcap" && tput "$bcap" } >/dev/null 2>&1 && break
 				done && cmd=tput && op=$(tput op 2>/dev/null)
 			fi
-		elif numcolors=$(tput Co 2>/dev/null); then
-			if (( numcolors >= 8 )); then
-				for fcap bcap in AF AB Sf Sb sp sp; do
+		elif numcolors=$(tput Co 2>/dev/null)
+		then
+			if (( numcolors >= 8 ))
+			then
+				for fcap bcap in AF AB Sf Sb sp sp
+				do
 					{ tput "$fcap" && tput "$bcap" } >/dev/null 2>&1 && break
 				done && cmd=tput && op=$(tput op 2>/dev/null)
 			fi
@@ -180,7 +195,8 @@ case ${TERM_PROGRAM:-$TERM} in
 				return 1
 				;;
 			scp,scp | sp,sp)
-				if [[ ! $cmd ]]; then
+				if [[ ! $cmd ]]
+				then
 					# The terminal entry is broken.
 					fmt='%s claims color support but lacks capabilities\n'
 				else
@@ -201,14 +217,18 @@ case ${TERM_PROGRAM:-$TERM} in
 				palette+=(black 0 green 2 magenta 5 white 7)    # [1][2]
 
 				# Validate the colors passed via option-arguments.
-				for color in $fcolors $bcolors; do
-					if [[ $color = default ]]; then
-						if [[ ! $op ]]; then
+				for color in $fcolors $bcolors
+				do
+					if [[ $color = default ]]
+					then
+						if [[ ! $op ]]
+						then
 							fmt='%s cannot reset colors to default\n'   # [8]
 							printf >&2 "colorpairs: $fmt" ${(qq)TERM}
 							return 1
 						fi
-					elif [[ ! $palette[$color] ]]; then
+					elif [[ ! $palette[$color] ]]
+					then
 						[[ $op ]] && palette+=(default '')
 						fmt='colorpairs: unavailable color: %s\n'
 						fmt+='available colors: %s\n'
@@ -224,10 +244,12 @@ case ${TERM_PROGRAM:-$TERM} in
 				local -A fseqs bseqs
 
 				# Save sequences to avoid querying repeatedly later.
-				for fcolor in ${fcolors:#default}; do
+				for fcolor in ${fcolors:#default}
+				do
 					fseqs[$fcolor]=$($cmd $fcap $palette[$fcolor]) || return 1
 				done
-				for bcolor in ${bcolors:#default}; do
+				for bcolor in ${bcolors:#default}
+				do
 					bseqs[$bcolor]=$($cmd $bcap $palette[$bcolor]) || return 1
 				done
 
@@ -240,8 +262,10 @@ case ${TERM_PROGRAM:-$TERM} in
 				# a lot more than colors.  Terminals which *can* reset
 				# colors separately can be handled up in the VIP area.
 				local seq
-				for fcolor in $fcolors; do
-					for bcolor in $bcolors; do
+				for fcolor in $fcolors
+				do
+					for bcolor in $bcolors
+					do
 						# If used, the "op" sequence must come first.
 						case $fcolor,$bcolor in
 							default,default) seq=$op ;;

@@ -17,7 +17,8 @@
 
 
 # Source topic scripts.
-for scpt in "${ZDOTDIR-$HOME}"/zprofile.d/*.zsh(N-^/); do
+for scpt in "${ZDOTDIR-$HOME}"/zprofile.d/*.zsh(N-^/)
+do
 	. "$scpt"
 done
 unset scpt
