@@ -32,6 +32,7 @@ GIT = git
 GPG = gpg
 LYNX = lynx
 SHELLCHECK = shellcheck
+SHELLCHECKFLAGS = --norc
 ZSH = zsh
 
 # Imitate .PHONY portably [6].  List "all" first to make it the default.
