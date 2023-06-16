@@ -90,8 +90,8 @@ partition() {
 		return 0
 	fi
 
-	# Turn the colon-delimited list into a colon-terminated one, making
-	# it unnecessary to treat the final element as a special case.
+	# Make the colon-delimited list colon-terminated to avoid having
+	# to special-case the final element.
 	xs=$1: || return
 	shift
 

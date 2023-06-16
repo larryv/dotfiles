@@ -44,7 +44,6 @@ for scpt in ~/.profile.d/[!_]*.sh
 do
 	if [ -e "$scpt" ] && [ ! -d "$scpt" ]
 	then
-		# I don't know if ShellCheck can use multiple sources somehow.
 		# shellcheck source=/dev/null
 		. "$scpt"
 	fi
@@ -89,7 +88,7 @@ if [ ! "$ZSH_VERSION" ]
 then
 	if [ "$tmpfuncs" ]
 	then
-		# I have to use field splitting, since arrays aren't portable.
+		# Use field splitting because arrays aren't portable.
 		# shellcheck disable=SC2086
 		unset -f $tmpfuncs
 	fi

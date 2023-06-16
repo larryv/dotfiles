@@ -31,8 +31,8 @@ esac
 # https://www.gnupg.org/documentation/manuals/gnupg/Agent-Examples.html
 if [ ! "${GPG_TTY+y}" ]
 then
-	# TTY is a zsh thing, but I check for it here because theoretically
-	# another shell, or even the terminal emulator itself, could set it.
+	# TTY is a zsh thing, but check for it here because, in theory,
+	# it could be set by other shells or the terminal emulator.
 	if GPG_TTY=${TTY:-$(tty)}
 	then
 		export GPG_TTY

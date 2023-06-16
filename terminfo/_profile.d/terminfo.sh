@@ -44,17 +44,18 @@ then
 	then
 		# https://invisible-island.net/ncurses/terminfo.src.html#toc-_Terminal_app
 		#
-		# Unconditionally override the "Declare terminal as" preference
-		# because (according to a comment in the terminfo source) it
-		# affects TERM but not the actual emulation, which is itself not
-		# accurately described by any of the preference's choices.  The
-		# required build numbers are taken from the source.
+		# Unconditionally override the "Declare terminal as"
+		# preference because (according to a comment in the
+		# terminfo source) it affects TERM but not the actual
+		# emulation, which is itself not accurately described by
+		# any of the preference's choices.  The required build
+		# numbers are taken from the source.
 
 		IFS=. read -r major minor rest <<EOF || return
 $TERM_PROGRAM_VERSION
 EOF
-		# There shouldn't be any leading zeros but strip them anyway.
-		# https://mywiki.wooledge.org/BashFAQ/067
+		# https://mywiki.wooledge.org/BashFAQ/067 -- There
+		# shouldn't be any leading zeros, but strip them anyway.
 		zeros=${major%%[!0]*} || return
 		major=${major#"$zeros"}
 		zeros=${minor%%[!0]*}
@@ -68,14 +69,14 @@ EOF
 			term=nsterm-build361    # 10.11 - 10.12
 		elif [ "$((major == 343 && minor >= 7 || major > 343))" -ne 0 ]
 		then
-			# Mismatch is intentional; see the terminfo source.
+			# Mismatch is intentional; see terminfo source.
 			term=nsterm-build343    # 10.10
 		elif [ "$((major >= 326))" -ne 0 ]
 		then
 			term=nsterm-build326    # 10.9
 		elif [ "$((major >= 303))" -ne 0 ]
 		then
-			# Mismatch is intentional; see the terminfo source.
+			# Mismatch is intentional; see terminfo source.
 			term=nsterm-build309    # 10.7 - 10.8
 		elif [ "$((major == 240 && minor >= 2 || major > 240))" -ne 0 ]
 		then
@@ -92,14 +93,16 @@ EOF
 		[ "$term" != "$TERM" ] \
 			&& if [ "$ZSH_VERSION" ]
 			   then
-			   	# On assignment to TERM, zsh automatically tries to
-			   	# reinitialize the terminal.  As far as I can tell,
-			   	# the only way to discern failure is to check for an
-			   	# error message, as neither the exit status nor the
-			   	# assignment itself is affected.
+			   	# On assignment to TERM, zsh tries to
+			   	# reinitialize the terminal.  As far as
+			   	# I can tell, the only way to discern
+			   	# failure is to check for an error
+			   	# message, as neither the exit status
+			   	# nor the assignment itself is affected.
 			   	[ ! "$(TERM=$term 2>&1)" ]
 			   else
-			   	# Not sure whether "init" or "reset" is better here.
+			   	# Not sure whether "init" or "reset" is
+			   	# better here.
 			   	tput -T "$term" init 2>/dev/null
 			   fi
 	then

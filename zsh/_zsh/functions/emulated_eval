@@ -66,10 +66,10 @@ emulate -L zsh
 	eval "$@"
 } always {
 	# https://www.zsh.org/mla/users/2008/msg00785.html (users/13169)
-	# In zsh prior to 4.3.7, options are restored at function exit but
-	# emulation mode is not.  Explicitly restore the original mode, or
-	# things get weird later.  (A trap might be better for this, but I'm
-	# not sure.)
+	# In zsh prior to 4.3.7, options are restored at function exit
+	# but emulation mode is not.  Explicitly restore the original
+	# mode, or things get weird later.  (A trap might be better for
+	# this, but I'm not sure.)
 	emulate -L "$origmode"
 }
 

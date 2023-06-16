@@ -42,10 +42,10 @@ esac
 
 # Use a helper function for its temporary positional parameters.
 promote_mp_paths() {
-	# Like path_helper(8), treat newlines as delimiters and ignore blank
-	# lines.  The files are usually very short, so using sed(1) for this
-	# isn't worth it.  Use REPLY as the variable because promote() is
-	# going to overwrite it anyway, so I don't have to unset it here.
+	# Like path_helper(8), treat LFs as delimiters and ignore empty
+	# lines.  The files are usually very short, so using sed(1) for
+	# this isn't worth it.  Use REPLY because promote() is going to
+	# overwrite it anyway, so I don't have to unset it here.
 	while IFS= read -r REPLY || [ "$REPLY" ]
 	do
 		if [ "$REPLY" ]
