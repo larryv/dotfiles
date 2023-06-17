@@ -15,23 +15,20 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
-# >= 4.3.7: %1F, %2F, %3F, %f (numbered form uses termcap [1])
-# Avoid using Functions/Misc/colors, which hard-codes ANSI sequences and
-# might not be installed.  Define my own colors instead.
-# NOTE: This function creates the "fgbg" global variable.
-autoload -Uz colorpairs
-colorpairs -f red,green,yellow,default -b default
-
 # TODO: If compatible with 4.3.6, move everything into a prompt theme.
 
 # Left prompt: Hostname, history number, job count, indication of last
 # exit status, privileges/shell-nesting indicator.
 PS1='%m %B%h%b%(1j. [%j].)'
-if (( $#fgbg ))
+if
+	# This expansion should be null if %f is unsupported.  (Color
+	# prompt escapes were introduced in zsh 4.3.7; I used to
+	# accommodate older versions but can't be bothered anymore.)
+	[[ ${(%):-%f} ]]
 then
-	PS1+=" %(?.%{$fgbg[green,default]%}.%{$fgbg[red,default]%})"
-	PS1+="%B${(r:SHLVL * 2::%#:)}%b"
-	PS1+="%{$fgbg[default,default]%} "
+	# Prefer the numbered form of %F because it uses termcap instead
+	# of hard-coded ANSI sequences [1].
+	PS1+=" %(?.%2F.%1F)%B${(r:SHLVL * 2::%#:)}%b%f "
 else
 	# Display the last exit status directly.
 	PS1+="%(?..%(1j.. )(%?%)) %B${(r:SHLVL * 2::%#:)}%b "
@@ -61,15 +58,13 @@ autoload -Uz +X vcs_info 2>/dev/null && {
 	zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
 	zstyle ':vcs_info:git:*' check-for-changes true
-	if (( $#fgbg ))
+	if [[ ${(%):-%f} ]]
 	then
 		# Color green/yellow/red if there are no/staged/unstaged changes.
-		zstyle ':vcs_info:git:*' unstagedstr "%{$fgbg[red,default]%}"
-		zstyle ':vcs_info:git:*' stagedstr "%{$fgbg[yellow,default]%}"
-		zstyle ':vcs_info:git:*' formats \
-			"%{$fgbg[green,default]%}%u%c(%s:%b)%{$fgbg[default,default]%}"
-		zstyle ':vcs_info:git:*' actionformats \
-			"%{$fgbg[green,default]%}%u%c(%s:%b|%a)%{$fgbg[default,default]%}"
+		zstyle ':vcs_info:git:*' unstagedstr '%1F'
+		zstyle ':vcs_info:git:*' stagedstr '%3F'
+		zstyle ':vcs_info:git:*' formats '%2F%u%c(%s:%b)%f'
+		zstyle ':vcs_info:git:*' actionformats '%2F%u%c(%s:%b|%a)%f'
 	else
 		zstyle ':vcs_info:git:*' unstagedstr ':U'
 		zstyle ':vcs_info:git:*' stagedstr ':S'
@@ -92,14 +87,8 @@ else
 	compinit
 fi && {
 	zstyle ':completion:*:descriptions' format '%B%d%b'
-
-	fmt='%BNo matches for %d%b'
-	if (( $#fgbg ))
-	then
-		fmt="%{$fgbg[red,default]%}$fmt%{$fgbg[default,default]%}"
-	fi
-	zstyle ':completion:*:warnings' format "$fmt"
-	unset fmt
+	# TODO: Make sure %1F and %f expand to null in zsh 4.3.6.
+	zstyle ':completion:*:warnings' format '%1F%BNo matches for %d%b%f'
 }
 
 # Enable fancy globbing.
@@ -137,9 +126,6 @@ then
 	fi
 	unset srcd tmpfuncs
 fi
-
-unset fgbg
-unfunction colorpairs
 
 
 # References
