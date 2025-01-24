@@ -3,7 +3,8 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2016, 2018, 2020-2023 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2016, 2018, 2020-2023, 2025 by Lawrence Velazquez
+# <vq@larryv.me>.
 #
 # To the extent possible under law, the author has dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -61,7 +62,7 @@ zsh-install: sh-install zsh zsh-installdirs FORCE
 	$(INSTALL_DATA) zsh/_zsh/_zshrc ~/.zsh/.zshrc
 	$(INSTALL_DATA) zsh/_zsh/_zlogin ~/.zsh/.zlogin
 	-ln -fs ../.zshenv ~/.zsh/.zshenv
-	-ln -fs ../.zshenv ~/.zsh/zshenv
+	-ln -fs .zshenv ~/.zsh/zshenv
 	-ln -fs .zprofile ~/.zsh/zprofile
 	-ln -fs .zshrc ~/.zsh/zshrc
 	-ln -fs .zlogin ~/.zsh/zlogin
