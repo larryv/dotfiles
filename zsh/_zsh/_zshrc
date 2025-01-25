@@ -3,7 +3,8 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2012-2016, 2018-2023 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2012-2016, 2018-2023, 2025 by Lawrence Velazquez
+# <vq@larryv.me>.
 #
 # To the extent possible under law, the author has dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -24,7 +25,7 @@ if
 	# This expansion should be null if %f is unsupported.  (Color
 	# prompt escapes were introduced in zsh 4.3.7; I used to
 	# accommodate older versions but can't be bothered anymore.)
-	[[ ${(%):-%f} ]]
+	[[ -n ${(%):-%f} ]]
 then
 	# Prefer the numbered form of %F because it uses termcap instead
 	# of hard-coded ANSI sequences [1].
@@ -58,7 +59,7 @@ autoload -Uz +X vcs_info 2>/dev/null && {
 	zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b/%r'
 
 	zstyle ':vcs_info:git:*' check-for-changes true
-	if [[ ${(%):-%f} ]]
+	if [[ -n ${(%):-%f} ]]
 	then
 		# Color green/yellow/red if there are no/staged/unstaged changes.
 		zstyle ':vcs_info:git:*' unstagedstr '%1F'
@@ -120,7 +121,7 @@ unset scpt
 # Login shells will do this later.
 if [[ ! -o LOGIN ]]
 then
-	if [[ $tmpfuncs ]]
+	if [[ -n $tmpfuncs ]]
 	then
 		unfunction ${(u)=tmpfuncs}
 	fi

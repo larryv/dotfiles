@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2016, 2018-2023 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2016, 2018-2023, 2025 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author has dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -34,7 +34,7 @@
 
 emulate -L zsh
 
-if [[ $INSIDE_EMACS ]]
+if [[ -n $INSIDE_EMACS ]]
 then
 	return 0
 fi
@@ -81,7 +81,7 @@ local docseq=$'\e]6;\a'
 local seqs=$dirseq$docseq
 
 # Modify the sequences so tmux passes them through [6].
-if [[ $TMUX ]]
+if [[ -n $TMUX ]]
 then
 	seqs=$'\ePtmux;'${seqs//$'\e'/$'\e\e'}$'\e\\'
 fi

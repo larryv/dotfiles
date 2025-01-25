@@ -1,0 +1,20 @@
+dotfiles development details
+============================
+
+
+zsh
+---
+
+Avoid `[[ str ]]` and `[[ ! str ]]`, which were not implemented until
+zsh 5.0.6 [1].  Use `[[ -n str ]]` and `[[ -z str ]]`, or `test`.
+
+
+References
+----------
+
+ 1. https://sourceforge.net/p/zsh/code/ci/9d47e8398d299e53ffe4e7ddf3731d2fedae9948
+
+
+SPDX-License-Identifier: CC0-1.0
+
+Written in 2025 by Lawrence Velazquez <vq@larryv.me>.
